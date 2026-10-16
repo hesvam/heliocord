@@ -1,4 +1,3 @@
-
 const form = document.getElementById("brief-form");
 const submitButton = document.getElementById("submit-button");
 const submitLabel = document.getElementById("submit-label");
@@ -25,16 +24,24 @@ function getFieldLabel(element) {
     }
   }
 
-  const choice = element.closest(".choice-card, .check-option");
+  const choice = element.closest(
+    ".choice-card, .check-option, .logo-type"
+  );
 
   if (choice) {
+    const name = choice.querySelector(
+      ".logo-type-name, .choice-title"
+    );
+
+    if (name) return name.innerText.trim();
+
     return choice.innerText.replace(/\s+/g, " ").trim();
   }
 
   return element.name || element.id || "بيانات إضافية";
 }
 
-/* Collect all answers, including multiple selections. */
+/* Collect all completed answers. */
 
 function collectAnswers() {
   const answers = [];
@@ -60,12 +67,11 @@ function collectAnswers() {
     }
 
     const key = element.name || element.id;
-
     if (!key) continue;
 
     let value = element.value.trim();
 
-    if (element.type === "checkbox" || element.type === "radio") {
+    if (["checkbox", "radio"].includes(element.type)) {
       value = getFieldLabel(element);
     }
 
@@ -76,7 +82,7 @@ function collectAnswers() {
     if (grouped.has(key)) {
       const existing = grouped.get(key);
 
-      if (!existing.value.includes(value)) {
+      if (!existing.value.split("، ").includes(value)) {
         existing.value += `، ${value}`;
       }
     } else {
@@ -89,38 +95,40 @@ function collectAnswers() {
   return answers;
 }
 
-/* Build a printable HTML report. */
+/* Build the PDF report. */
 
 function createReport(referenceId, answers) {
   const report = document.createElement("div");
 
-  report.dir = "rtl";
+  report.setAttribute("dir", "rtl");
 
-  report.style.cssText = `
-    position: fixed;
-    left: -10000px;
-    top: 0;
-    width: 760px;
-    padding: 36px;
-    background: #ffffff;
-    color: #171717;
-    font-family: Cairo, Arial, sans-serif;
-    box-sizing: border-box;
-  `;
+  Object.assign(report.style, {
+    position: "absolute",
+    left: "-800px",
+    top: "0",
+    width: "760px",
+    padding: "36px",
+    background: "#ffffff",
+    color: "#171717",
+    fontFamily: "Cairo, Arial, sans-serif",
+    boxSizing: "border-box",
+    zIndex: "-1",
+  });
 
   const rows = answers.map((item, index) => `
     <div style="
-      padding: 13px 0;
-      border-bottom: 1px solid #e7e7e7;
+      padding: 14px 0;
+      border-bottom: 1px solid #e7e9ed;
       break-inside: avoid;
+      page-break-inside: avoid;
     ">
       <div style="
         display: flex;
         justify-content: space-between;
         gap: 12px;
-        color: #777;
+        color: #737780;
         font-size: 11px;
-        margin-bottom: 5px;
+        margin-bottom: 6px;
       ">
         <span>${escapeHTML(item.label)}</span>
         <span>${String(index + 1).padStart(2, "0")}</span>
@@ -129,7 +137,7 @@ function createReport(referenceId, answers) {
       <div style="
         color: #171717;
         font-size: 13px;
-        line-height: 1.9;
+        line-height: 2;
         white-space: pre-wrap;
         overflow-wrap: anywhere;
       ">${escapeHTML(item.value)}</div>
@@ -137,58 +145,85 @@ function createReport(referenceId, answers) {
   `).join("");
 
   report.innerHTML = `
-    <div style="
+    <header style="
       border-bottom: 2px solid #171717;
-      padding-bottom: 20px;
+      padding-bottom: 22px;
       margin-bottom: 24px;
     ">
       <div style="
-        font-family: Inter, Arial, sans-serif;
+        font-family: Arial, sans-serif;
         font-size: 12px;
-        font-weight: bold;
-        letter-spacing: 2px;
+        font-weight: 800;
+        letter-spacing: 3px;
         direction: ltr;
         text-align: left;
       ">BRIEF STUDIO</div>
 
       <h1 style="
         font-size: 27px;
-        margin: 20px 0 5px;
+        line-height: 1.6;
+        margin: 20px 0 4px;
+        color: #171717;
       ">بريف تصميم الشعار</h1>
 
       <p style="
         color: #777;
-        font-family: Inter, Arial, sans-serif;
-        font-size: 12px;
+        font-family: Arial, sans-serif;
+        font-size: 11px;
+        letter-spacing: 1px;
         direction: ltr;
         text-align: left;
+        margin: 0;
       ">LOGO DESIGN BRIEF</p>
 
       <div style="
         margin-top: 20px;
-        padding: 12px;
-        background: #f4f4f4;
+        padding: 13px 15px;
+        background: #f3f4f6;
+        border-right: 3px solid #171717;
         font-size: 12px;
       ">
-        رقم المرجع:
+        رقم الطلب:
         <strong dir="ltr">${escapeHTML(referenceId)}</strong>
       </div>
-    </div>
 
-    ${rows}
+      <p style="
+        margin: 16px 0 0;
+        color: #666;
+        font-size: 11px;
+        line-height: 1.9;
+      ">
+        يحتوي هذا المستند على المعلومات المقدمة من العميل
+        لتحديد متطلبات واتجاه تصميم الشعار.
+      </p>
+    </header>
 
-    <div style="
+    <section>
+      <h2 style="
+        font-size: 16px;
+        margin: 0 0 12px;
+        padding-bottom: 8px;
+        border-bottom: 1px solid #ddd;
+      ">تفاصيل البريف</h2>
+
+      ${rows}
+    </section>
+
+    <footer style="
       margin-top: 28px;
-      padding-top: 15px;
+      padding-top: 14px;
       border-top: 1px solid #ddd;
       color: #888;
-      font-family: Inter, Arial, sans-serif;
+      font-family: Arial, sans-serif;
       font-size: 9px;
       direction: ltr;
       text-align: center;
     ">
       LOGO DESIGN / CREATIVE PROCESS
-    </div>
+      <div style="margin-top: 5px;">
+        REFERENCE: ${escapeHTML(referenceId)}
+      </div>
+    </footer>
   `;
 
   document.body.appendChild(report);
@@ -201,7 +236,8 @@ function setStatus(message, success = false) {
   statusBox.dataset.state = success ? "success" : "error";
 }
 
-/* Generate PDF and submit it to the Vercel API. */
+/* Submit the PDF directly to the server.
+   No automatic download is triggered for the client. */
 
 form.addEventListener("submit", async (event) => {
   event.preventDefault();
@@ -226,6 +262,10 @@ form.addEventListener("submit", async (event) => {
 
     const answers = collectAnswers();
 
+    if (!answers.length) {
+      throw new Error("لم يتم العثور على بيانات لإضافتها إلى البريف.");
+    }
+
     const referenceId =
       "BR-" +
       new Date().toISOString().slice(0, 10).replace(/-/g, "") +
@@ -234,17 +274,20 @@ form.addEventListener("submit", async (event) => {
 
     report = createReport(referenceId, answers);
 
+    // Give the browser time to render the report before PDF generation.
+    await new Promise((resolve) => requestAnimationFrame(resolve));
+
     const pdfBlob = await html2pdf()
       .set({
         margin: [10, 10, 10, 10],
-        filename: `Logo-Brief-${referenceId}.pdf`,
-        image: { type: "jpeg", quality: 0.98 },
+        image: { type: "jpeg", quality: 0.95 },
         html2canvas: {
           scale: 2,
           useCORS: true,
           backgroundColor: "#ffffff",
           scrollX: 0,
           scrollY: 0,
+          logging: false,
         },
         jsPDF: {
           unit: "mm",
@@ -258,14 +301,25 @@ form.addEventListener("submit", async (event) => {
       .from(report)
       .outputPdf("blob");
 
-    submitLabel.textContent = "جاري إرسال البريف...";
+    // Validate that the generated file is a real, non-empty PDF.
+    if (!pdfBlob || pdfBlob.size < 1000) {
+      throw new Error("ملف PDF الناتج فارغ أو غير مكتمل. حاول مرة أخرى.");
+    }
+
+    const signature = new Uint8Array(
+      await pdfBlob.slice(0, 5).arrayBuffer()
+    );
+
+    if (String.fromCharCode(...signature) !== "%PDF-") {
+      throw new Error("تعذر إنشاء ملف PDF صالح. حاول مرة أخرى.");
+    }
+
+    submitLabel.textContent = "جاري إرسال البريف إلى الاستوديو...";
 
     const requestData = new FormData();
 
     requestData.append("referenceId", referenceId);
-
     requestData.append("payload", JSON.stringify(answers));
-
     requestData.append(
       "report",
       pdfBlob,
@@ -285,26 +339,15 @@ form.addEventListener("submit", async (event) => {
       );
     }
 
-    /* Download a copy for the client after successful submission. */
-
-    const downloadUrl = URL.createObjectURL(pdfBlob);
-    const link = document.createElement("a");
-
-    link.href = downloadUrl;
-    link.download = `Logo-Brief-${referenceId}.pdf`;
-
-    document.body.appendChild(link);
-    link.click();
-    link.remove();
-
-    setTimeout(() => URL.revokeObjectURL(downloadUrl), 1000);
+    // Intentionally no download link or automatic PDF download.
 
     setStatus(
-      `تم إرسال البريف بنجاح! رقم الطلب: ${referenceId}. تم تجهيز نسخة PDF لك.`,
+      `تم إرسال البريف بنجاح. رقم الطلب: ${referenceId}`,
       true
     );
 
-    submitLabel.textContent = "تم إرسال البريف";
+    submitLabel.textContent = "تم إرسال البريف بنجاح";
+
   } catch (error) {
     console.error("Brief submission failed:", error);
 
@@ -314,12 +357,15 @@ form.addEventListener("submit", async (event) => {
     );
 
     submitLabel.textContent = "إعادة محاولة الإرسال";
+
   } finally {
     report?.remove();
     submitButton.disabled = false;
 
-    if (submitLabel.textContent === "جاري إرسال البريف..." ||
-        submitLabel.textContent === "جاري تجهيز البريف...") {
+    if (
+      submitLabel.textContent === "جاري إرسال البريف إلى الاستوديو..." ||
+      submitLabel.textContent === "جاري تجهيز البريف..."
+    ) {
       submitLabel.textContent = "إرسال البريف وحفظ PDF";
     }
   }
