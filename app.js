@@ -4,7 +4,9 @@ const submitButton = document.getElementById("submit-button");
 const submitLabel = document.getElementById("submit-label");
 const statusBox = document.getElementById("form-status");
 
-/* Escape user-provided text before inserting it into HTML. */
+const PDF_REPORT_ID = "pdf-report-render-target";
+
+/* Escape HTML to safely display submitted answers. */
 
 function escapeHTML(value) {
   return String(value ?? "").replace(/[&<>"']/g, (char) => ({
@@ -16,7 +18,7 @@ function escapeHTML(value) {
   })[char]);
 }
 
-/* Get a readable label for each form field. */
+/* Get a readable field label. */
 
 function getFieldLabel(element) {
   const wrapper = element.closest(".field");
@@ -38,7 +40,7 @@ function getFieldLabel(element) {
   return element.name || element.id || "بيانات إضافية";
 }
 
-/* Collect answers and combine multiple selections. */
+/* Collect answers, including multiple selections. */
 
 function collectAnswers() {
   const answers = [];
@@ -77,13 +79,13 @@ function collectAnswers() {
 
     if (grouped.has(key)) {
       const existing = grouped.get(key);
+      const values = existing.value.split("، ");
 
-      if (!existing.value.split("، ").includes(value)) {
+      if (!values.includes(value)) {
         existing.value += `، ${value}`;
       }
     } else {
       const item = { label, value };
-
       grouped.set(key, item);
       answers.push(item);
     }
@@ -92,7 +94,7 @@ function collectAnswers() {
   return answers;
 }
 
-/* Generate a unique order reference. */
+/* Create a unique reference ID. */
 
 function createReferenceId() {
   const date = new Date()
@@ -100,34 +102,22 @@ function createReferenceId() {
     .slice(0, 10)
     .replace(/-/g, "");
 
-  let randomPart;
-
-  if (
+  const randomPart =
     typeof crypto !== "undefined" &&
     typeof crypto.randomUUID === "function"
-  ) {
-    randomPart = crypto.randomUUID()
-      .replace(/-/g, "")
-      .slice(0, 8)
-      .toUpperCase();
-  } else {
-    randomPart = Math.random()
-      .toString(16)
-      .slice(2, 10)
-      .padEnd(8, "0")
-      .toUpperCase();
-  }
+      ? crypto.randomUUID().replace(/-/g, "").slice(0, 8).toUpperCase()
+      : Math.random().toString(16).slice(2, 10).toUpperCase();
 
   return `BR-${date}-${randomPart}`;
 }
 
-/* Build the printable HTML report. */
+/* Build the PDF report. */
 
 function createReport(referenceId, answers) {
   const report = document.createElement("div");
 
+  report.id = PDF_REPORT_ID;
   report.dir = "rtl";
-  report.setAttribute("aria-hidden", "true");
 
   Object.assign(report.style, {
     position: "fixed",
@@ -143,6 +133,7 @@ function createReport(referenceId, answers) {
     lineHeight: "1.8",
     boxSizing: "border-box",
     zIndex: "-1",
+    opacity: "0",
     pointerEvents: "none",
     overflow: "visible",
   });
@@ -178,17 +169,13 @@ function createReport(referenceId, answers) {
         </div>
       `).join("")
     : `
-        <div style="
-          padding: 20px 0;
-          color: #777777;
-          font-size: 13px;
-        ">
+        <div style="padding: 20px 0; color: #777777;">
           لم يتم العثور على إجابات مدخلة في النموذج.
         </div>
       `;
 
   report.innerHTML = `
-    <div style="
+    <header style="
       border-bottom: 2px solid #171717;
       padding-bottom: 20px;
       margin-bottom: 24px;
@@ -203,8 +190,8 @@ function createReport(referenceId, answers) {
       ">BRIEF STUDIO</div>
 
       <h1 style="
-        font-family: Cairo, Arial, sans-serif;
         color: #171717;
+        font-family: Cairo, Arial, sans-serif;
         font-size: 27px;
         font-weight: 700;
         margin: 20px 0 5px;
@@ -224,17 +211,17 @@ function createReport(referenceId, answers) {
         margin-top: 20px;
         padding: 12px;
         background: #f4f4f4;
-        font-size: 12px;
         border: 1px solid #e9e9e9;
+        font-size: 12px;
       ">
         رقم المرجع:
         <strong dir="ltr">${escapeHTML(referenceId)}</strong>
       </div>
-    </div>
+    </header>
 
-    ${rows}
+    <main>${rows}</main>
 
-    <div style="
+    <footer style="
       margin-top: 28px;
       padding-top: 15px;
       border-top: 1px solid #dddddd;
@@ -245,7 +232,7 @@ function createReport(referenceId, answers) {
       text-align: center;
     ">
       LOGO DESIGN / CREATIVE PROCESS
-    </div>
+    </footer>
   `;
 
   document.body.appendChild(report);
@@ -253,7 +240,7 @@ function createReport(referenceId, answers) {
   return report;
 }
 
-/* Update the form status message. */
+/* Display status messages. */
 
 function setStatus(message, success = false) {
   if (!statusBox) return;
@@ -262,62 +249,187 @@ function setStatus(message, success = false) {
   statusBox.dataset.state = success ? "success" : "error";
 }
 
-/* Wait for the browser to finish layout and rendering. */
+/* Allow browser layout and fonts to finish loading. */
 
-function waitForRender() {
-  return new Promise((resolve) => {
+async function waitForRender() {
+  if (document.fonts?.ready) {
+    await document.fonts.ready;
+  }
+
+  await new Promise((resolve) => {
     requestAnimationFrame(() => {
       requestAnimationFrame(resolve);
     });
   });
 }
 
-/* Generate and validate the PDF without downloading it. */
+/* Create PDF and check that the captured report is not blank. */
 
-async function generatePDF(report, referenceId) {
-  if (document.fonts?.ready) {
-    await document.fonts.ready;
+async function generatePDF(report) {
+  if (typeof html2pdf === "undefined") {
+    throw new Error("مكتبة إنشاء PDF غير متاحة.");
+  }
+
+  if (typeof html2canvas === "undefined") {
+    throw new Error("مكتبة التقاط التقرير غير متاحة.");
   }
 
   await waitForRender();
 
-  const pdfBlob = await html2pdf()
-    .set({
-      margin: [10, 10, 10, 10],
+  /*
+   * Capture the report directly first.
+   * This helps detect blank rendering before making the PDF.
+   */
 
-      image: {
-        type: "jpeg",
-        quality: 0.98,
-      },
+  const canvas = await html2canvas(report, {
+    scale: 1.5,
+    useCORS: true,
+    backgroundColor: "#ffffff",
+    logging: true,
+    width: report.scrollWidth,
+    height: report.scrollHeight,
+    windowWidth: Math.max(window.innerWidth, 1000),
+    windowHeight: Math.max(window.innerHeight, report.scrollHeight + 100),
+    scrollX: 0,
+    scrollY: 0,
 
-      html2canvas: {
-        scale: 2,
-        useCORS: true,
-        backgroundColor: "#ffffff",
-        scrollX: 0,
-        scrollY: 0,
-        logging: false,
-        removeContainer: true,
-      },
+    onclone: (clonedDocument) => {
+      const clonedReport = clonedDocument.getElementById(PDF_REPORT_ID);
 
-      jsPDF: {
-        unit: "mm",
-        format: "a4",
-        orientation: "portrait",
-        compress: true,
-      },
+      if (!clonedReport) {
+        throw new Error("لم يتم العثور على التقرير في نسخة التصوير.");
+      }
 
-      pagebreak: {
-        mode: ["css", "legacy"],
-      },
-    })
-    .from(report)
-    .outputPdf("blob");
+      Object.assign(clonedReport.style, {
+        position: "absolute",
+        left: "0",
+        top: "0",
+        width: "760px",
+        height: "auto",
+        zIndex: "999999",
+        opacity: "1",
+        visibility: "visible",
+        display: "block",
+        overflow: "visible",
+        background: "#ffffff",
+        color: "#171717",
+      });
+    },
+  });
+
+  if (!canvas || canvas.width < 10 || canvas.height < 10) {
+    throw new Error("تعذر التقاط محتوى التقرير.");
+  }
+
+  /*
+   * Check whether the captured canvas contains non-white pixels.
+   * If it is entirely white, do not send an empty PDF.
+   */
+
+  const context = canvas.getContext("2d", {
+    willReadFrequently: true,
+  });
+
+  if (!context) {
+    throw new Error("تعذر قراءة صورة التقرير.");
+  }
+
+  const sampleWidth = Math.min(canvas.width, 200);
+  const sampleHeight = Math.min(canvas.height, 200);
+  const sample = context.getImageData(
+    0,
+    0,
+    sampleWidth,
+    sampleHeight
+  ).data;
+
+  let hasVisibleContent = false;
+
+  for (let i = 0; i < sample.length; i += 4) {
+    const r = sample[i];
+    const g = sample[i + 1];
+    const b = sample[i + 2];
+
+    if (r < 245 || g < 245 || b < 245) {
+      hasVisibleContent = true;
+      break;
+    }
+  }
+
+  if (!hasVisibleContent) {
+    throw new Error(
+      "التقرير تم التقاطه كصفحة بيضاء. لم يتم إرسال الملف. راجع إعدادات عرض التقرير."
+    );
+  }
+
+  /*
+   * Convert the captured canvas into a PDF.
+   * The PDF is returned as a Blob; it is never downloaded here.
+   */
+
+  const imageData = canvas.toDataURL("image/jpeg", 0.96);
+
+  const { jsPDF } = window.jspdf || {};
+
+  if (!jsPDF) {
+    throw new Error("مكتبة jsPDF غير متاحة.");
+  }
+
+  const pdf = new jsPDF({
+    orientation: "portrait",
+    unit: "mm",
+    format: "a4",
+    compress: true,
+  });
+
+  const pageWidth = pdf.internal.pageSize.getWidth();
+  const pageHeight = pdf.internal.pageSize.getHeight();
+  const margin = 10;
+
+  const contentWidth = pageWidth - margin * 2;
+  const contentHeight = pageHeight - margin * 2;
+
+  const imageWidth = contentWidth;
+  const imageHeight = (canvas.height * imageWidth) / canvas.width;
+
+  let remainingHeight = imageHeight;
+  let position = margin;
+
+  pdf.addImage(
+    imageData,
+    "JPEG",
+    margin,
+    position,
+    imageWidth,
+    imageHeight,
+    undefined,
+    "FAST"
+  );
+
+  remainingHeight -= contentHeight;
+
+  while (remainingHeight > 0) {
+    pdf.addPage();
+    position = margin - (imageHeight - remainingHeight);
+
+    pdf.addImage(
+      imageData,
+      "JPEG",
+      margin,
+      position,
+      imageWidth,
+      imageHeight,
+      undefined,
+      "FAST"
+    );
+
+    remainingHeight -= contentHeight;
+  }
+
+  const pdfBlob = pdf.output("blob");
 
   if (!(pdfBlob instanceof Blob) || pdfBlob.size < 1000) {
-    throw new Error(
-      "ملف PDF الناتج فارغ أو غير مكتمل. حاول مرة أخرى."
-    );
+    throw new Error("ملف PDF الناتج فارغ أو غير مكتمل.");
   }
 
   const signature = new Uint8Array(
@@ -331,19 +443,18 @@ async function generatePDF(report, referenceId) {
   return pdfBlob;
 }
 
-/* Submit the brief and send the PDF directly to the API. */
+/* Submit the brief and PDF to the Vercel API. */
 
 if (form && submitButton && submitLabel) {
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
 
     if (submitButton.disabled) return;
-
     if (!form.reportValidity()) return;
 
-    if (typeof html2pdf === "undefined") {
+    if (typeof html2canvas === "undefined" || !window.jspdf?.jsPDF) {
       setStatus(
-        "تعذر تحميل مكتبة PDF. حدّث الصفحة وحاول مرة أخرى."
+        "مكتبات PDF غير مكتملة. تأكد من تحميل html2canvas وjsPDF."
       );
       return;
     }
@@ -360,9 +471,7 @@ if (form && submitButton && submitLabel) {
 
       report = createReport(referenceId, answers);
 
-      const pdfBlob = await generatePDF(report, referenceId);
-
-      /* Remove the report after PDF generation. */
+      const pdfBlob = await generatePDF(report);
 
       report.remove();
       report = null;
@@ -393,8 +502,6 @@ if (form && submitButton && submitLabel) {
         );
       }
 
-      /* No automatic PDF download for the client. */
-
       setStatus(
         `تم إرسال البريف بنجاح! رقم الطلب: ${referenceId}`,
         true
@@ -413,7 +520,6 @@ if (form && submitButton && submitLabel) {
       submitLabel.textContent = "إعادة محاولة الإرسال";
     } finally {
       report?.remove();
-
       submitButton.disabled = false;
 
       if (
@@ -426,6 +532,6 @@ if (form && submitButton && submitLabel) {
   });
 } else {
   console.error(
-    "Brief form initialization failed: check the IDs brief-form, submit-button, submit-label."
+    "Brief form initialization failed. Check the required HTML element IDs."
   );
 }
