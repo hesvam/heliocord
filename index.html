@@ -1,0 +1,878 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Logo Design Brief | Creative Studio</title>
+
+    <link rel="stylesheet" href="style.css" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body>
+    <div class="page-wrapper">
+      <!-- Header -->
+      <header class="header">
+        <a href="#" class="brand">
+          <span class="brand-symbol">B.</span>
+          <span class="brand-name">BRIEF STUDIO</span>
+        </a>
+
+        <span class="header-label">LOGO DESIGN / PROJECT BRIEF</span>
+      </header>
+
+      <!-- Hero -->
+      <section class="hero">
+        <div class="hero-tag">
+          <span class="status-dot"></span>
+          LOGO DESIGN QUESTIONNAIRE
+        </div>
+
+        <h1>خلينا نبدأ من <span>فكرة واضحة.</span></h1>
+
+        <p class="hero-description">
+          بريف تصميم الشعار
+          <span class="separator">/</span>
+          Logo Design Brief
+        </p>
+
+        <p class="hero-text">
+          جاوب على الأسئلة التالية بأكبر قدر ممكن من الدقة. كل معلومة بتساعدنا
+          نفهم البراند بشكل أفضل ونحدد الاتجاه المناسب لتصميم شعار يعبر عنه.
+        </p>
+
+        <div class="hero-meta">
+          <span>01 — BRAND DISCOVERY</span>
+          <span>EST. CREATIVE PROCESS</span>
+        </div>
+      </section>
+
+      <form class="brief-form" id="brief-form">
+        <!-- Section 01 -->
+        <section class="form-section">
+          <div class="section-heading">
+            <div class="section-number">01</div>
+
+            <div>
+              <h2>معلومات البراند</h2>
+              <p>Brand Information</p>
+            </div>
+          </div>
+
+          <div class="form-grid">
+            <div class="field">
+              <label for="brand-name">
+                اسم البراند
+                <small>Brand Name</small>
+              </label>
+              <input
+                id="brand-name"
+                name="brand_name"
+                type="text"
+                required
+                placeholder="اكتب اسم البراند"
+              />
+            </div>
+
+            <div class="field">
+              <label for="brand-arabic">
+                الاسم بالعربي
+                <small>Arabic Name</small>
+              </label>
+              <input
+                id="brand-arabic"
+                name="arabic_name"
+                type="text"
+                placeholder="الاسم العربي إن وجد"
+              />
+            </div>
+
+            <div class="field">
+              <label for="brand-english">
+                الاسم بالإنجليزي
+                <small>English Name</small>
+              </label>
+              <input
+                id="brand-english"
+                name="english_name"
+                type="text"
+                dir="ltr"
+                placeholder="Brand Name"
+              />
+            </div>
+
+            <div class="field">
+              <label for="industry">
+                مجال النشاط
+                <small>Industry / Business Category</small>
+              </label>
+              <input
+                id="industry"
+                name="industry"
+                type="text"
+                required
+                placeholder="مثال: أزياء، تقنية، مطاعم"
+              />
+            </div>
+
+            <div class="field full-width">
+              <label for="description">
+                احكي لنا عن البراند
+                <small>Business Description</small>
+              </label>
+              <textarea
+                id="description"
+                name="description"
+                required
+                rows="4"
+                placeholder="ما طبيعة النشاط؟ ماذا يقدم البراند؟ وما الذي يميزه؟"
+              ></textarea>
+            </div>
+
+            <div class="field">
+              <label for="brand-stage">
+                مرحلة البراند
+                <small>Brand Stage</small>
+              </label>
+              <select id="brand-stage" name="brand_stage">
+                <option value="">اختر المرحلة</option>
+                <option>مشروع جديد / New Business</option>
+                <option>براند قائم / Existing Brand</option>
+                <option>إعادة تصميم / Rebranding</option>
+                <option>تطوير شعار حالي / Logo Refresh</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="location">
+                السوق المستهدف جغرافيًا
+                <small>Target Market / Location</small>
+              </label>
+              <input
+                id="location"
+                name="location"
+                type="text"
+                placeholder="مصر، الخليج، عالمي..."
+              />
+            </div>
+
+            <div class="field full-width">
+              <label for="slogan">
+                السلوغان أو العبارة التعريفية
+                <small>Slogan / Tagline</small>
+              </label>
+              <input
+                id="slogan"
+                name="slogan"
+                type="text"
+                placeholder="اكتب العبارة أو اتركه فارغًا"
+              />
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 02 -->
+        <section class="form-section">
+          <div class="section-heading">
+            <div class="section-number">02</div>
+
+            <div>
+              <h2>الجمهور المستهدف</h2>
+              <p>Target Audience</p>
+            </div>
+          </div>
+
+          <div class="form-grid">
+            <div class="field">
+              <label for="audience">
+                من هو عميلك المثالي؟
+                <small>Ideal Customer</small>
+              </label>
+              <textarea
+                id="audience"
+                name="audience"
+                rows="3"
+                placeholder="صف الأشخاص الذين تستهدفهم"
+              ></textarea>
+            </div>
+
+            <div class="field">
+              <label for="age-group">
+                الفئة العمرية
+                <small>Age Group</small>
+              </label>
+              <select id="age-group" name="age_group">
+                <option value="">اختر الفئة العمرية</option>
+                <option>أقل من 18 سنة</option>
+                <option>18–24</option>
+                <option>25–34</option>
+                <option>35–44</option>
+                <option>45 فأكثر</option>
+                <option>جميع الفئات / All Ages</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="audience-gender">
+                الجمهور من حيث النوع
+                <small>Gender</small>
+              </label>
+              <select id="audience-gender" name="audience_gender">
+                <option value="">اختر</option>
+                <option>رجال / Men</option>
+                <option>نساء / Women</option>
+                <option>الجميع / Everyone</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="price-position">
+                الفئة السعرية للبراند
+                <small>Market Positioning</small>
+              </label>
+              <select id="price-position" name="price_position">
+                <option value="">اختر الفئة</option>
+                <option>اقتصادي / Budget</option>
+                <option>متوسط / Mid-range</option>
+                <option>متميز / Premium</option>
+                <option>فاخر / Luxury</option>
+              </select>
+            </div>
+
+            <div class="field full-width">
+              <label for="audience-needs">
+                ما الذي يبحث عنه جمهورك؟
+                <small>Customer Needs & Expectations</small>
+              </label>
+              <textarea
+                id="audience-needs"
+                name="audience_needs"
+                rows="3"
+                placeholder="الجودة، السعر، التميز، الثقة، الفخامة..."
+              ></textarea>
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 03 -->
+        <section class="form-section">
+          <div class="section-heading">
+            <div class="section-number">03</div>
+
+            <div>
+              <h2>نوع الشعار</h2>
+              <p>Logo Type Selection</p>
+            </div>
+          </div>
+
+          <p class="section-description">
+            اختر النوع الأقرب إلى تصورك. يمكنك ترك الاختيار لنا إذا كنت تفضل أن
+            نحدد الأنسب لطبيعة البراند.
+          </p>
+
+          <div class="choice-grid">
+            <label class="choice-card">
+              <input type="radio" name="logo_type" value="Wordmark" />
+              <span class="choice-index">01</span>
+              <span class="choice-title">ووردمارك</span>
+              <span class="choice-en">WORDMARK</span>
+              <span class="choice-desc">اسم البراند بتصميم مميز</span>
+            </label>
+
+            <label class="choice-card">
+              <input type="radio" name="logo_type" value="Lettermark" />
+              <span class="choice-index">02</span>
+              <span class="choice-title">حروف مختصرة</span>
+              <span class="choice-en">LETTERMARK</span>
+              <span class="choice-desc">حرف أو مجموعة حروف</span>
+            </label>
+
+            <label class="choice-card">
+              <input type="radio" name="logo_type" value="Symbol" />
+              <span class="choice-index">03</span>
+              <span class="choice-title">رمز تصويري</span>
+              <span class="choice-en">SYMBOL</span>
+              <span class="choice-desc">أيقونة تعبر عن البراند</span>
+            </label>
+
+            <label class="choice-card">
+              <input type="radio" name="logo_type" value="Combination Mark" />
+              <span class="choice-index">04</span>
+              <span class="choice-title">شعار مركب</span>
+              <span class="choice-en">COMBINATION MARK</span>
+              <span class="choice-desc">اسم مع رمز بصري</span>
+            </label>
+
+            <label class="choice-card">
+              <input type="radio" name="logo_type" value="Emblem" />
+              <span class="choice-index">05</span>
+              <span class="choice-title">شعار شارة</span>
+              <span class="choice-en">EMBLEM</span>
+              <span class="choice-desc">اسم أو رمز داخل إطار</span>
+            </label>
+
+            <label class="choice-card">
+              <input type="radio" name="logo_type" value="Designer Choice" />
+              <span class="choice-index">06</span>
+              <span class="choice-title">اختيار المصمم</span>
+              <span class="choice-en">DESIGNER'S CHOICE</span>
+              <span class="choice-desc">اترك القرار لنا</span>
+            </label>
+          </div>
+
+          <div class="form-grid standalone-fields">
+            <div class="field">
+              <label for="logo-language">
+                لغة الشعار
+                <small>Logo Language</small>
+              </label>
+              <select id="logo-language" name="logo_language">
+                <option value="">اختر اللغة</option>
+                <option>عربي / Arabic</option>
+                <option>إنجليزي / English</option>
+                <option>عربي وإنجليزي / Both</option>
+                <option>رمز فقط / Symbol Only</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="logo-usage">
+                شكل الشعار المفضل
+                <small>Logo Orientation</small>
+              </label>
+              <select id="logo-usage" name="logo_orientation">
+                <option value="">اختر</option>
+                <option>أفقي / Horizontal</option>
+                <option>رأسي / Vertical</option>
+                <option>مربع / Square</option>
+                <option>مرن حسب الاستخدام / Flexible</option>
+              </select>
+            </div>
+
+            <div class="field full-width">
+              <label for="logo-concept">
+                هل لديك فكرة محددة للشعار؟
+                <small>Initial Logo Concept</small>
+              </label>
+              <textarea
+                id="logo-concept"
+                name="logo_concept"
+                rows="3"
+                placeholder="اكتب فكرتك أو تصورك المبدئي إن وجد"
+              ></textarea>
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 04 -->
+        <section class="form-section">
+          <div class="section-heading">
+            <div class="section-number">04</div>
+
+            <div>
+              <h2>الأسلوب البصري</h2>
+              <p>Visual Direction</p>
+            </div>
+          </div>
+
+          <p class="section-description">
+            اختر الصفات التي تريد أن يعبر عنها الشعار. يمكنك تحديد أكثر من
+            اختيار.
+          </p>
+
+          <div class="checkbox-grid">
+            <label class="check-option">
+              <input type="checkbox" name="style[]" value="Minimal" />
+              <span>بسيط / Minimal</span>
+            </label>
+
+            <label class="check-option">
+              <input type="checkbox" name="style[]" value="Luxury" />
+              <span>فاخر / Luxury</span>
+            </label>
+
+            <label class="check-option">
+              <input type="checkbox" name="style[]" value="Modern" />
+              <span>عصري / Modern</span>
+            </label>
+
+            <label class="check-option">
+              <input type="checkbox" name="style[]" value="Elegant" />
+              <span>أنيق / Elegant</span>
+            </label>
+
+            <label class="check-option">
+              <input type="checkbox" name="style[]" value="Bold" />
+              <span>قوي وجريء / Bold</span>
+            </label>
+
+            <label class="check-option">
+              <input type="checkbox" name="style[]" value="Classic" />
+              <span>كلاسيكي / Classic</span>
+            </label>
+
+            <label class="check-option">
+              <input type="checkbox" name="style[]" value="Geometric" />
+              <span>هندسي / Geometric</span>
+            </label>
+
+            <label class="check-option">
+              <input type="checkbox" name="style[]" value="Creative" />
+              <span>إبداعي / Creative</span>
+            </label>
+
+            <label class="check-option">
+              <input type="checkbox" name="style[]" value="Playful" />
+              <span>مرح / Playful</span>
+            </label>
+
+            <label class="check-option">
+              <input type="checkbox" name="style[]" value="Professional" />
+              <span>احترافي / Professional</span>
+            </label>
+          </div>
+
+          <div class="form-grid standalone-fields">
+            <div class="field">
+              <label for="logo-colors">
+                الألوان المفضلة
+                <small>Preferred Colors</small>
+              </label>
+              <input
+                id="logo-colors"
+                name="preferred_colors"
+                type="text"
+                placeholder="مثال: أسود، أبيض، فضي"
+              />
+            </div>
+
+            <div class="field">
+              <label for="avoid-colors">
+                الألوان غير المرغوبة
+                <small>Colors to Avoid</small>
+              </label>
+              <input
+                id="avoid-colors"
+                name="avoid_colors"
+                type="text"
+                placeholder="اكتب الألوان التي لا تفضلها"
+              />
+            </div>
+
+            <div class="field">
+              <label for="font-style">
+                أسلوب الخط المفضل
+                <small>Typography Preference</small>
+              </label>
+              <select id="font-style" name="font_style">
+                <option value="">اختر</option>
+                <option>هندسي / Geometric</option>
+                <option>ناعم وأنيق / Elegant</option>
+                <option>قوي وعريض / Bold</option>
+                <option>كلاسيكي / Serif</option>
+                <option>بسيط وحديث / Sans Serif</option>
+                <option>خط مخصص / Custom Lettering</option>
+                <option>لا يوجد تفضيل / No Preference</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="logo-feeling">
+                الانطباع المطلوب
+                <small>Desired Brand Personality</small>
+              </label>
+              <input
+                id="logo-feeling"
+                name="brand_personality"
+                type="text"
+                placeholder="مثال: الثقة، القوة، الرقي"
+              />
+            </div>
+
+            <div class="field full-width">
+              <label for="visual-reference">
+                روابط الشعارات أو التصاميم المرجعية
+                <small>Visual References / Inspiration Links</small>
+              </label>
+              <textarea
+                id="visual-reference"
+                name="visual_references"
+                rows="3"
+                placeholder="ضع روابط Pinterest أو مواقع أو شعارات تعجبك"
+              ></textarea>
+            </div>
+
+            <div class="field full-width">
+              <label for="reference-reason">
+                ما الذي أعجبك في هذه المراجع؟
+                <small>What Do You Like About These References?</small>
+              </label>
+              <textarea
+                id="reference-reason"
+                name="reference_reason"
+                rows="3"
+                placeholder="مثل شكل الحروف، الرمز، التكوين أو الألوان"
+              ></textarea>
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 05 -->
+        <section class="form-section">
+          <div class="section-heading">
+            <div class="section-number">05</div>
+
+            <div>
+              <h2>المنافسون والتميّز</h2>
+              <p>Competitors & Differentiation</p>
+            </div>
+          </div>
+
+          <div class="form-grid">
+            <div class="field full-width">
+              <label for="competitors">
+                من هم أبرز منافسيك؟
+                <small>Main Competitors</small>
+              </label>
+              <textarea
+                id="competitors"
+                name="competitors"
+                rows="3"
+                placeholder="أسماء البراندات المنافسة أو روابط مواقعها"
+              ></textarea>
+            </div>
+
+            <div class="field">
+              <label for="competitor-notes">
+                ما الذي يعجبك أو لا يعجبك في شعاراتهم؟
+                <small>Competitor Logo Analysis</small>
+              </label>
+              <textarea
+                id="competitor-notes"
+                name="competitor_notes"
+                rows="4"
+                placeholder="ما الذي تفضله أو تريد تجنبه؟"
+              ></textarea>
+            </div>
+
+            <div class="field">
+              <label for="differentiation">
+                ما الذي يميز براندك عن المنافسين؟
+                <small>Unique Selling Point</small>
+              </label>
+              <textarea
+                id="differentiation"
+                name="differentiation"
+                rows="4"
+                placeholder="اكتب أهم نقاط الاختلاف"
+              ></textarea>
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 06 -->
+        <section class="form-section">
+          <div class="section-heading">
+            <div class="section-number">06</div>
+
+            <div>
+              <h2>استخدامات الشعار</h2>
+              <p>Logo Applications</p>
+            </div>
+          </div>
+
+          <p class="section-description">
+            حدد الأماكن التي سيظهر فيها الشعار حتى نراعي وضوحه وقابليته
+            للاستخدام بأحجام مختلفة.
+          </p>
+
+          <div class="checkbox-grid">
+            <label class="check-option">
+              <input
+                type="checkbox"
+                name="applications[]"
+                value="Social Media"
+              />
+              <span>السوشيال ميديا / Social Media</span>
+            </label>
+
+            <label class="check-option">
+              <input type="checkbox" name="applications[]" value="Website" />
+              <span>الموقع الإلكتروني / Website</span>
+            </label>
+
+            <label class="check-option">
+              <input type="checkbox" name="applications[]" value="Packaging" />
+              <span>التغليف / Packaging</span>
+            </label>
+
+            <label class="check-option">
+              <input
+                type="checkbox"
+                name="applications[]"
+                value="Business Cards"
+              />
+              <span>الكروت الشخصية / Business Cards</span>
+            </label>
+
+            <label class="check-option">
+              <input type="checkbox" name="applications[]" value="Print" />
+              <span>المطبوعات / Print Materials</span>
+            </label>
+
+            <label class="check-option">
+              <input type="checkbox" name="applications[]" value="Signage" />
+              <span>اللافتات / Signage</span>
+            </label>
+
+            <label class="check-option">
+              <input type="checkbox" name="applications[]" value="Clothing" />
+              <span>الملابس / Apparel</span>
+            </label>
+
+            <label class="check-option">
+              <input type="checkbox" name="applications[]" value="Product" />
+              <span>المنتجات / Products</span>
+            </label>
+
+            <label class="check-option">
+              <input
+                type="checkbox"
+                name="applications[]"
+                value="Digital Ads"
+              />
+              <span>الإعلانات الرقمية / Digital Ads</span>
+            </label>
+
+            <label class="check-option">
+              <input type="checkbox" name="applications[]" value="Other" />
+              <span>أخرى / Other</span>
+            </label>
+          </div>
+
+          <div class="form-grid standalone-fields">
+            <div class="field">
+              <label for="logo-background">
+                الخلفية الأكثر استخدامًا
+                <small>Typical Background</small>
+              </label>
+              <select id="logo-background" name="logo_background">
+                <option value="">اختر</option>
+                <option>خلفية فاتحة / Light</option>
+                <option>خلفية داكنة / Dark</option>
+                <option>كلاهما / Both</option>
+                <option>لا يوجد تفضيل / No Preference</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="logo-versions">
+                النسخ المطلوبة للشعار
+                <small>Logo Variations</small>
+              </label>
+              <select id="logo-versions" name="logo_versions">
+                <option value="">اختر</option>
+                <option>ملون فقط / Full Color</option>
+                <option>أسود وأبيض / Black & White</option>
+                <option>ملون وأحادي اللون / Both</option>
+                <option>اتركها للمصمم / Designer's Choice</option>
+              </select>
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 07 -->
+        <section class="form-section">
+          <div class="section-heading">
+            <div class="section-number">07</div>
+
+            <div>
+              <h2>المتطلبات والملاحظات</h2>
+              <p>Requirements & Additional Notes</p>
+            </div>
+          </div>
+
+          <div class="form-grid">
+            <div class="field">
+              <label for="required-elements">
+                عناصر يجب أن تظهر في الشعار
+                <small>Required Elements</small>
+              </label>
+              <textarea
+                id="required-elements"
+                name="required_elements"
+                rows="3"
+                placeholder="حروف، رمز، شكل أو فكرة معينة"
+              ></textarea>
+            </div>
+
+            <div class="field">
+              <label for="forbidden-elements">
+                عناصر يجب تجنبها
+                <small>Elements to Avoid</small>
+              </label>
+              <textarea
+                id="forbidden-elements"
+                name="forbidden_elements"
+                rows="3"
+                placeholder="رموز أو أشكال أو أفكار لا تريدها"
+              ></textarea>
+            </div>
+
+            <div class="field">
+              <label for="deadline">
+                الموعد المتوقع للتسليم
+                <small>Expected Deadline</small>
+              </label>
+              <input id="deadline" name="deadline" type="date" />
+            </div>
+
+            <div class="field">
+              <label for="budget">
+                الميزانية المخصصة للتصميم
+                <small>Design Budget (Optional)</small>
+              </label>
+              <input
+                id="budget"
+                name="budget"
+                type="text"
+                placeholder="اكتب الميزانية والعملة إن رغبت"
+              />
+            </div>
+
+            <div class="field full-width">
+              <label for="additional-notes">
+                أي تفاصيل إضافية
+                <small>Additional Notes</small>
+              </label>
+              <textarea
+                id="additional-notes"
+                name="additional_notes"
+                rows="5"
+                placeholder="اكتب أي معلومة أخرى قد تساعد في تصميم الشعار"
+              ></textarea>
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 08 -->
+        <section class="form-section">
+          <div class="section-heading">
+            <div class="section-number">08</div>
+
+            <div>
+              <h2>بيانات التواصل</h2>
+              <p>Client Information</p>
+            </div>
+          </div>
+
+          <div class="form-grid">
+            <div class="field">
+              <label for="client-name">
+                الاسم
+                <small>Full Name</small>
+              </label>
+              <input
+                id="client-name"
+                name="client_name"
+                type="text"
+                required
+                placeholder="اسمك بالكامل"
+              />
+            </div>
+
+            <div class="field">
+              <label for="email">
+                البريد الإلكتروني
+                <small>Email Address</small>
+              </label>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                required
+                dir="ltr"
+                placeholder="name@example.com"
+              />
+            </div>
+
+            <div class="field">
+              <label for="phone">
+                رقم الهاتف
+                <small>Phone / WhatsApp</small>
+              </label>
+              <input
+                id="phone"
+                name="phone"
+                type="tel"
+                dir="ltr"
+                placeholder="+20 1XX XXX XXXX"
+              />
+            </div>
+
+            <div class="field">
+              <label for="social-link">
+                رابط حساب البراند
+                <small>Website / Social Profile</small>
+              </label>
+              <input
+                id="social-link"
+                name="social_link"
+                type="url"
+                dir="ltr"
+                placeholder="https://"
+              />
+            </div>
+          </div>
+        </section>
+
+        <!-- Submit -->
+        <section class="submit-section">
+          <div class="submit-copy">
+            <span class="submit-overline">YOUR BRAND STARTS HERE</span>
+            <h2>كل فكرة عظيمة تبدأ بتفاصيل واضحة.</h2>
+            <p>
+              راجع إجاباتك وتأكد من إدخال المعلومات الأساسية قبل إنهاء البريف.
+            </p>
+          </div>
+
+          <button type="submit" class="submit-button" id="submit-button">
+            <span id="submit-label">إرسال البريف</span>
+            <span aria-hidden="true">↗</span>
+          </button>
+
+          <p class="privacy-note">
+            سيتم إرسال إجاباتك وملف البريف إلى فريق التصميم.
+          </p>
+
+          <p
+            id="form-status"
+            class="form-status"
+            role="status"
+            aria-live="polite"
+          ></p>
+
+          <p class="privacy-note">
+            يتم استخدام المعلومات المقدمة لفهم متطلبات تصميم الشعار.
+          </p>
+        </section>
+      </form>
+
+      <footer class="footer">
+        <span>BRIEF STUDIO</span>
+        <span>LOGO DESIGN / CREATIVE PROCESS</span>
+        <span>© 2026 ALL RIGHTS RESERVED</span>
+      </footer>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.3/html2pdf.bundle.min.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
