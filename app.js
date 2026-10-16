@@ -6,7 +6,9 @@ const statusBox = document.getElementById("form-status");
 
 const PDF_REPORT_ID = "pdf-report-render-target";
 
-/* Escape HTML to safely display submitted answers. */
+/* =========================================
+   1. HELPERS
+========================================= */
 
 function escapeHTML(value) {
   return String(value ?? "").replace(/[&<>"']/g, (char) => ({
@@ -18,7 +20,14 @@ function escapeHTML(value) {
   })[char]);
 }
 
-/* Get a readable field label. */
+function normalizeText(value) {
+  return String(value ?? "")
+    .trim()
+    .toLowerCase()
+    .replace(/[أإآ]/g, "ا")
+    .replace(/ى/g, "ي")
+    .replace(/\s+/g, " ");
+}
 
 function getFieldLabel(element) {
   const wrapper = element.closest(".field");
@@ -37,10 +46,18 @@ function getFieldLabel(element) {
     return choice.innerText.replace(/\s+/g, " ").trim();
   }
 
+  const associatedLabel = element.labels?.[0];
+
+  if (associatedLabel) {
+    return associatedLabel.innerText.replace(/\s+/g, " ").trim();
+  }
+
   return element.name || element.id || "بيانات إضافية";
 }
 
-/* Collect answers, including multiple selections. */
+/* =========================================
+   2. COLLECT FORM ANSWERS
+========================================= */
 
 function collectAnswers() {
   const answers = [];
@@ -79,13 +96,14 @@ function collectAnswers() {
 
     if (grouped.has(key)) {
       const existing = grouped.get(key);
-      const values = existing.value.split("، ");
+      const existingValues = existing.value.split("، ");
 
-      if (!values.includes(value)) {
+      if (!existingValues.includes(value)) {
         existing.value += `، ${value}`;
       }
     } else {
       const item = { label, value };
+
       grouped.set(key, item);
       answers.push(item);
     }
@@ -94,7 +112,9 @@ function collectAnswers() {
   return answers;
 }
 
-/* Create a unique reference ID. */
+/* =========================================
+   3. REFERENCE NUMBER
+========================================= */
 
 function createReferenceId() {
   const date = new Date()
@@ -102,16 +122,66 @@ function createReferenceId() {
     .slice(0, 10)
     .replace(/-/g, "");
 
-  const randomPart =
+  let randomPart;
+
+  if (
     typeof crypto !== "undefined" &&
     typeof crypto.randomUUID === "function"
-      ? crypto.randomUUID().replace(/-/g, "").slice(0, 8).toUpperCase()
-      : Math.random().toString(16).slice(2, 10).toUpperCase();
+  ) {
+    randomPart = crypto.randomUUID()
+      .replace(/-/g, "")
+      .slice(0, 8)
+      .toUpperCase();
+  } else {
+    randomPart = Math.random()
+      .toString(16)
+      .slice(2, 10)
+      .padEnd(8, "0")
+      .toUpperCase();
+  }
 
   return `BR-${date}-${randomPart}`;
 }
 
-/* Build the PDF report. */
+/* =========================================
+   4. IDENTIFY CUSTOMER INFORMATION
+========================================= */
+
+function isCustomerField(item) {
+  const label = normalizeText(item.label);
+
+  const customerKeywords = [
+    "اسم العميل",
+    "اسمك",
+    "الاسم",
+    "اسم صاحب",
+    "اسم البراند",
+    "اسم العلامة",
+    "اسم الشركه",
+    "اسم النشاط",
+    "البريد الالكتروني",
+    "الايميل",
+    "البريد",
+    "email",
+    "e-mail",
+    "phone",
+    "رقم الهاتف",
+    "رقم الموبايل",
+    "رقم التليفون",
+    "واتساب",
+    "whatsapp",
+    "contact",
+    "اسم المشروع",
+  ];
+
+  return customerKeywords.some((keyword) =>
+    label.includes(normalizeText(keyword))
+  );
+}
+
+/* =========================================
+   5. CREATE PROFESSIONAL REPORT
+========================================= */
 
 function createReport(referenceId, answers) {
   const report = document.createElement("div");
@@ -124,13 +194,13 @@ function createReport(referenceId, answers) {
     left: "0",
     top: "0",
     width: "760px",
-    padding: "36px",
+    padding: "28px",
     margin: "0",
     background: "#ffffff",
     color: "#171717",
     fontFamily: "Cairo, Arial, sans-serif",
-    fontSize: "13px",
-    lineHeight: "1.8",
+    fontSize: "12px",
+    lineHeight: "1.65",
     boxSizing: "border-box",
     zIndex: "-1",
     opacity: "0",
@@ -138,100 +208,215 @@ function createReport(referenceId, answers) {
     overflow: "visible",
   });
 
-  const rows = answers.length
-    ? answers.map((item, index) => `
-        <div style="
-          padding: 13px 0;
-          border-bottom: 1px solid #e7e7e7;
-          break-inside: avoid;
-          page-break-inside: avoid;
-        ">
-          <div style="
-            display: flex;
-            justify-content: space-between;
-            gap: 12px;
-            color: #777777;
-            font-size: 11px;
-            margin-bottom: 5px;
-          ">
-            <span>${escapeHTML(item.label)}</span>
-            <span dir="ltr">${String(index + 1).padStart(2, "0")}</span>
-          </div>
+  const customerAnswers = answers.filter(isCustomerField);
+  const otherAnswers = answers.filter((item) => !isCustomerField(item));
 
-          <div style="
-            color: #171717;
-            font-size: 13px;
-            line-height: 1.9;
-            white-space: pre-wrap;
-            overflow-wrap: anywhere;
-            word-break: break-word;
-          ">${escapeHTML(item.value)}</div>
-        </div>
-      `).join("")
-    : `
-        <div style="padding: 20px 0; color: #777777;">
-          لم يتم العثور على إجابات مدخلة في النموذج.
-        </div>
-      `;
+  const customerCards = customerAnswers.map((item) => `
+    <div style="
+      padding: 9px 11px;
+      border: 1px solid #e1e4e8;
+      border-radius: 6px;
+      background: #ffffff;
+      min-width: 0;
+      box-sizing: border-box;
+      overflow-wrap: anywhere;
+    ">
+      <div style="
+        font-size: 10px;
+        color: #737983;
+        margin-bottom: 3px;
+      ">${escapeHTML(item.label)}</div>
+
+      <div style="
+        font-size: 12px;
+        color: #171717;
+        font-weight: 700;
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+      ">${escapeHTML(item.value)}</div>
+    </div>
+  `).join("");
+
+  const answerCards = otherAnswers.map((item, index) => `
+    <div style="
+      padding: 9px 11px;
+      border: 1px solid #e5e7eb;
+      border-radius: 6px;
+      background: #ffffff;
+      min-width: 0;
+      box-sizing: border-box;
+      overflow-wrap: anywhere;
+    ">
+      <div style="
+        display: flex;
+        align-items: flex-start;
+        gap: 7px;
+        margin-bottom: 4px;
+      ">
+        <span style="
+          display: inline-block;
+          min-width: 22px;
+          padding: 2px 4px;
+          background: #171717;
+          color: #ffffff;
+          border-radius: 4px;
+          font-size: 9px;
+          text-align: center;
+          box-sizing: border-box;
+        ">${String(index + 1).padStart(2, "0")}</span>
+
+        <span style="
+          font-size: 10px;
+          color: #6b7280;
+          font-weight: 700;
+          overflow-wrap: anywhere;
+        ">${escapeHTML(item.label)}</span>
+      </div>
+
+      <div style="
+        font-size: 11px;
+        color: #171717;
+        line-height: 1.65;
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+        word-break: break-word;
+      ">${escapeHTML(item.value)}</div>
+    </div>
+  `).join("");
 
   report.innerHTML = `
     <header style="
+      padding-bottom: 13px;
       border-bottom: 2px solid #171717;
-      padding-bottom: 20px;
-      margin-bottom: 24px;
+      margin-bottom: 14px;
     ">
       <div style="
-        font-family: Inter, Arial, sans-serif;
-        font-size: 12px;
-        font-weight: bold;
-        letter-spacing: 2px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
         direction: ltr;
-        text-align: left;
-      ">BRIEF STUDIO</div>
+      ">
+        <div style="
+          font-family: Inter, Arial, sans-serif;
+          font-size: 14px;
+          font-weight: 800;
+          letter-spacing: 2px;
+          color: #171717;
+        ">BRIEF STUDIO</div>
+
+        <div style="
+          font-family: Inter, Arial, sans-serif;
+          font-size: 9px;
+          color: #777777;
+          letter-spacing: 1px;
+        ">LOGO DESIGN / CLIENT BRIEF</div>
+      </div>
 
       <h1 style="
+        font-size: 25px;
+        font-weight: 800;
+        margin: 12px 0 2px;
+        line-height: 1.5;
         color: #171717;
-        font-family: Cairo, Arial, sans-serif;
-        font-size: 27px;
-        font-weight: 700;
-        margin: 20px 0 5px;
-        line-height: 1.6;
       ">بريف تصميم الشعار</h1>
 
-      <p style="
-        color: #777777;
-        font-family: Inter, Arial, sans-serif;
-        font-size: 12px;
-        direction: ltr;
-        text-align: left;
-        margin: 0;
-      ">LOGO DESIGN BRIEF</p>
+      <div style="
+        font-size: 11px;
+        color: #737373;
+      ">نموذج بيانات ومتطلبات تصميم الشعار</div>
 
       <div style="
-        margin-top: 20px;
-        padding: 12px;
-        background: #f4f4f4;
-        border: 1px solid #e9e9e9;
-        font-size: 12px;
+        margin-top: 11px;
+        padding: 9px 12px;
+        background: #f3f4f6;
+        border: 1px solid #e8e9ec;
+        border-radius: 5px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
       ">
-        رقم المرجع:
-        <strong dir="ltr">${escapeHTML(referenceId)}</strong>
+        <span style="font-size: 10px; color: #666666;">
+          رقم مرجع الطلب
+        </span>
+
+        <strong dir="ltr" style="
+          font-family: Inter, Arial, sans-serif;
+          font-size: 11px;
+          color: #171717;
+        ">${escapeHTML(referenceId)}</strong>
       </div>
     </header>
 
-    <main>${rows}</main>
+    <section style="margin-bottom: 14px;">
+      <div style="
+        font-size: 13px;
+        font-weight: 800;
+        margin-bottom: 7px;
+        color: #171717;
+      ">
+        <span style="color: #777777; font-size: 10px;">01 /</span>
+        بيانات العميل
+      </div>
+
+      <div style="
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 7px;
+      ">
+        ${
+          customerCards ||
+          `<div style="
+            grid-column: 1 / -1;
+            padding: 9px 11px;
+            border: 1px solid #e1e4e8;
+            border-radius: 6px;
+            color: #777777;
+            font-size: 10px;
+          ">بيانات العميل غير محددة بشكل منفصل. راجع أسماء الحقول في النموذج.</div>`
+        }
+      </div>
+    </section>
+
+    <section>
+      <div style="
+        font-size: 13px;
+        font-weight: 800;
+        margin-bottom: 7px;
+        color: #171717;
+      ">
+        <span style="color: #777777; font-size: 10px;">02 /</span>
+        تفاصيل ومتطلبات الشعار
+      </div>
+
+      <div style="
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 7px;
+      ">
+        ${
+          answerCards ||
+          `<div style="
+            padding: 10px;
+            border: 1px solid #e5e7eb;
+            color: #777777;
+          ">لا توجد تفاصيل إضافية.</div>`
+        }
+      </div>
+    </section>
 
     <footer style="
-      margin-top: 28px;
-      padding-top: 15px;
-      border-top: 1px solid #dddddd;
-      color: #888888;
+      margin-top: 14px;
+      padding-top: 8px;
+      border-top: 1px solid #e3e3e3;
+      display: flex;
+      justify-content: space-between;
       font-family: Inter, Arial, sans-serif;
-      font-size: 9px;
+      font-size: 8px;
+      color: #888888;
       direction: ltr;
-      text-align: center;
     ">
-      LOGO DESIGN / CREATIVE PROCESS
+      <span>BRIEF STUDIO</span>
+      <span>CONFIDENTIAL CLIENT BRIEF</span>
     </footer>
   `;
 
@@ -240,7 +425,9 @@ function createReport(referenceId, answers) {
   return report;
 }
 
-/* Display status messages. */
+/* =========================================
+   6. STATUS MESSAGES
+========================================= */
 
 function setStatus(message, success = false) {
   if (!statusBox) return;
@@ -249,7 +436,9 @@ function setStatus(message, success = false) {
   statusBox.dataset.state = success ? "success" : "error";
 }
 
-/* Allow browser layout and fonts to finish loading. */
+/* =========================================
+   7. WAIT FOR RENDERING
+========================================= */
 
 async function waitForRender() {
   if (document.fonts?.ready) {
@@ -263,44 +452,45 @@ async function waitForRender() {
   });
 }
 
-/* Create PDF and check that the captured report is not blank. */
+/* =========================================
+   8. GENERATE ONE-PAGE PDF
+========================================= */
 
 async function generatePDF(report) {
-if (
-  typeof html2canvas === "undefined" ||
-  !window.jspdf ||
-  typeof window.jspdf.jsPDF !== "function"
-) {
-  setStatus(
-    "تعذر تحميل مكتبات PDF. حدّث الصفحة وحاول مرة أخرى."
-  );
-  return;
-}
+  if (
+    typeof html2canvas === "undefined" ||
+    !window.jspdf ||
+    typeof window.jspdf.jsPDF !== "function"
+  ) {
+    throw new Error("مكتبات إنشاء PDF غير متاحة.");
+  }
 
   await waitForRender();
 
   /*
-   * Capture the report directly first.
-   * This helps detect blank rendering before making the PDF.
+   * Capture the report.
+   * The cloned report is made visible for html2canvas only.
    */
 
   const canvas = await html2canvas(report, {
-    scale: 1.5,
+    scale: 2,
     useCORS: true,
     backgroundColor: "#ffffff",
-    logging: true,
-    width: report.scrollWidth,
-    height: report.scrollHeight,
-    windowWidth: Math.max(window.innerWidth, 1000),
-    windowHeight: Math.max(window.innerHeight, report.scrollHeight + 100),
+    logging: false,
     scrollX: 0,
     scrollY: 0,
+    windowWidth: 1000,
+    windowHeight: Math.max(
+      window.innerHeight,
+      report.scrollHeight + 100
+    ),
 
     onclone: (clonedDocument) => {
-      const clonedReport = clonedDocument.getElementById(PDF_REPORT_ID);
+      const clonedReport =
+        clonedDocument.getElementById(PDF_REPORT_ID);
 
       if (!clonedReport) {
-        throw new Error("لم يتم العثور على التقرير في نسخة التصوير.");
+        throw new Error("لم يتم العثور على التقرير للتصوير.");
       }
 
       Object.assign(clonedReport.style, {
@@ -325,8 +515,7 @@ if (
   }
 
   /*
-   * Check whether the captured canvas contains non-white pixels.
-   * If it is entirely white, do not send an empty PDF.
+   * Check the entire canvas for non-white pixels.
    */
 
   const context = canvas.getContext("2d", {
@@ -337,46 +526,39 @@ if (
     throw new Error("تعذر قراءة صورة التقرير.");
   }
 
-  const sampleWidth = Math.min(canvas.width, 200);
-  const sampleHeight = Math.min(canvas.height, 200);
-  const sample = context.getImageData(
+  const pixels = context.getImageData(
     0,
     0,
-    sampleWidth,
-    sampleHeight
+    canvas.width,
+    canvas.height
   ).data;
 
-  let hasVisibleContent = false;
+  let visiblePixels = 0;
 
-  for (let i = 0; i < sample.length; i += 4) {
-    const r = sample[i];
-    const g = sample[i + 1];
-    const b = sample[i + 2];
+  for (let i = 0; i < pixels.length; i += 4) {
+    if (
+      pixels[i] < 245 ||
+      pixels[i + 1] < 245 ||
+      pixels[i + 2] < 245
+    ) {
+      visiblePixels++;
 
-    if (r < 245 || g < 245 || b < 245) {
-      hasVisibleContent = true;
-      break;
+      if (visiblePixels > 100) break;
     }
   }
 
-  if (!hasVisibleContent) {
+  if (visiblePixels <= 100) {
     throw new Error(
-      "التقرير تم التقاطه كصفحة بيضاء. لم يتم إرسال الملف. راجع إعدادات عرض التقرير."
+      "تم التقاط التقرير كصفحة بيضاء. لم يتم إرسال PDF."
     );
   }
 
   /*
-   * Convert the captured canvas into a PDF.
-   * The PDF is returned as a Blob; it is never downloaded here.
+   * Create a single A4 page.
+   * Scale the entire report to fit without creating extra pages.
    */
 
-  const imageData = canvas.toDataURL("image/jpeg", 0.96);
-
-  const { jsPDF } = window.jspdf || {};
-
-  if (!jsPDF) {
-    throw new Error("مكتبة jsPDF غير متاحة.");
-  }
+  const { jsPDF } = window.jspdf;
 
   const pdf = new jsPDF({
     orientation: "portrait",
@@ -387,47 +569,34 @@ if (
 
   const pageWidth = pdf.internal.pageSize.getWidth();
   const pageHeight = pdf.internal.pageSize.getHeight();
-  const margin = 10;
 
-  const contentWidth = pageWidth - margin * 2;
-  const contentHeight = pageHeight - margin * 2;
+  const margin = 7;
+  const availableWidth = pageWidth - margin * 2;
+  const availableHeight = pageHeight - margin * 2;
 
-  const imageWidth = contentWidth;
-  const imageHeight = (canvas.height * imageWidth) / canvas.width;
+  const scale = Math.min(
+    availableWidth / canvas.width,
+    availableHeight / canvas.height
+  );
 
-  let remainingHeight = imageHeight;
-  let position = margin;
+  const imageWidth = canvas.width * scale;
+  const imageHeight = canvas.height * scale;
+
+  const x = (pageWidth - imageWidth) / 2;
+  const y = (pageHeight - imageHeight) / 2;
+
+  const imageData = canvas.toDataURL("image/jpeg", 0.98);
 
   pdf.addImage(
     imageData,
     "JPEG",
-    margin,
-    position,
+    x,
+    y,
     imageWidth,
     imageHeight,
     undefined,
     "FAST"
   );
-
-  remainingHeight -= contentHeight;
-
-  while (remainingHeight > 0) {
-    pdf.addPage();
-    position = margin - (imageHeight - remainingHeight);
-
-    pdf.addImage(
-      imageData,
-      "JPEG",
-      margin,
-      position,
-      imageWidth,
-      imageHeight,
-      undefined,
-      "FAST"
-    );
-
-    remainingHeight -= contentHeight;
-  }
 
   const pdfBlob = pdf.output("blob");
 
@@ -440,24 +609,31 @@ if (
   );
 
   if (String.fromCharCode(...signature) !== "%PDF-") {
-    throw new Error("تعذر إنشاء ملف PDF صالح.");
+    throw new Error("ملف PDF الناتج غير صالح.");
   }
 
   return pdfBlob;
 }
 
-/* Submit the brief and PDF to the Vercel API. */
+/* =========================================
+   9. SUBMIT FORM AND SEND PDF
+========================================= */
 
 if (form && submitButton && submitLabel) {
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
 
     if (submitButton.disabled) return;
+
     if (!form.reportValidity()) return;
 
-    if (typeof html2canvas === "undefined" || !window.jspdf?.jsPDF) {
+    if (
+      typeof html2canvas === "undefined" ||
+      !window.jspdf ||
+      typeof window.jspdf.jsPDF !== "function"
+    ) {
       setStatus(
-        "مكتبات PDF غير مكتملة. تأكد من تحميل html2canvas وjsPDF."
+        "تعذر تحميل مكتبات PDF. تأكد من تحميل html2canvas وjsPDF قبل app.js."
       );
       return;
     }
@@ -505,6 +681,8 @@ if (form && submitButton && submitLabel) {
         );
       }
 
+      /* Send to Telegram only; do not download a local copy. */
+
       setStatus(
         `تم إرسال البريف بنجاح! رقم الطلب: ${referenceId}`,
         true
@@ -523,6 +701,7 @@ if (form && submitButton && submitLabel) {
       submitLabel.textContent = "إعادة محاولة الإرسال";
     } finally {
       report?.remove();
+
       submitButton.disabled = false;
 
       if (
@@ -535,6 +714,6 @@ if (form && submitButton && submitLabel) {
   });
 } else {
   console.error(
-    "Brief form initialization failed. Check the required HTML element IDs."
+    "Brief form initialization failed. Check the HTML IDs: brief-form, submit-button, submit-label."
   );
 }
