@@ -266,13 +266,16 @@ async function waitForRender() {
 /* Create PDF and check that the captured report is not blank. */
 
 async function generatePDF(report) {
-  if (typeof html2pdf === "undefined") {
-    throw new Error("مكتبة إنشاء PDF غير متاحة.");
-  }
-
-  if (typeof html2canvas === "undefined") {
-    throw new Error("مكتبة التقاط التقرير غير متاحة.");
-  }
+if (
+  typeof html2canvas === "undefined" ||
+  !window.jspdf ||
+  typeof window.jspdf.jsPDF !== "function"
+) {
+  setStatus(
+    "تعذر تحميل مكتبات PDF. حدّث الصفحة وحاول مرة أخرى."
+  );
+  return;
+}
 
   await waitForRender();
 
