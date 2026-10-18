@@ -86,18 +86,22 @@ function collectAnswers() {
 
     let value = String(element.value ?? "").trim();
 
-   if (element.name === "logo_type" && element.type === "radio") {
-     value = element.value;
-   } else if (element.type === "checkbox" || element.type === "radio") {
-     value = getFieldLabel(element);
-   }
+    // حفظ نوع الشعار بالإنجليزية فقط
+    if (element.name === "logo_type" && element.type === "radio") {
+      value = element.value;
+    } else if (
+      element.type === "checkbox" ||
+      element.type === "radio"
+    ) {
+      value = getFieldLabel(element);
+    }
 
     if (!value) continue;
-   
-   const label =
-     element.name === "logo_type"
-       ? "نوع الشعار"
-       : getFieldLabel(element);
+
+    const label =
+      element.name === "logo_type"
+        ? "نوع الشعار"
+        : getFieldLabel(element);
 
     if (grouped.has(key)) {
       const existing = grouped.get(key);
@@ -211,16 +215,19 @@ function createReport(referenceId, answers) {
     overflow: "visible",
   });
 
-   const customerAnswers = answers.filter(isCustomerField);
-   
-   const logoTypeAnswer = answers.find(
-     (item) => item.label === "نوع الشعار"
-   );
-   
-   const otherAnswers = answers.filter(
-     (item) => !isCustomerField(item) && item.label !== "نوع الشعار"
-   );
+  // تقسيم الإجابات إلى بيانات العميل ونوع الشعار وباقي التفاصيل
+  const customerAnswers = answers.filter(isCustomerField);
 
+  const logoTypeAnswer = answers.find(
+    (item) => item.label === "نوع الشعار",
+  );
+
+  const otherAnswers = answers.filter(
+    (item) =>
+      !isCustomerField(item) && item.label !== "نوع الشعار",
+  );
+
+  // بطاقات بيانات العميل
   const customerCards = customerAnswers
     .map(
       (item) => `
@@ -251,6 +258,7 @@ function createReport(referenceId, answers) {
     )
     .join("");
 
+  // بطاقات تفاصيل ومتطلبات الشعار
   const answerCards = otherAnswers
     .map(
       (item, index) => `
@@ -302,6 +310,7 @@ function createReport(referenceId, answers) {
     )
     .join("");
 
+  // محتوى تقرير PDF
   report.innerHTML = `
     <header style="
       padding-bottom: 13px;
@@ -365,6 +374,7 @@ function createReport(referenceId, answers) {
       </div>
     </header>
 
+    <!-- 01: بيانات العميل -->
     <section style="margin-bottom: 14px;">
       <div style="
         font-size: 13px;
@@ -395,6 +405,44 @@ function createReport(referenceId, answers) {
       </div>
     </section>
 
+    <!-- 02: نوع الشعار -->
+    <section style="margin-bottom: 14px;">
+      <div style="margin-bottom: 7px; color: #171717;">
+        <h2 style="
+          margin: 0;
+          font-size: 13px;
+          font-weight: 800;
+          line-height: 1.6;
+        ">نوع الشعار</h2>
+
+        <p style="
+          margin: 0;
+          font-family: Inter, Arial, sans-serif;
+          font-size: 9px;
+          color: #777777;
+          direction: ltr;
+          text-align: right;
+        ">Logo Type Selection</p>
+      </div>
+
+      <div style="
+        padding: 10px 12px;
+        border: 1px solid #e5e7eb;
+        border-radius: 6px;
+        background: #ffffff;
+        direction: ltr;
+        text-align: left;
+        font-family: Inter, Arial, sans-serif;
+        font-size: 12px;
+        font-weight: 700;
+        color: #171717;
+        overflow-wrap: anywhere;
+      ">
+        ${escapeHTML(logoTypeAnswer?.value || "Not Selected")}
+      </div>
+    </section>
+
+    <!-- 03: تفاصيل ومتطلبات الشعار -->
     <section>
       <div style="
         font-size: 13px;
@@ -402,7 +450,7 @@ function createReport(referenceId, answers) {
         margin-bottom: 7px;
         color: #171717;
       ">
-        <span style="color: #777777; font-size: 10px;">02 /</span>
+        <span style="color: #777777; font-size: 10px;">03 /</span>
         تفاصيل ومتطلبات الشعار
       </div>
 
@@ -498,10 +546,14 @@ async function generatePDF(report) {
     scrollX: 0,
     scrollY: 0,
     windowWidth: 1000,
-    windowHeight: Math.max(window.innerHeight, report.scrollHeight + 100),
+    windowHeight: Math.max(
+      window.innerHeight,
+      report.scrollHeight + 100,
+    ),
 
     onclone: (clonedDocument) => {
-      const clonedReport = clonedDocument.getElementById(PDF_REPORT_ID);
+      const clonedReport =
+        clonedDocument.getElementById(PDF_REPORT_ID);
 
       if (!clonedReport) {
         throw new Error("لم يتم العثور على التقرير للتصوير.");
@@ -540,12 +592,21 @@ async function generatePDF(report) {
     throw new Error("تعذر قراءة صورة التقرير.");
   }
 
-  const pixels = context.getImageData(0, 0, canvas.width, canvas.height).data;
+  const pixels = context.getImageData(
+    0,
+    0,
+    canvas.width,
+    canvas.height,
+  ).data;
 
   let visiblePixels = 0;
 
   for (let i = 0; i < pixels.length; i += 4) {
-    if (pixels[i] < 245 || pixels[i + 1] < 245 || pixels[i + 2] < 245) {
+    if (
+      pixels[i] < 245 ||
+      pixels[i + 1] < 245 ||
+      pixels[i + 2] < 245
+    ) {
       visiblePixels++;
 
       if (visiblePixels > 100) break;
@@ -553,7 +614,9 @@ async function generatePDF(report) {
   }
 
   if (visiblePixels <= 100) {
-    throw new Error("تم التقاط التقرير كصفحة بيضاء. لم يتم إرسال PDF.");
+    throw new Error(
+      "تم التقاط التقرير كصفحة بيضاء. لم يتم إرسال PDF.",
+    );
   }
 
   /*
@@ -607,7 +670,9 @@ async function generatePDF(report) {
     throw new Error("ملف PDF الناتج فارغ أو غير مكتمل.");
   }
 
-  const signature = new Uint8Array(await pdfBlob.slice(0, 5).arrayBuffer());
+  const signature = new Uint8Array(
+    await pdfBlob.slice(0, 5).arrayBuffer(),
+  );
 
   if (String.fromCharCode(...signature) !== "%PDF-") {
     throw new Error("ملف PDF الناتج غير صالح.");
@@ -663,7 +728,11 @@ if (form && submitButton && submitLabel) {
       requestData.append("referenceId", referenceId);
       requestData.append("payload", JSON.stringify(answers));
 
-      requestData.append("report", pdfBlob, `Logo-Brief-${referenceId}.pdf`);
+      requestData.append(
+        "report",
+        pdfBlob,
+        `Logo-Brief-${referenceId}.pdf`,
+      );
 
       const response = await fetch("/api/submit", {
         method: "POST",
@@ -673,12 +742,17 @@ if (form && submitButton && submitLabel) {
       const result = await response.json().catch(() => ({}));
 
       if (!response.ok || !result.success) {
-        throw new Error(result.message || "لم نتمكن من إرسال طلبك.");
+        throw new Error(
+          result.message || "لم نتمكن من إرسال طلبك.",
+        );
       }
 
       /* Send to Telegram only; do not download a local copy. */
 
-      setStatus(`تم إرسال طلبك بنجاح! رقم الطلب: ${referenceId}`, true);
+      setStatus(
+        `تم إرسال طلبك بنجاح! رقم الطلب: ${referenceId}`,
+        true,
+      );
 
       submitLabel.textContent = "تم إرسال طلبك";
     } catch (error) {
