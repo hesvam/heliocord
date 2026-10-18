@@ -308,7 +308,7 @@ function createReport(referenceId, answers) {
           font-weight: 800;
           letter-spacing: 2px;
           color: #171717;
-        ">HELIOCORD</div>
+        ">BRIEF STUDIO</div>
 
         <div style="
           font-family: Inter, Arial, sans-serif;
@@ -421,7 +421,7 @@ function createReport(referenceId, answers) {
       color: #888888;
       direction: ltr;
     ">
-      <span>HELIOCORD</span>
+      <span>BRIEF STUDIO</span>
       <span>CONFIDENTIAL CLIENT BRIEF</span>
     </footer>
   `;
@@ -628,7 +628,7 @@ if (form && submitButton && submitLabel) {
     }
 
     submitButton.disabled = true;
-    submitLabel.textContent = "جاري تجهيز البريف...";
+    submitLabel.textContent = "جاري تجهيز طلبك...";
     setStatus("");
 
     let report = null;
@@ -644,7 +644,7 @@ if (form && submitButton && submitLabel) {
       report.remove();
       report = null;
 
-      submitLabel.textContent = "جاري إرسال البريف...";
+      submitLabel.textContent = "جاري إرسال طلبك...";
 
       const requestData = new FormData();
 
@@ -661,14 +661,14 @@ if (form && submitButton && submitLabel) {
       const result = await response.json().catch(() => ({}));
 
       if (!response.ok || !result.success) {
-        throw new Error(result.message || "لم نتمكن من إرسال البريف.");
+        throw new Error(result.message || "لم نتمكن من إرسال طلبك.");
       }
 
       /* Send to Telegram only; do not download a local copy. */
 
-      setStatus(`تم إرسال البريف بنجاح! رقم الطلب: ${referenceId}`, true);
+      setStatus(`تم إرسال طلبك بنجاح! رقم الطلب: ${referenceId}`, true);
 
-      submitLabel.textContent = "تم إرسال البريف";
+      submitLabel.textContent = "تم إرسال طلبك";
     } catch (error) {
       console.error("Brief submission failed:", error);
 
@@ -685,10 +685,10 @@ if (form && submitButton && submitLabel) {
       submitButton.disabled = false;
 
       if (
-        submitLabel.textContent === "جاري إرسال البريف..." ||
-        submitLabel.textContent === "جاري تجهيز البريف..."
+        submitLabel.textContent === "جاري إرسال طلبك..." ||
+        submitLabel.textContent === "جاري تجهيز طلبك..."
       ) {
-        submitLabel.textContent = "إرسال البريف";
+        submitLabel.textContent = "إرسال الطلب";
       }
     }
   });
