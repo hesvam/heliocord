@@ -852,7 +852,7 @@ select {
 
 .orientation-image img {
   display: block !important;
-  width: 124px;
+  width: 100px;
   max-width: 100%;
   height: auto;
   margin: 0 auto !important;
