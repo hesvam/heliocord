@@ -752,58 +752,30 @@ select {
     padding: 23px 0;
   }
 
-     .submit-button {
+   .submit-button {
     width: 100%;
     min-height: 54px;
     margin-top: 22px;
     padding: 14px 20px;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     background: #ffffff;
     color: #111111;
-
     border: 1px solid #ffffff;
     border-radius: 7px;
-
     font-family: "Cairo", sans-serif;
     font-size: 14px;
     font-weight: 700;
-
     box-shadow: 0 3px 10px rgb(255 255 255 / 5%);
-
     -webkit-tap-highlight-color: transparent;
     touch-action: manipulation;
-
-    transition:
-      background 180ms ease,
-      transform 180ms ease,
-      box-shadow 180ms ease;
   }
 
   .submit-button span {
     font-family: "Cairo", sans-serif;
     font-size: 14px;
     font-weight: 700;
-  }
-
-  .submit-button:active {
-    background: #eaeaea;
-    transform: scale(0.985);
-    box-shadow: none;
-  }
-
-  .submit-button:focus-visible {
-    outline: 2px solid #ffffff;
-    outline-offset: 4px;
-  }
-
-  .submit-button:disabled {
-    opacity: 0.6;
-    cursor: wait;
-    transform: none;
   }
 }
 
