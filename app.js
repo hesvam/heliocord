@@ -1,3 +1,4 @@
+
 const form = document.getElementById("brief-form");
 const submitButton = document.getElementById("submit-button");
 const submitLabel = document.getElementById("submit-label");
@@ -88,7 +89,7 @@ function collectAnswers() {
 
     // حفظ نوع الشعار بالإنجليزية فقط
     if (element.name === "logo_type" && element.type === "radio") {
-      value = element.value;
+      value = element.value.trim();
     } else if (
       element.type === "checkbox" ||
       element.type === "radio"
@@ -227,6 +228,19 @@ function createReport(referenceId, answers) {
       !isCustomerField(item) && item.label !== "نوع الشعار",
   );
 
+  // إضافة نوع الشعار كأول بطاقة في قسم التفاصيل
+  const detailsAnswers = [
+    ...(logoTypeAnswer
+      ? [
+          {
+            label: "نوع الشعار",
+            value: logoTypeAnswer.value,
+          },
+        ]
+      : []),
+    ...otherAnswers,
+  ];
+
   // بطاقات بيانات العميل
   const customerCards = customerAnswers
     .map(
@@ -259,7 +273,8 @@ function createReport(referenceId, answers) {
     .join("");
 
   // بطاقات تفاصيل ومتطلبات الشعار
-  const answerCards = otherAnswers
+  // نوع الشعار يظهر كأول بطاقة بنفس التنسيق والترقيم
+  const answerCards = detailsAnswers
     .map(
       (item, index) => `
     <div style="
@@ -304,6 +319,7 @@ function createReport(referenceId, answers) {
         white-space: pre-wrap;
         overflow-wrap: anywhere;
         word-break: break-word;
+        ${item.label === "نوع الشعار" ? "direction: ltr; text-align: left; font-family: Inter, Arial, sans-serif; font-weight: 700;" : ""}
       ">${escapeHTML(item.value)}</div>
     </div>
   `,
@@ -405,44 +421,7 @@ function createReport(referenceId, answers) {
       </div>
     </section>
 
-    <!-- 02: نوع الشعار -->
-    <section style="margin-bottom: 14px;">
-      <div style="margin-bottom: 7px; color: #171717;">
-        <h2 style="
-          margin: 0;
-          font-size: 13px;
-          font-weight: 800;
-          line-height: 1.6;
-        ">نوع الشعار</h2>
-
-        <p style="
-          margin: 0;
-          font-family: Inter, Arial, sans-serif;
-          font-size: 9px;
-          color: #777777;
-          direction: ltr;
-          text-align: right;
-        ">Logo Type Selection</p>
-      </div>
-
-      <div style="
-        padding: 10px 12px;
-        border: 1px solid #e5e7eb;
-        border-radius: 6px;
-        background: #ffffff;
-        direction: ltr;
-        text-align: left;
-        font-family: Inter, Arial, sans-serif;
-        font-size: 12px;
-        font-weight: 700;
-        color: #171717;
-        overflow-wrap: anywhere;
-      ">
-        ${escapeHTML(logoTypeAnswer?.value || "Not Selected")}
-      </div>
-    </section>
-
-    <!-- 03: تفاصيل ومتطلبات الشعار -->
+    <!-- 02: تفاصيل ومتطلبات الشعار -->
     <section>
       <div style="
         font-size: 13px;
@@ -450,7 +429,7 @@ function createReport(referenceId, answers) {
         margin-bottom: 7px;
         color: #171717;
       ">
-        <span style="color: #777777; font-size: 10px;">03 /</span>
+        <span style="color: #777777; font-size: 10px;">02 /</span>
         تفاصيل ومتطلبات الشعار
       </div>
 
@@ -533,11 +512,6 @@ async function generatePDF(report) {
 
   await waitForRender();
 
-  /*
-   * Capture the report.
-   * The cloned report is made visible for html2canvas only.
-   */
-
   const canvas = await html2canvas(report, {
     scale: 2,
     useCORS: true,
@@ -580,10 +554,6 @@ async function generatePDF(report) {
     throw new Error("تعذر التقاط محتوى التقرير.");
   }
 
-  /*
-   * Check the entire canvas for non-white pixels.
-   */
-
   const context = canvas.getContext("2d", {
     willReadFrequently: true,
   });
@@ -618,11 +588,6 @@ async function generatePDF(report) {
       "تم التقاط التقرير كصفحة بيضاء. لم يتم إرسال PDF.",
     );
   }
-
-  /*
-   * Create a single A4 page.
-   * Scale the entire report to fit without creating extra pages.
-   */
 
   const { jsPDF } = window.jspdf;
 
@@ -746,8 +711,6 @@ if (form && submitButton && submitLabel) {
           result.message || "لم نتمكن من إرسال طلبك.",
         );
       }
-
-      /* Send to Telegram only; do not download a local copy. */
 
       setStatus(
         `تم إرسال طلبك بنجاح! رقم الطلب: ${referenceId}`,
