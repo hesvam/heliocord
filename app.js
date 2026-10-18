@@ -86,13 +86,18 @@ function collectAnswers() {
 
     let value = String(element.value ?? "").trim();
 
-    if (element.type === "checkbox" || element.type === "radio") {
-      value = getFieldLabel(element);
-    }
+   if (element.name === "logo_type" && element.type === "radio") {
+     value = element.value;
+   } else if (element.type === "checkbox" || element.type === "radio") {
+     value = getFieldLabel(element);
+   }
 
     if (!value) continue;
-
-    const label = getFieldLabel(element);
+   
+   const label =
+     element.name === "logo_type"
+       ? "نوع الشعار"
+       : getFieldLabel(element);
 
     if (grouped.has(key)) {
       const existing = grouped.get(key);
@@ -206,8 +211,15 @@ function createReport(referenceId, answers) {
     overflow: "visible",
   });
 
-  const customerAnswers = answers.filter(isCustomerField);
-  const otherAnswers = answers.filter((item) => !isCustomerField(item));
+   const customerAnswers = answers.filter(isCustomerField);
+   
+   const logoTypeAnswer = answers.find(
+     (item) => item.label === "نوع الشعار"
+   );
+   
+   const otherAnswers = answers.filter(
+     (item) => !isCustomerField(item) && item.label !== "نوع الشعار"
+   );
 
   const customerCards = customerAnswers
     .map(
