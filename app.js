@@ -87,7 +87,7 @@ function collectAnswers() {
 
     let value = String(element.value ?? "").trim();
 
-    // حفظ نوع الشعار بالإنجليزية فقط
+    // الاحتفاظ بقيمة نوع الشعار بالإنجليزية فقط
     if (element.name === "logo_type" && element.type === "radio") {
       value = element.value.trim();
     } else if (
@@ -216,7 +216,7 @@ function createReport(referenceId, answers) {
     overflow: "visible",
   });
 
-  // تقسيم الإجابات إلى بيانات العميل ونوع الشعار وباقي التفاصيل
+  // تقسيم الإجابات
   const customerAnswers = answers.filter(isCustomerField);
 
   const logoTypeAnswer = answers.find(
@@ -228,7 +228,7 @@ function createReport(referenceId, answers) {
       !isCustomerField(item) && item.label !== "نوع الشعار",
   );
 
-  // إضافة نوع الشعار كأول بطاقة في قسم التفاصيل
+  // نوع الشعار أول بطاقة داخل قسم التفاصيل
   const detailsAnswers = [
     ...(logoTypeAnswer
       ? [
@@ -242,10 +242,17 @@ function createReport(referenceId, answers) {
   ];
 
   // بطاقات بيانات العميل
+  // بطاقة الهاتف تمتد بعرض العمودين
   const customerCards = customerAnswers
-    .map(
-      (item) => `
+    .map((item) => {
+      const isPhoneField =
+        /phone|whatsapp|واتساب|رقم الهاتف|رقم الموبايل|رقم التليفون/i.test(
+          item.label,
+        );
+
+      return `
     <div style="
+      grid-column: ${isPhoneField ? "1 / -1" : "auto"};
       padding: 9px 11px;
       border: 1px solid #e1e4e8;
       border-radius: 6px;
@@ -268,12 +275,12 @@ function createReport(referenceId, answers) {
         overflow-wrap: anywhere;
       ">${escapeHTML(item.value)}</div>
     </div>
-  `,
-    )
+  `;
+    })
     .join("");
 
   // بطاقات تفاصيل ومتطلبات الشعار
-  // نوع الشعار يظهر كأول بطاقة بنفس التنسيق والترقيم
+  // جميع القيم تستخدم نفس التنسيق بما فيها Wordmark
   const answerCards = detailsAnswers
     .map(
       (item, index) => `
@@ -319,7 +326,6 @@ function createReport(referenceId, answers) {
         white-space: pre-wrap;
         overflow-wrap: anywhere;
         word-break: break-word;
-        ${item.label === "نوع الشعار" ? "direction: ltr; text-align: left; font-family: Inter, Arial, sans-serif; font-weight: 700;" : ""}
       ">${escapeHTML(item.value)}</div>
     </div>
   `,
