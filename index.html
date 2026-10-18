@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>Logo Design Brief | Creative Studio</title>
+    <title>HELIOCORD</title>
 
     <link rel="stylesheet" href="style.css" />
 
@@ -22,8 +22,7 @@
       <!-- Header -->
       <header class="header">
         <a href="#" class="brand">
-          <span class="brand-symbol">B.</span>
-          <span class="brand-name">BRIEF STUDIO</span>
+          <img src="Logo.png" alt="HELIOCORD Logo" class="brand-logo" />
         </a>
 
         <span class="header-label">LOGO DESIGN / PROJECT BRIEF</span>
@@ -77,35 +76,7 @@
                 id="brand-name"
                 name="brand_name"
                 type="text"
-                required
                 placeholder="اكتب اسم البراند"
-              />
-            </div>
-
-            <div class="field">
-              <label for="brand-arabic">
-                الاسم بالعربي
-                <small>Arabic Name</small>
-              </label>
-              <input
-                id="brand-arabic"
-                name="arabic_name"
-                type="text"
-                placeholder="الاسم العربي إن وجد"
-              />
-            </div>
-
-            <div class="field">
-              <label for="brand-english">
-                الاسم بالإنجليزي
-                <small>English Name</small>
-              </label>
-              <input
-                id="brand-english"
-                name="english_name"
-                type="text"
-                dir="ltr"
-                placeholder="Brand Name"
               />
             </div>
 
@@ -118,7 +89,6 @@
                 id="industry"
                 name="industry"
                 type="text"
-                required
                 placeholder="مثال: أزياء، تقنية، مطاعم"
               />
             </div>
@@ -131,7 +101,6 @@
               <textarea
                 id="description"
                 name="description"
-                required
                 rows="4"
                 placeholder="ما طبيعة النشاط؟ ماذا يقدم البراند؟ وما الذي يميزه؟"
               ></textarea>
@@ -145,9 +114,7 @@
               <select id="brand-stage" name="brand_stage">
                 <option value="">اختر المرحلة</option>
                 <option>مشروع جديد / New Business</option>
-                <option>براند قائم / Existing Brand</option>
                 <option>إعادة تصميم / Rebranding</option>
-                <option>تطوير شعار حالي / Logo Refresh</option>
               </select>
             </div>
 
@@ -166,7 +133,7 @@
 
             <div class="field full-width">
               <label for="slogan">
-                السلوغان أو العبارة التعريفية
+                الشعار اللفظي أو العبارة الترويجية
                 <small>Slogan / Tagline</small>
               </label>
               <input
@@ -193,31 +160,29 @@
           <div class="form-grid">
             <div class="field">
               <label for="audience">
-                من هو عميلك المثالي؟
-                <small>Ideal Customer</small>
+                وصف الجمهور المستهدف
+                <small>Target Audience Description</small>
               </label>
               <textarea
                 id="audience"
                 name="audience"
                 rows="3"
-                placeholder="صف الأشخاص الذين تستهدفهم"
+                placeholder="صف الأشخاص الذين تستهدفهم علامتك التجارية واهتماماتهم..."
               ></textarea>
             </div>
 
             <div class="field">
               <label for="age-group">
-                الفئة العمرية
-                <small>Age Group</small>
+                الفئة العمرية المستهدفة
+                <small>Target Age Group</small>
               </label>
-              <select id="age-group" name="age_group">
-                <option value="">اختر الفئة العمرية</option>
-                <option>أقل من 18 سنة</option>
-                <option>18–24</option>
-                <option>25–34</option>
-                <option>35–44</option>
-                <option>45 فأكثر</option>
-                <option>جميع الفئات / All Ages</option>
-              </select>
+
+              <input
+                type="text"
+                id="age-group"
+                name="age_group"
+                placeholder="مثال: من 18 إلى 35 سنة"
+              />
             </div>
 
             <div class="field">
@@ -235,15 +200,19 @@
 
             <div class="field">
               <label for="price-position">
-                الفئة السعرية للبراند
-                <small>Market Positioning</small>
+                المكانة السوقية للعلامة التجارية
+                <small>Brand Market Positioning</small>
               </label>
+
               <select id="price-position" name="price_position">
-                <option value="">اختر الفئة</option>
-                <option>اقتصادي / Budget</option>
-                <option>متوسط / Mid-range</option>
-                <option>متميز / Premium</option>
-                <option>فاخر / Luxury</option>
+                <option value="">اختر مكانة البراند في السوق</option>
+                <option value="budget">اقتصادي / Budget</option>
+                <option value="mid-range">متوسط / Mid-range</option>
+                <option value="premium">متميز / Premium</option>
+                <option value="luxury">فاخر / Luxury</option>
+                <option value="undetermined">
+                  لم يتم تحديدها بعد / Not Yet Defined
+                </option>
               </select>
             </div>
 
@@ -273,32 +242,51 @@
             </div>
           </div>
 
-          <p class="section-description">
-            اختر النوع الأقرب إلى تصورك. يمكنك ترك الاختيار لنا إذا كنت تفضل أن
-            نحدد الأنسب لطبيعة البراند.
-          </p>
+          <div class="field full-width">
+            <label>
+              اختر النوع
+              <small>Choose Logo Type</small>
+            </label>
+
+            <p class="section-description">
+              اختر النمط الفني الذي تفضّله لشعارك
+            </p>
+          </div>
 
           <div class="choice-grid">
             <label class="choice-card">
               <input type="radio" name="logo_type" value="Wordmark" />
               <span class="choice-index">01</span>
-              <span class="choice-title">ووردمارك</span>
+              <div class="orientation-image">
+                <img src="Wordmark.png" alt="Wordmark Logo" />
+              </div>
+              <span class="choice-title">شعار نصي</span>
               <span class="choice-en">WORDMARK</span>
-              <span class="choice-desc">اسم البراند بتصميم مميز</span>
+              <span class="choice-desc"
+                >التركيز على اسم الشركة بخط مخصص ومميز</span
+              >
             </label>
 
             <label class="choice-card">
               <input type="radio" name="logo_type" value="Lettermark" />
               <span class="choice-index">02</span>
+              <div class="orientation-image">
+                <img src="Lettermark.png" alt="Lettermark Logo" />
+              </div>
               <span class="choice-title">حروف مختصرة</span>
               <span class="choice-en">LETTERMARK</span>
-              <span class="choice-desc">حرف أو مجموعة حروف</span>
+              <span class="choice-desc"
+                >اختصار الاسم في الحروف الأولى (مثل HC)</span
+              >
             </label>
 
             <label class="choice-card">
               <input type="radio" name="logo_type" value="Symbol" />
               <span class="choice-index">03</span>
-              <span class="choice-title">رمز تصويري</span>
+              <div class="orientation-image">
+                <img src="Symbol.png" alt="Symbol Logo" />
+              </div>
+              <span class="choice-title">رمز</span>
               <span class="choice-en">SYMBOL</span>
               <span class="choice-desc">أيقونة تعبر عن البراند</span>
             </label>
@@ -306,25 +294,12 @@
             <label class="choice-card">
               <input type="radio" name="logo_type" value="Combination Mark" />
               <span class="choice-index">04</span>
+              <div class="orientation-image">
+                <img src="Combination.png" alt="Combination Mark Logo" />
+              </div>
               <span class="choice-title">شعار مركب</span>
               <span class="choice-en">COMBINATION MARK</span>
-              <span class="choice-desc">اسم مع رمز بصري</span>
-            </label>
-
-            <label class="choice-card">
-              <input type="radio" name="logo_type" value="Emblem" />
-              <span class="choice-index">05</span>
-              <span class="choice-title">شعار شارة</span>
-              <span class="choice-en">EMBLEM</span>
-              <span class="choice-desc">اسم أو رمز داخل إطار</span>
-            </label>
-
-            <label class="choice-card">
-              <input type="radio" name="logo_type" value="Designer Choice" />
-              <span class="choice-index">06</span>
-              <span class="choice-title">اختيار المصمم</span>
-              <span class="choice-en">DESIGNER'S CHOICE</span>
-              <span class="choice-desc">اترك القرار لنا</span>
+              <span class="choice-desc">دمج بين الأيقونة والاسم النصي</span>
             </label>
           </div>
 
@@ -340,20 +315,6 @@
                 <option>إنجليزي / English</option>
                 <option>عربي وإنجليزي / Both</option>
                 <option>رمز فقط / Symbol Only</option>
-              </select>
-            </div>
-
-            <div class="field">
-              <label for="logo-usage">
-                شكل الشعار المفضل
-                <small>Logo Orientation</small>
-              </label>
-              <select id="logo-usage" name="logo_orientation">
-                <option value="">اختر</option>
-                <option>أفقي / Horizontal</option>
-                <option>رأسي / Vertical</option>
-                <option>مربع / Square</option>
-                <option>مرن حسب الاستخدام / Flexible</option>
               </select>
             </div>
 
@@ -482,19 +443,6 @@
                 <option>خط مخصص / Custom Lettering</option>
                 <option>لا يوجد تفضيل / No Preference</option>
               </select>
-            </div>
-
-            <div class="field">
-              <label for="logo-feeling">
-                الانطباع المطلوب
-                <small>Desired Brand Personality</small>
-              </label>
-              <input
-                id="logo-feeling"
-                name="brand_personality"
-                type="text"
-                placeholder="مثال: الثقة، القوة، الرقي"
-              />
             </div>
 
             <div class="field full-width">
@@ -727,27 +675,6 @@
               ></textarea>
             </div>
 
-            <div class="field">
-              <label for="deadline">
-                الموعد المتوقع للتسليم
-                <small>Expected Deadline</small>
-              </label>
-              <input id="deadline" name="deadline" type="date" />
-            </div>
-
-            <div class="field">
-              <label for="budget">
-                الميزانية المخصصة للتصميم
-                <small>Design Budget (Optional)</small>
-              </label>
-              <input
-                id="budget"
-                name="budget"
-                type="text"
-                placeholder="اكتب الميزانية والعملة إن رغبت"
-              />
-            </div>
-
             <div class="field full-width">
               <label for="additional-notes">
                 أي تفاصيل إضافية
@@ -784,7 +711,6 @@
                 id="client-name"
                 name="client_name"
                 type="text"
-                required
                 placeholder="اسمك بالكامل"
               />
             </div>
@@ -798,7 +724,6 @@
                 id="email"
                 name="email"
                 type="email"
-                required
                 dir="ltr"
                 placeholder="name@example.com"
               />
@@ -848,11 +773,6 @@
             <span id="submit-label">إرسال البريف</span>
             <span aria-hidden="true">↗</span>
           </button>
-
-          <p class="privacy-note">
-            سيتم إرسال إجاباتك وملف البريف إلى فريق التصميم.
-          </p>
-
           <p
             id="form-status"
             class="form-status"
@@ -861,14 +781,17 @@
           ></p>
 
           <p class="privacy-note">
+            سيتم إرسال إجاباتك وملف البريف إلى فريق التصميم.
+          </p>
+
+          <p class="privacy-note">
             يتم استخدام المعلومات المقدمة لفهم متطلبات تصميم الشعار.
           </p>
         </section>
       </form>
 
       <footer class="footer">
-        <span>BRIEF STUDIO</span>
-        <span>LOGO DESIGN / CREATIVE PROCESS</span>
+        <span>HELIOCORD</span>
         <span>© 2026 ALL RIGHTS RESERVED</span>
       </footer>
     </div>
