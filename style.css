@@ -306,8 +306,19 @@ select {
   min-width: 0;
 }
 
-.full-width {
+.field.full-width {
   grid-column: 1 / -1;
+  width: 100%;
+  min-width: 0;
+}
+
+.field.full-width input,
+.field.full-width textarea,
+.field.full-width select {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .field label {
@@ -694,11 +705,7 @@ select {
     grid-template-columns: minmax(0, 1fr);
     gap: 19px;
   }
-
-  .full-width {
-    grid-column: auto;
-  }
-
+   
   .choice-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 9px;
