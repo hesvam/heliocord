@@ -49,6 +49,11 @@ input[type="radio"] {
   cursor: pointer;
 }
 
+.orientation-card input[type="radio"]:focus {
+  outline: none;
+  box-shadow: none;
+}
+
 input,
 textarea,
 select {
@@ -87,9 +92,22 @@ select {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-
   color: var(--black);
   text-decoration: none;
+}
+
+.brand-logo {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  display: block;
+  flex-shrink: 0;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .brand-symbol {
@@ -822,4 +840,22 @@ select {
   opacity: 0.65;
   cursor: wait;
   transform: none;
+}
+
+.orientation-image {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 100%;
+  text-align: center;
+}
+
+.orientation-image img {
+  display: block !important;
+  width: 124px;
+  max-width: 100%;
+  height: auto;
+  margin: 0 auto !important;
+  position: static !important;
+  transform: none !important;
 }
