@@ -1,4 +1,3 @@
-
 const form = document.getElementById("brief-form");
 const submitButton = document.getElementById("submit-button");
 const submitLabel = document.getElementById("submit-label");
@@ -11,13 +10,17 @@ const PDF_REPORT_ID = "pdf-report-render-target";
 ========================================= */
 
 function escapeHTML(value) {
-  return String(value ?? "").replace(/[&<>"']/g, (char) => ({
-    "&": "&amp;",
-    "<": "&lt;",
-    ">": "&gt;",
-    '"': "&quot;",
-    "'": "&#039;",
-  })[char]);
+  return String(value ?? "").replace(
+    /[&<>"']/g,
+    (char) =>
+      ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#039;",
+      })[char],
+  );
 }
 
 function normalizeText(value) {
@@ -73,10 +76,7 @@ function collectAnswers() {
       continue;
     }
 
-    if (
-      ["checkbox", "radio"].includes(element.type) &&
-      !element.checked
-    ) {
+    if (["checkbox", "radio"].includes(element.type) && !element.checked) {
       continue;
     }
 
@@ -117,10 +117,7 @@ function collectAnswers() {
 ========================================= */
 
 function createReferenceId() {
-  const date = new Date()
-    .toISOString()
-    .slice(0, 10)
-    .replace(/-/g, "");
+  const date = new Date().toISOString().slice(0, 10).replace(/-/g, "");
 
   let randomPart;
 
@@ -128,7 +125,8 @@ function createReferenceId() {
     typeof crypto !== "undefined" &&
     typeof crypto.randomUUID === "function"
   ) {
-    randomPart = crypto.randomUUID()
+    randomPart = crypto
+      .randomUUID()
       .replace(/-/g, "")
       .slice(0, 8)
       .toUpperCase();
@@ -175,7 +173,7 @@ function isCustomerField(item) {
   ];
 
   return customerKeywords.some((keyword) =>
-    label.includes(normalizeText(keyword))
+    label.includes(normalizeText(keyword)),
   );
 }
 
@@ -211,7 +209,9 @@ function createReport(referenceId, answers) {
   const customerAnswers = answers.filter(isCustomerField);
   const otherAnswers = answers.filter((item) => !isCustomerField(item));
 
-  const customerCards = customerAnswers.map((item) => `
+  const customerCards = customerAnswers
+    .map(
+      (item) => `
     <div style="
       padding: 9px 11px;
       border: 1px solid #e1e4e8;
@@ -235,9 +235,13 @@ function createReport(referenceId, answers) {
         overflow-wrap: anywhere;
       ">${escapeHTML(item.value)}</div>
     </div>
-  `).join("");
+  `,
+    )
+    .join("");
 
-  const answerCards = otherAnswers.map((item, index) => `
+  const answerCards = otherAnswers
+    .map(
+      (item, index) => `
     <div style="
       padding: 9px 11px;
       border: 1px solid #e5e7eb;
@@ -282,7 +286,9 @@ function createReport(referenceId, answers) {
         word-break: break-word;
       ">${escapeHTML(item.value)}</div>
     </div>
-  `).join("");
+  `,
+    )
+    .join("");
 
   report.innerHTML = `
     <header style="
@@ -480,14 +486,10 @@ async function generatePDF(report) {
     scrollX: 0,
     scrollY: 0,
     windowWidth: 1000,
-    windowHeight: Math.max(
-      window.innerHeight,
-      report.scrollHeight + 100
-    ),
+    windowHeight: Math.max(window.innerHeight, report.scrollHeight + 100),
 
     onclone: (clonedDocument) => {
-      const clonedReport =
-        clonedDocument.getElementById(PDF_REPORT_ID);
+      const clonedReport = clonedDocument.getElementById(PDF_REPORT_ID);
 
       if (!clonedReport) {
         throw new Error("لم يتم العثور على التقرير للتصوير.");
@@ -526,21 +528,12 @@ async function generatePDF(report) {
     throw new Error("تعذر قراءة صورة التقرير.");
   }
 
-  const pixels = context.getImageData(
-    0,
-    0,
-    canvas.width,
-    canvas.height
-  ).data;
+  const pixels = context.getImageData(0, 0, canvas.width, canvas.height).data;
 
   let visiblePixels = 0;
 
   for (let i = 0; i < pixels.length; i += 4) {
-    if (
-      pixels[i] < 245 ||
-      pixels[i + 1] < 245 ||
-      pixels[i + 2] < 245
-    ) {
+    if (pixels[i] < 245 || pixels[i + 1] < 245 || pixels[i + 2] < 245) {
       visiblePixels++;
 
       if (visiblePixels > 100) break;
@@ -548,9 +541,7 @@ async function generatePDF(report) {
   }
 
   if (visiblePixels <= 100) {
-    throw new Error(
-      "تم التقاط التقرير كصفحة بيضاء. لم يتم إرسال PDF."
-    );
+    throw new Error("تم التقاط التقرير كصفحة بيضاء. لم يتم إرسال PDF.");
   }
 
   /*
@@ -576,7 +567,7 @@ async function generatePDF(report) {
 
   const scale = Math.min(
     availableWidth / canvas.width,
-    availableHeight / canvas.height
+    availableHeight / canvas.height,
   );
 
   const imageWidth = canvas.width * scale;
@@ -595,7 +586,7 @@ async function generatePDF(report) {
     imageWidth,
     imageHeight,
     undefined,
-    "FAST"
+    "FAST",
   );
 
   const pdfBlob = pdf.output("blob");
@@ -604,9 +595,7 @@ async function generatePDF(report) {
     throw new Error("ملف PDF الناتج فارغ أو غير مكتمل.");
   }
 
-  const signature = new Uint8Array(
-    await pdfBlob.slice(0, 5).arrayBuffer()
-  );
+  const signature = new Uint8Array(await pdfBlob.slice(0, 5).arrayBuffer());
 
   if (String.fromCharCode(...signature) !== "%PDF-") {
     throw new Error("ملف PDF الناتج غير صالح.");
@@ -633,7 +622,7 @@ if (form && submitButton && submitLabel) {
       typeof window.jspdf.jsPDF !== "function"
     ) {
       setStatus(
-        "تعذر تحميل مكتبات PDF. تأكد من تحميل html2canvas وjsPDF قبل app.js."
+        "تعذر تحميل مكتبات PDF. تأكد من تحميل html2canvas وjsPDF قبل app.js.",
       );
       return;
     }
@@ -662,11 +651,7 @@ if (form && submitButton && submitLabel) {
       requestData.append("referenceId", referenceId);
       requestData.append("payload", JSON.stringify(answers));
 
-      requestData.append(
-        "report",
-        pdfBlob,
-        `Logo-Brief-${referenceId}.pdf`
-      );
+      requestData.append("report", pdfBlob, `Logo-Brief-${referenceId}.pdf`);
 
       const response = await fetch("/api/submit", {
         method: "POST",
@@ -676,17 +661,12 @@ if (form && submitButton && submitLabel) {
       const result = await response.json().catch(() => ({}));
 
       if (!response.ok || !result.success) {
-        throw new Error(
-          result.message || "لم نتمكن من إرسال البريف."
-        );
+        throw new Error(result.message || "لم نتمكن من إرسال البريف.");
       }
 
       /* Send to Telegram only; do not download a local copy. */
 
-      setStatus(
-        `تم إرسال البريف بنجاح! رقم الطلب: ${referenceId}`,
-        true
-      );
+      setStatus(`تم إرسال البريف بنجاح! رقم الطلب: ${referenceId}`, true);
 
       submitLabel.textContent = "تم إرسال البريف";
     } catch (error) {
@@ -695,7 +675,7 @@ if (form && submitButton && submitLabel) {
       setStatus(
         error instanceof Error && error.message
           ? error.message
-          : "حدث خطأ أثناء الإرسال. تحقق من اتصال الإنترنت وحاول مجددًا."
+          : "حدث خطأ أثناء الإرسال. تحقق من اتصال الإنترنت وحاول مجددًا.",
       );
 
       submitLabel.textContent = "إعادة محاولة الإرسال";
@@ -714,6 +694,6 @@ if (form && submitButton && submitLabel) {
   });
 } else {
   console.error(
-    "Brief form initialization failed. Check the HTML IDs: brief-form, submit-button, submit-label."
+    "Brief form initialization failed. Check the HTML IDs: brief-form, submit-button, submit-label.",
   );
 }
