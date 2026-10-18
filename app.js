@@ -351,7 +351,7 @@ function createReport(referenceId, answers) {
           font-weight: 800;
           letter-spacing: 2px;
           color: #171717;
-        ">BRIEF STUDIO</div>
+        ">HELIOCORD</div>
 
         <div style="
           font-family: Inter, Arial, sans-serif;
@@ -466,7 +466,7 @@ function createReport(referenceId, answers) {
       color: #888888;
       direction: ltr;
     ">
-      <span>BRIEF STUDIO</span>
+      <span>HELIOCORD</span>
       <span>CONFIDENTIAL CLIENT BRIEF</span>
     </footer>
   `;
