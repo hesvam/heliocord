@@ -138,7 +138,7 @@ function createReferenceId() {
       .toUpperCase();
   }
 
-  return `BR-${date}-${randomPart}`;
+  return `HC-${date}-${randomPart}`;
 }
 
 /* =========================================
