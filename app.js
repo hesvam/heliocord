@@ -1,4 +1,3 @@
-
 const form = document.getElementById("brief-form");
 const submitButton = document.getElementById("submit-button");
 const submitLabel = document.getElementById("submit-label");
@@ -90,19 +89,14 @@ function collectAnswers() {
     // الاحتفاظ بقيمة نوع الشعار بالإنجليزية فقط
     if (element.name === "logo_type" && element.type === "radio") {
       value = element.value.trim();
-    } else if (
-      element.type === "checkbox" ||
-      element.type === "radio"
-    ) {
+    } else if (element.type === "checkbox" || element.type === "radio") {
       value = getFieldLabel(element);
     }
 
     if (!value) continue;
 
     const label =
-      element.name === "logo_type"
-        ? "نوع الشعار"
-        : getFieldLabel(element);
+      element.name === "logo_type" ? "نوع الشعار" : getFieldLabel(element);
 
     if (grouped.has(key)) {
       const existing = grouped.get(key);
@@ -219,13 +213,10 @@ function createReport(referenceId, answers) {
   // تقسيم الإجابات
   const customerAnswers = answers.filter(isCustomerField);
 
-  const logoTypeAnswer = answers.find(
-    (item) => item.label === "نوع الشعار",
-  );
+  const logoTypeAnswer = answers.find((item) => item.label === "نوع الشعار");
 
   const otherAnswers = answers.filter(
-    (item) =>
-      !isCustomerField(item) && item.label !== "نوع الشعار",
+    (item) => !isCustomerField(item) && item.label !== "نوع الشعار",
   );
 
   // نوع الشعار أول بطاقة داخل قسم التفاصيل
@@ -526,14 +517,10 @@ async function generatePDF(report) {
     scrollX: 0,
     scrollY: 0,
     windowWidth: 1000,
-    windowHeight: Math.max(
-      window.innerHeight,
-      report.scrollHeight + 100,
-    ),
+    windowHeight: Math.max(window.innerHeight, report.scrollHeight + 100),
 
     onclone: (clonedDocument) => {
-      const clonedReport =
-        clonedDocument.getElementById(PDF_REPORT_ID);
+      const clonedReport = clonedDocument.getElementById(PDF_REPORT_ID);
 
       if (!clonedReport) {
         throw new Error("لم يتم العثور على التقرير للتصوير.");
@@ -568,21 +555,12 @@ async function generatePDF(report) {
     throw new Error("تعذر قراءة صورة التقرير.");
   }
 
-  const pixels = context.getImageData(
-    0,
-    0,
-    canvas.width,
-    canvas.height,
-  ).data;
+  const pixels = context.getImageData(0, 0, canvas.width, canvas.height).data;
 
   let visiblePixels = 0;
 
   for (let i = 0; i < pixels.length; i += 4) {
-    if (
-      pixels[i] < 245 ||
-      pixels[i + 1] < 245 ||
-      pixels[i + 2] < 245
-    ) {
+    if (pixels[i] < 245 || pixels[i + 1] < 245 || pixels[i + 2] < 245) {
       visiblePixels++;
 
       if (visiblePixels > 100) break;
@@ -590,9 +568,7 @@ async function generatePDF(report) {
   }
 
   if (visiblePixels <= 100) {
-    throw new Error(
-      "تم التقاط التقرير كصفحة بيضاء. لم يتم إرسال PDF.",
-    );
+    throw new Error("تم التقاط التقرير كصفحة بيضاء. لم يتم إرسال PDF.");
   }
 
   const { jsPDF } = window.jspdf;
@@ -641,9 +617,7 @@ async function generatePDF(report) {
     throw new Error("ملف PDF الناتج فارغ أو غير مكتمل.");
   }
 
-  const signature = new Uint8Array(
-    await pdfBlob.slice(0, 5).arrayBuffer(),
-  );
+  const signature = new Uint8Array(await pdfBlob.slice(0, 5).arrayBuffer());
 
   if (String.fromCharCode(...signature) !== "%PDF-") {
     throw new Error("ملف PDF الناتج غير صالح.");
@@ -699,11 +673,7 @@ if (form && submitButton && submitLabel) {
       requestData.append("referenceId", referenceId);
       requestData.append("payload", JSON.stringify(answers));
 
-      requestData.append(
-        "report",
-        pdfBlob,
-        `Logo-Brief-${referenceId}.pdf`,
-      );
+      requestData.append("report", pdfBlob, `Logo-Brief-${referenceId}.pdf`);
 
       const response = await fetch("/api/submit", {
         method: "POST",
@@ -713,15 +683,10 @@ if (form && submitButton && submitLabel) {
       const result = await response.json().catch(() => ({}));
 
       if (!response.ok || !result.success) {
-        throw new Error(
-          result.message || "لم نتمكن من إرسال طلبك.",
-        );
+        throw new Error(result.message || "لم نتمكن من إرسال طلبك.");
       }
 
-      setStatus(
-        `تم إرسال طلبك بنجاح! رقم الطلب: ${referenceId}`,
-        true,
-      );
+      setStatus(`تم إرسال طلبك بنجاح! رقم الطلب: ${referenceId}`, true);
 
       submitLabel.textContent = "تم إرسال طلبك";
     } catch (error) {
