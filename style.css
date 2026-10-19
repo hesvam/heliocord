@@ -153,9 +153,7 @@ select {
   display: inline-flex;
   align-items: center;
   gap: 9px;
-
   margin-bottom: 22px;
-
   color: var(--muted);
   font-family: "Inter", sans-serif;
   font-size: 10px;
@@ -166,7 +164,6 @@ select {
 .status-dot {
   width: 7px;
   height: 7px;
-
   background: var(--black);
   border-radius: 50%;
 }
@@ -564,7 +561,6 @@ select {
 
 .submit-copy h2 {
   margin-top: 10px;
-
   color: #ffffff;
   font-size: 21px;
   font-weight: 700;
@@ -573,7 +569,6 @@ select {
 .submit-copy p {
   max-width: 500px;
   margin-top: 8px;
-
   color: #aaaaaa;
   font-size: 12px;
   line-height: 2;
@@ -582,7 +577,7 @@ select {
 .submit-button {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   gap: 20px;
   width: 100%;
   min-height: 52px;
@@ -623,10 +618,8 @@ select {
   align-items: center;
   flex-wrap: wrap;
   gap: 12px;
-
   padding: 25px 0;
   margin-top: 10px;
-
   color: #888888;
   font-family: "Inter", "Cairo", sans-serif;
   font-size: 9px;
@@ -646,34 +639,40 @@ select {
     min-height: 68px;
   }
 
-  .brand-symbol {
-    width: 33px;
-    height: 33px;
-    font-size: 18px;
-  }
-
-  .brand-name {
-    font-size: 10px;
-    letter-spacing: 1px;
-  }
-
   .header-label {
-    max-width: 125px;
+    width: 100%;
     font-size: 8px;
     line-height: 1.8;
+  }
+
+  .brand-logo {
+    width: 70px;
+    height: 70px;
   }
 
   .hero {
     padding: 48px 0 30px;
   }
 
+  .hero-tag {
+    gap: 7px;
+    font-size: 8px;
+  }
+
+  .status-dot {
+    width: 5px;
+    height: 5px;
+    background: var(--black);
+    border-radius: 50%;
+  }
+
   .hero h1 {
-    font-size: 31px;
+    font-size: 26px;
     letter-spacing: -0.7px;
   }
 
   .hero-text {
-    font-size: 12px;
+    font-size: 10px;
   }
 
   .hero-meta {
@@ -705,7 +704,7 @@ select {
     grid-template-columns: minmax(0, 1fr);
     gap: 19px;
   }
-   
+
   .choice-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 9px;
@@ -743,7 +742,19 @@ select {
   }
 
   .submit-copy h2 {
-    font-size: 18px;
+    font-size: 17px;
+  }
+
+  .submit-copy p {
+    font-size: 10px;
+  }
+
+  .privacy-note {
+    font-size: 10px;
+  }
+
+  .hero-description {
+    font-size: 11px;
   }
 
   .footer {
@@ -752,30 +763,18 @@ select {
     padding: 23px 0;
   }
 
-   .submit-button {
-    width: 100%;
-    min-height: 54px;
-    margin-top: 22px;
-    padding: 14px 20px;
-    display: flex;
-    align-items: center;
+  .submit-overline {
+    font-size: 8px;
+  }
+
+  .submit-button {
     justify-content: center;
-    background: #ffffff;
-    color: #111111;
-    border: 1px solid #ffffff;
-    border-radius: 7px;
-    font-family: "Cairo", sans-serif;
-    font-size: 14px;
-    font-weight: 700;
-    box-shadow: 0 3px 10px rgb(255 255 255 / 5%);
     -webkit-tap-highlight-color: transparent;
     touch-action: manipulation;
   }
 
   .submit-button span {
-    font-family: "Cairo", sans-serif;
-    font-size: 14px;
-    font-weight: 700;
+    font-size: 12px;
   }
 }
 
