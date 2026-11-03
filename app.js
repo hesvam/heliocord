@@ -39,7 +39,13 @@ function getFieldLabel(element) {
     const label = wrapper.querySelector("label");
 
     if (label) {
-      return label.innerText.replace(/\s+/g, " ").trim();
+      const clonedLabel = label.cloneNode(true);
+
+      clonedLabel.querySelectorAll("small").forEach((small) => {
+        small.remove();
+      });
+
+      return clonedLabel.innerText.replace(/\s+/g, " ").trim();
     }
   }
 
@@ -52,7 +58,13 @@ function getFieldLabel(element) {
   const associatedLabel = element.labels?.[0];
 
   if (associatedLabel) {
-    return associatedLabel.innerText.replace(/\s+/g, " ").trim();
+    const clonedLabel = associatedLabel.cloneNode(true);
+
+    clonedLabel.querySelectorAll("small").forEach((small) => {
+      small.remove();
+    });
+
+    return clonedLabel.innerText.replace(/\s+/g, " ").trim();
   }
 
   return element.name || element.id || "بيانات إضافية";
@@ -384,7 +396,7 @@ function collectAnswers() {
       element.name === "logo_type"
         ? "نوع الشعار"
         : element.name === "applications[]"
-          ? element.closest(".checkbox-grid")?.previousElementSibling?.querySelector("label")?.innerText.replace(/\s+/g, " ").trim() || "استخدامات الشعار"
+          ? "أين سيتم استخدام الشعار؟"
           : getFieldLabel(element);
 
     if (grouped.has(key)) {
