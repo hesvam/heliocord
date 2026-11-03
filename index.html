@@ -1,773 +1,418 @@
 <!doctype html>
 <html lang="ar" dir="rtl">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>HELIOCORD</title>
-    <link rel="icon" type="image/png" href="images/fav.png" />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <link rel="stylesheet" href="style.css" />
+  <title>HELIOCORD</title>
+  <link rel="icon" type="image/png" href="images/fav.png" />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="style.css" />
 
-    <link
-      href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
-  </head>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
-  <body>
-    <div class="page-wrapper">
-      <!-- Header -->
-      <header class="header">
-        <a href="#" class="brand">
-          <img src="images/logo.png" alt="HELIOCORD Logo" class="brand-logo" />
-        </a>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet" />
+</head>
 
-        <span class="header-label">LOGO DESIGN / PROJECT BRIEF</span>
-      </header>
+<body>
+  <div class="page-wrapper">
 
-      <!-- Hero -->
-      <section class="hero">
-        <div class="hero-tag">
-          <span class="status-dot"></span>
-          LOGO DESIGN QUESTIONNAIRE
+    <!-- Header -->
+    <header class="header">
+      <a href="#" class="brand">
+        <img src="images/logo.png" alt="HELIOCORD Logo" class="brand-logo" />
+      </a>
+
+      <span class="header-label">LOGO DESIGN / PROJECT BRIEF</span>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+      <div class="hero-tag">
+        <span class="status-dot"></span>
+        LOGO DESIGN QUESTIONNAIRE
+      </div>
+
+      <h1>شاركنا تفاصيل <span>الشعار المطلوب.</span></h1>
+
+      <p class="hero-description">
+        استبيان تصميم الشعار
+        <span class="separator">/</span>
+        Logo Design Brief
+      </p>
+
+      <p class="hero-text">
+        أجب عن الأسئلة التالية لمساعدتنا على فهم مشروعك وتصورك للشعار، وتحديد
+        الاتجاه المناسب لتصميم يعبر عنك.
+      </p>
+
+      <div class="hero-meta">
+        <span>01 — BRAND DISCOVERY</span>
+        <span>EST. CREATIVE PROCESS</span>
+      </div>
+    </section>
+
+    <form class="brief-form" id="brief-form" novalidate>
+
+      <!-- Section 01 -->
+      <section class="form-section">
+        <div class="section-heading">
+          <div class="section-number">01</div>
+
+          <div>
+            <h2>معلومات المشروع</h2>
+            <p>Project Information</p>
+          </div>
         </div>
 
-        <h1>خلينا نبدأ من <span>فكرة واضحة.</span></h1>
+        <div class="form-grid">
+          <div class="field">
+            <label for="brand-name">
+              الاسم المطلوب في الشعار
+              <small>Logo Name</small>
+            </label>
 
-        <p class="hero-description">
-          استبيان تصميم الشعار
-          <span class="separator">/</span>
-          Logo Design Brief
-        </p>
-
-        <p class="hero-text">
-          أجب عن الأسئلة التالية لمساعدتنا على فهم مشروعك وتصورك للشعار، وتحديد
-          الاتجاه المناسب لتصميم يعبر عنك.
-        </p>
-
-        <div class="hero-meta">
-          <span>01 — BRAND DISCOVERY</span>
-          <span>EST. CREATIVE PROCESS</span>
-        </div>
-      </section>
-
-      <form class="brief-form" id="brief-form">
-        <!-- Section 01 -->
-        <section class="form-section">
-          <div class="section-heading">
-            <div class="section-number">01</div>
-
-            <div>
-              <h2>معلومات المشروع</h2>
-              <p>Project Information</p>
-            </div>
+            <input
+              id="brand-name"
+              name="brand_name"
+              type="text"
+              placeholder="اكتب الاسم كما تريد ظهوره في التصميم"
+              required />
           </div>
 
-          <div class="form-grid">
-            <div class="field">
-              <label for="brand-name">
-                الاسم المطلوب في الشعار
-                <small>Logo Name</small>
-              </label>
-              <input
-                id="brand-name"
-                name="brand_name"
-                type="text"
-                placeholder="اكتب الاسم كما تريد ظهوره في التصميم"
-                required
-              />
-            </div>
+          <div class="field">
+            <label for="industry">
+              نوع النشاط التجاري
+              <small>Business Type</small>
+            </label>
 
-            <div class="field">
-              <label for="industry">
-                طبيعة النشاط
-                <small>Business Type</small>
-              </label>
-              <input
-                id="industry"
-                name="industry"
-                type="text"
-                placeholder="مثال: أزياء، تقنية، مطاعم، خدمات"
-                required
-              />
-            </div>
-
-            <div class="field full-width">
-              <label for="description">
-                نبذة عن المشروع
-                <small>Project Description</small>
-              </label>
-              <textarea
-                id="description"
-                name="description"
-                rows="4"
-                placeholder="ماذا يقدم مشروعك؟ ومن هم عملاؤك؟ وما الذي يميزه؟"
-                required
-              ></textarea>
-            </div>
-
-            <div class="field">
-              <label for="brand-stage">
-                حالة المشروع
-                <small>Project Stage</small>
-              </label>
-              <select id="brand-stage" name="brand_stage" required>
-                <option value="">اختر حالة المشروع</option>
-                <option>مشروع جديد / New Business</option>
-                <option>إعادة تصميم الشعار / Rebranding</option>
-              </select>
-            </div>
-
-            <div class="field">
-              <label for="location">
-                السوق المستهدف
-                <small>Target Market</small>
-              </label>
-              <input
-                id="location"
-                name="location"
-                type="text"
-                placeholder="مثال: مصر، الخليج، أو السوق العالمي"
-                required
-              />
-            </div>
-
-            <div class="field full-width">
-              <label for="slogan">
-                العبارة المصاحبة للشعار (إن وجدت)
-                <small>Slogan / Tagline</small>
-              </label>
-              <input
-                id="slogan"
-                name="slogan"
-                type="text"
-                placeholder="اكتب العبارة التي تريد إضافتها إلى الشعار"
-              />
-            </div>
-          </div>
-        </section>
-
-        <!-- Section 02 -->
-        <section class="form-section">
-          <div class="section-heading">
-            <div class="section-number">02</div>
-
-            <div>
-              <h2>الجمهور المستهدف</h2>
-              <p>Target Audience</p>
-            </div>
-          </div>
-
-          <div class="form-grid">
-            <div class="field">
-              <label for="audience">
-                من هم عملاؤك؟
-                <small>Target Audience</small>
-              </label>
-              <textarea
-                id="audience"
-                name="audience"
-                rows="3"
-                placeholder="صف العملاء الذين تستهدفهم واهتماماتهم"
-                required
-              ></textarea>
-            </div>
-
-            <div class="field">
-              <label for="age-group">
-                الفئة العمرية
-                <small>Age Group</small>
-              </label>
-
-              <input
-                type="text"
-                id="age-group"
-                name="age_group"
-                placeholder="مثال: من 18 إلى 35 سنة"
-                required
-              />
-            </div>
-
-            <div class="field full-width">
-              <label for="audience-gender">
-                النوع المستهدف
-                <small>Target Gender</small>
-              </label>
-              <select id="audience-gender" name="audience_gender" required>
-                <option value="">اختر الفئة</option>
-                <option>رجال / Men</option>
-                <option>نساء / Women</option>
-                <option>الجميع / Everyone</option>
-              </select>
-            </div>
-
-            <div class="field full-width">
-              <label for="audience-needs">
-                ما أهم ما يهتم به عملاؤك؟
-                <small>Customer Needs & Expectations</small>
-              </label>
-              <textarea
-                id="audience-needs"
-                name="audience_needs"
-                rows="3"
-                placeholder="مثال: الجودة، السعر، الثقة، التميز أو الفخامة"
-                required
-              ></textarea>
-            </div>
-          </div>
-        </section>
-
-        <!-- Section 03 -->
-        <section class="form-section">
-          <div class="section-heading">
-            <div class="section-number">03</div>
-
-            <div>
-              <h2>نوع الشعار</h2>
-              <p>Logo Type</p>
-            </div>
+            <input
+              id="industry"
+              name="industry"
+              type="text"
+              placeholder="مثال: أزياء، تقنية، مطاعم، خدمات"
+              required />
           </div>
 
           <div class="field full-width">
-            <label>
-              الشكل الذي تفضله للشعار
-              <small>Choose Logo Type</small>
+            <label for="brand-stage">
+              حالة المشروع
+              <small>Project Stage</small>
             </label>
+
+            <select id="brand-stage" name="brand_stage" required>
+              <option value="">اختر حالة المشروع</option>
+              <option>مشروع جديد / New Business</option>
+              <option>إعادة تصميم الشعار / Rebranding</option>
+            </select>
           </div>
 
-          <div class="choice-grid">
-            <label class="choice-card">
-              <input type="radio" name="logo_type" value="Wordmark" required />
-              <span class="choice-index">01</span>
-              <div class="orientation-image">
-                <img src="images/wordmark.png" alt="Wordmark Logo" />
-              </div>
-              <span class="choice-title">شعار بالاسم</span>
-              <span class="choice-en">WORDMARK</span>
-              <span class="choice-desc">
-                يعتمد على تصميم اسم المشروع بخط مميز.
-              </span>
+          <div class="field full-width">
+            <label for="slogan">
+              العبارة المصاحبة للشعار (إن وجدت)
+              <small>Slogan / Tagline</small>
             </label>
 
-            <label class="choice-card">
-              <input type="radio" name="logo_type" value="Lettermark" />
-              <span class="choice-index">02</span>
-              <div class="orientation-image">
-                <img src="images/lettermark.png" alt="Lettermark Logo" />
-              </div>
-              <span class="choice-title">شعار بالأحرف</span>
-              <span class="choice-en">LETTERMARK</span>
-              <span class="choice-desc">
-                يعتمد على الحروف الأولى من الاسم، مثل HC.
-              </span>
+            <input
+              id="slogan"
+              name="slogan"
+              type="text"
+              placeholder="اكتب العبارة التي تريد إضافتها إلى الشعار" />
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 02 -->
+      <section class="form-section">
+        <div class="section-heading">
+          <div class="section-number">02</div>
+
+          <div>
+            <h2>الجمهور المستهدف</h2>
+            <p>Target Audience</p>
+          </div>
+        </div>
+
+        <div class="form-grid">
+          <div class="field full-width">
+            <label for="age-group">
+              الفئة العمرية
+              <small>Age Group</small>
             </label>
 
-            <label class="choice-card">
-              <input type="radio" name="logo_type" value="Symbol" />
-              <span class="choice-index">03</span>
-              <div class="orientation-image">
-                <img src="images/symbol.png" alt="Symbol Logo" />
-              </div>
-              <span class="choice-title">شعار رمزي</span>
-              <span class="choice-en">SYMBOL</span>
-              <span class="choice-desc"> رمز بصري مميز يعبر عن المشروع. </span>
-            </label>
-
-            <label class="choice-card">
-              <input type="radio" name="logo_type" value="Combination Mark" />
-              <span class="choice-index">04</span>
-              <div class="orientation-image">
-                <img src="images/combination.png" alt="Combination Mark Logo" />
-              </div>
-              <span class="choice-title">شعار مدمج</span>
-              <span class="choice-en">COMBINATION MARK</span>
-              <span class="choice-desc"> يجمع بين اسم المشروع والرمز. </span>
-            </label>
+            <input
+              type="text"
+              id="age-group"
+              name="age_group"
+              placeholder="مثال: من 18 إلى 35 سنة"
+              required />
           </div>
 
-          <div class="form-grid standalone-fields">
-            <div class="field full-width">
-              <label for="logo-language">
-                لغة الشعار
-                <small>Logo Language</small>
-              </label>
-              <select id="logo-language" name="logo_language" required>
-                <option value="">اختر اللغة</option>
-                <option>عربي / Arabic</option>
-                <option>إنجليزي / English</option>
-                <option>عربي وإنجليزي / Both</option>
-                <option>رمز فقط / Symbol Only</option>
-              </select>
+          <div class="field full-width">
+            <label for="audience-gender">
+              النوع المستهدف
+              <small>Target Gender</small>
+            </label>
+
+            <select id="audience-gender" name="audience_gender" required>
+              <option value="">اختر الفئة</option>
+              <option>رجال / Men</option>
+              <option>نساء / Women</option>
+              <option>الجميع / Everyone</option>
+            </select>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 03 -->
+      <section class="form-section">
+        <div class="section-heading">
+          <div class="section-number">03</div>
+
+          <div>
+            <h2>نوع الشعار</h2>
+            <p>Logo Type</p>
+          </div>
+        </div>
+
+        <div class="field full-width">
+          <label>
+            الشكل الذي تفضله للشعار
+            <small>Choose Logo Type</small>
+          </label>
+        </div>
+
+        <div class="choice-grid">
+          <label class="choice-card">
+            <input type="radio" name="logo_type" value="Wordmark" required />
+
+            <span class="choice-index">01</span>
+
+            <div class="orientation-image">
+              <img src="images/wordmark.png" alt="Wordmark Logo" />
             </div>
 
-            <div class="field full-width">
-              <label for="logo-concept">
-                هل لديك فكرة مبدئية للشعار؟
-                <small>Initial Logo Concept</small>
-              </label>
-              <textarea
-                id="logo-concept"
-                name="logo_concept"
-                rows="3"
-                placeholder="اشرح فكرتك أو تصورك إن وجد، ويمكنك ترك الحقل فارغًا"
-              ></textarea>
+            <span class="choice-title">شعار بالاسم</span>
+            <span class="choice-en">WORDMARK</span>
+
+            <span class="choice-desc">
+              يعتمد على تصميم اسم المشروع بخط مميز.
+            </span>
+          </label>
+
+          <label class="choice-card">
+            <input type="radio" name="logo_type" value="Lettermark" />
+
+            <span class="choice-index">02</span>
+
+            <div class="orientation-image">
+              <img src="images/lettermark.png" alt="Lettermark Logo" />
             </div>
-          </div>
-        </section>
 
-        <!-- Section 04 -->
-        <section class="form-section">
-          <div class="section-heading">
-            <div class="section-number">04</div>
+            <span class="choice-title">شعار بالأحرف</span>
+            <span class="choice-en">LETTERMARK</span>
 
-            <div>
-              <h2>الأسلوب البصري</h2>
-              <p>Visual Style</p>
+            <span class="choice-desc">
+              يعتمد على الحروف الأولى من الاسم، مثل HC.
+            </span>
+          </label>
+
+          <label class="choice-card">
+            <input type="radio" name="logo_type" value="Symbol" />
+
+            <span class="choice-index">03</span>
+
+            <div class="orientation-image">
+              <img src="images/symbol.png" alt="Symbol Logo" />
             </div>
+
+            <span class="choice-title">شعار رمزي</span>
+            <span class="choice-en">SYMBOL</span>
+
+            <span class="choice-desc">
+              رمز بصري مميز يعبر عن المشروع.
+            </span>
+          </label>
+
+          <label class="choice-card">
+            <input type="radio" name="logo_type" value="Combination Mark" />
+
+            <span class="choice-index">04</span>
+
+            <div class="orientation-image">
+              <img src="images/combination.png" alt="Combination Mark Logo" />
+            </div>
+
+            <span class="choice-title">شعار مدمج</span>
+            <span class="choice-en">COMBINATION MARK</span>
+
+            <span class="choice-desc">
+              يجمع بين اسم المشروع والرمز.
+            </span>
+          </label>
+        </div>
+
+        <div class="form-grid standalone-fields">
+          <div class="field full-width">
+            <label for="logo-language">
+              لغة الشعار
+              <small>Logo Language</small>
+            </label>
+
+            <select id="logo-language" name="logo_language" required>
+              <option value="">اختر اللغة</option>
+              <option>عربي / Arabic</option>
+              <option>إنجليزي / English</option>
+              <option>عربي وإنجليزي / Both</option>
+              <option>رمز فقط / Symbol Only</option>
+            </select>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 06 -->
+      <section class="form-section">
+        <div class="section-heading">
+          <div class="section-number">06</div>
+
+          <div>
+            <h2>استخدامات الشعار</h2>
+            <p>Logo Applications</p>
+          </div>
+        </div>
+
+        <p class="section-description">
+          حدد أين ستستخدم الشعار لنراعي وضوحه وملاءمته لمختلف الاستخدامات.
+        </p>
+
+        <div class="checkbox-grid">
+          <label class="check-option">
+            <input
+              type="checkbox"
+              name="applications[]"
+              value="Social Media"
+              required />
+
+            <span>منصات التواصل الاجتماعي / Social Media</span>
+          </label>
+
+          <label class="check-option">
+            <input
+              type="checkbox"
+              name="applications[]"
+              value="Website" />
+
+            <span>الموقع الإلكتروني / Website</span>
+          </label>
+
+          <label class="check-option">
+            <input
+              type="checkbox"
+              name="applications[]"
+              value="Print" />
+
+            <span>المطبوعات / Print Materials</span>
+          </label>
+
+          <label class="check-option">
+            <input
+              type="checkbox"
+              name="applications[]"
+              value="Other" />
+
+            <span>استخدامات أخرى / Other</span>
+          </label>
+        </div>
+      </section>
+
+      <!-- Section 08 -->
+      <section class="form-section">
+        <div class="section-heading">
+          <div class="section-number">08</div>
+
+          <div>
+            <h2>بيانات التواصل</h2>
+            <p>Contact Information</p>
+          </div>
+        </div>
+
+        <div class="form-grid">
+          <div class="field">
+            <label for="client-name">
+              الاسم بالكامل
+              <small>Full Name</small>
+            </label>
+
+            <input
+              id="client-name"
+              name="client_name"
+              type="text"
+              placeholder="اكتب اسمك بالكامل"
+              required />
           </div>
 
-          <p class="section-description">
-            اختر الصفات التي تريد أن يعكسها الشعار. يمكنك اختيار أكثر من صفة.
+          <div class="field">
+            <label for="phone">
+              رقم واتساب للتواصل
+              <small>WhatsApp Contact Number</small>
+            </label>
+
+            <input
+              id="phone"
+              name="phone"
+              type="tel"
+              dir="ltr"
+              placeholder="01XXXXXXXXX"
+              inputmode="numeric"
+              pattern="[0-9]{11}"
+              minlength="11"
+              maxlength="11"
+              title="يجب إدخال رقم مكون من 11 رقمًا"
+              oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 11)"
+              required />
+          </div>
+        </div>
+      </section>
+
+      <!-- Submit -->
+      <section class="submit-section">
+        <div class="submit-copy">
+          <span class="submit-overline">YOUR BRAND STARTS HERE</span>
+
+          <h2>كل فكرة عظيمة تبدأ بتفاصيل واضحة.</h2>
+
+          <p>
+            يرجى مراجعة بياناتك قبل الضغط على «إرسال الطلب».
           </p>
+        </div>
 
-          <div class="checkbox-grid">
-            <label class="check-option">
-              <input type="checkbox" name="style[]" value="Minimal" required />
-              <span>بسيط / Minimal</span>
-            </label>
+        <button type="submit" class="submit-button" id="submit-button">
+          <span id="submit-label">إرسال الطلب</span>
+        </button>
 
-            <label class="check-option">
-              <input type="checkbox" name="style[]" value="Luxury" />
-              <span>فاخر / Luxury</span>
-            </label>
+        <p id="form-status" class="form-status" role="status" aria-live="polite"></p>
 
-            <label class="check-option">
-              <input type="checkbox" name="style[]" value="Modern" />
-              <span>عصري / Modern</span>
-            </label>
+        <p class="privacy-note">
+          تُرسل بياناتك إلى فريق التصميم لمراجعة طلبك.
+        </p>
+      </section>
 
-            <label class="check-option">
-              <input type="checkbox" name="style[]" value="Elegant" />
-              <span>أنيق / Elegant</span>
-            </label>
+    </form>
 
-            <label class="check-option">
-              <input type="checkbox" name="style[]" value="Bold" />
-              <span>جريء / Bold</span>
-            </label>
+    <footer class="footer">
+      <span>HELIOCORD</span>
+      <span>© 2026 ALL RIGHTS RESERVED</span>
+    </footer>
 
-            <label class="check-option">
-              <input type="checkbox" name="style[]" value="Classic" />
-              <span>كلاسيكي / Classic</span>
-            </label>
+  </div>
 
-            <label class="check-option">
-              <input type="checkbox" name="style[]" value="Geometric" />
-              <span>هندسي / Geometric</span>
-            </label>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="app.js"></script>
+</body>
 
-            <label class="check-option">
-              <input type="checkbox" name="style[]" value="Creative" />
-              <span>إبداعي / Creative</span>
-            </label>
-
-            <label class="check-option">
-              <input type="checkbox" name="style[]" value="Playful" />
-              <span>مرح / Playful</span>
-            </label>
-
-            <label class="check-option">
-              <input type="checkbox" name="style[]" value="Professional" />
-              <span>احترافي / Professional</span>
-            </label>
-          </div>
-
-          <div class="form-grid standalone-fields">
-            <div class="field">
-              <label for="logo-colors">
-                الألوان المفضلة للشعار
-                <small>Preferred Colors</small>
-              </label>
-              <input
-                id="logo-colors"
-                name="preferred_colors"
-                type="text"
-                placeholder="مثال: الأسود، الأبيض، الفضي"
-                required
-              />
-            </div>
-
-            <div class="field">
-              <label for="avoid-colors">
-                ألوان لا تفضلها
-                <small>Colors to Avoid</small>
-              </label>
-              <input
-                id="avoid-colors"
-                name="avoid_colors"
-                type="text"
-                placeholder="اذكر الألوان التي لا تريد استخدامها"
-                required
-              />
-            </div>
-
-            <div class="field full-width">
-              <label for="font-style">
-                أسلوب الخط المفضل
-                <small>Typography Preference</small>
-              </label>
-
-              <select id="font-style" name="font_style" required>
-                <option value="">اختر أسلوب الخط</option>
-                <option>هندسي / Geometric</option>
-                <option>ناعم وأنيق / Elegant</option>
-                <option>قوي وعريض / Bold</option>
-                <option>كلاسيكي / Serif</option>
-                <option>بسيط وحديث / Sans Serif</option>
-                <option>حروف مصممة خصيصًا / Custom Lettering</option>
-                <option>لا يوجد تفضيل / No Preference</option>
-              </select>
-            </div>
-
-            <div class="field full-width">
-              <label for="visual-reference">
-                روابط لشعارات أو تصاميم تعجبك
-                <small>Visual References / Inspiration Links</small>
-              </label>
-              <textarea
-                id="visual-reference"
-                name="visual_references"
-                rows="3"
-                placeholder="أضف روابط لشعارات أو تصاميم تفضل أسلوبها"
-              ></textarea>
-            </div>
-
-            <div class="field full-width">
-              <label for="reference-reason">
-                ما الذي أعجبك في هذه التصاميم؟
-                <small>What Do You Like About These References?</small>
-              </label>
-              <textarea
-                id="reference-reason"
-                name="reference_reason"
-                rows="3"
-                placeholder="مثال: شكل الحروف، الرمز، الألوان أو طريقة ترتيب العناصر"
-              ></textarea>
-            </div>
-          </div>
-        </section>
-
-        <!-- Section 05 -->
-        <section class="form-section">
-          <div class="section-heading">
-            <div class="section-number">05</div>
-
-            <div>
-              <h2>المنافسون ونقاط التميز</h2>
-              <p>Competitors & Differentiation</p>
-            </div>
-          </div>
-
-          <div class="form-grid">
-            <div class="field full-width">
-              <label for="competitors">
-                اذكر أبرز منافسيك
-                <small>Main Competitors</small>
-              </label>
-              <textarea
-                id="competitors"
-                name="competitors"
-                rows="3"
-                placeholder="اكتب أسماء المنافسين أو أضف روابط مواقعهم"
-              ></textarea>
-            </div>
-
-            <div class="field">
-              <label for="competitor-notes">
-                ما الذي يعجبك أو لا يعجبك في شعاراتهم؟
-                <small>Competitor Logo Preferences</small>
-              </label>
-              <textarea
-                id="competitor-notes"
-                name="competitor_notes"
-                rows="4"
-                placeholder="اذكر ما تفضله أو ما تريد تجنبه في تصميم شعارك"
-              ></textarea>
-            </div>
-
-            <div class="field">
-              <label for="differentiation">
-                ما الذي يميز مشروعك عن غيره؟
-                <small>Unique Selling Point</small>
-              </label>
-              <textarea
-                id="differentiation"
-                name="differentiation"
-                rows="4"
-                placeholder="اذكر أهم ما يجعل مشروعك مختلفًا عن المنافسين"
-              ></textarea>
-            </div>
-          </div>
-        </section>
-
-        <!-- Section 06 -->
-        <section class="form-section">
-          <div class="section-heading">
-            <div class="section-number">06</div>
-
-            <div>
-              <h2>استخدامات الشعار</h2>
-              <p>Logo Applications</p>
-            </div>
-          </div>
-
-          <p class="section-description">
-            حدد أين ستستخدم الشعار لنراعي وضوحه وملاءمته لمختلف الاستخدامات.
-          </p>
-
-          <div class="checkbox-grid">
-            <label class="check-option">
-              <input
-                type="checkbox"
-                name="applications[]"
-                value="Social Media"
-                required
-              />
-              <span>منصات التواصل الاجتماعي / Social Media</span>
-            </label>
-
-            <label class="check-option">
-              <input type="checkbox" name="applications[]" value="Website" />
-              <span>الموقع الإلكتروني / Website</span>
-            </label>
-
-            <label class="check-option">
-              <input type="checkbox" name="applications[]" value="Packaging" />
-              <span>تغليف المنتجات / Packaging</span>
-            </label>
-
-            <label class="check-option">
-              <input
-                type="checkbox"
-                name="applications[]"
-                value="Business Cards"
-              />
-              <span>بطاقات العمل / Business Cards</span>
-            </label>
-
-            <label class="check-option">
-              <input type="checkbox" name="applications[]" value="Print" />
-              <span>المطبوعات / Print Materials</span>
-            </label>
-
-            <label class="check-option">
-              <input type="checkbox" name="applications[]" value="Signage" />
-              <span>اللافتات / Signage</span>
-            </label>
-
-            <label class="check-option">
-              <input type="checkbox" name="applications[]" value="Clothing" />
-              <span>الملابس / Apparel</span>
-            </label>
-
-            <label class="check-option">
-              <input type="checkbox" name="applications[]" value="Product" />
-              <span>المنتجات / Products</span>
-            </label>
-
-            <label class="check-option">
-              <input
-                type="checkbox"
-                name="applications[]"
-                value="Digital Ads"
-              />
-              <span>الإعلانات الرقمية / Digital Ads</span>
-            </label>
-
-            <label class="check-option">
-              <input type="checkbox" name="applications[]" value="Other" />
-              <span>استخدامات أخرى / Other</span>
-            </label>
-          </div>
-
-          <div class="form-grid standalone-fields">
-            <div class="field">
-              <label for="logo-background">
-                لون الخلفية الأكثر استخدامًا
-                <small>Typical Background</small>
-              </label>
-              <select id="logo-background" name="logo_background">
-                <option value="">اختر الخلفية</option>
-                <option>فاتحة / Light</option>
-                <option>داكنة / Dark</option>
-                <option>فاتحة وداكنة / Both</option>
-                <option>لا يوجد تفضيل / No Preference</option>
-              </select>
-            </div>
-
-            <div class="field">
-              <label for="logo-versions">
-                نسخ الشعار المطلوبة
-                <small>Logo Variations</small>
-              </label>
-              <select id="logo-versions" name="logo_versions">
-                <option value="">اختر النسخ المطلوبة</option>
-                <option>ملون فقط / Full Color</option>
-                <option>أسود وأبيض / Black & White</option>
-                <option>ملون وأسود وأبيض / Both</option>
-                <option>أترك الاختيار للمصمم / Designer's Choice</option>
-              </select>
-            </div>
-          </div>
-        </section>
-
-        <!-- Section 07 -->
-        <section class="form-section">
-          <div class="section-heading">
-            <div class="section-number">07</div>
-
-            <div>
-              <h2>متطلبات إضافية</h2>
-              <p>Requirements & Additional Notes</p>
-            </div>
-          </div>
-
-          <div class="form-grid">
-            <div class="field">
-              <label for="required-elements">
-                عناصر تريد إضافتها إلى الشعار
-                <small>Required Elements</small>
-              </label>
-              <textarea
-                id="required-elements"
-                name="required_elements"
-                rows="3"
-                placeholder="مثل حروف أو رموز أو أشكال محددة"
-              ></textarea>
-            </div>
-
-            <div class="field">
-              <label for="forbidden-elements">
-                عناصر لا تريد ظهورها في الشعار
-                <small>Elements to Avoid</small>
-              </label>
-              <textarea
-                id="forbidden-elements"
-                name="forbidden_elements"
-                rows="3"
-                placeholder="اذكر أي رموز أو أشكال أو أفكار تريد تجنبها"
-              ></textarea>
-            </div>
-
-            <div class="field full-width">
-              <label for="additional-notes">
-                ملاحظات أخرى
-                <small>Additional Notes</small>
-              </label>
-              <textarea
-                id="additional-notes"
-                name="additional_notes"
-                rows="5"
-                placeholder="أضف أي تفاصيل أخرى تساعدنا على فهم تصورك للشعار"
-              ></textarea>
-            </div>
-          </div>
-        </section>
-
-        <!-- Section 08 -->
-        <section class="form-section">
-          <div class="section-heading">
-            <div class="section-number">08</div>
-
-            <div>
-              <h2>بيانات التواصل</h2>
-              <p>Contact Information</p>
-            </div>
-          </div>
-
-          <div class="form-grid">
-            <div class="field">
-              <label for="client-name">
-                الاسم بالكامل
-                <small>Full Name</small>
-              </label>
-              <input
-                id="client-name"
-                name="client_name"
-                type="text"
-                placeholder="اكتب اسمك بالكامل"
-                required
-              />
-            </div>
-
-            <div class="field">
-              <label for="phone">
-                رقم واتساب للتواصل
-                <small>WhatsApp Contact Number</small>
-              </label>
-              <input
-                id="phone"
-                name="phone"
-                type="tel"
-                dir="ltr"
-                placeholder="+20 1XX XXX XXXX"
-                required
-              />
-            </div>
-
-            <div class="field full-width">
-              <label for="social-link">
-                رابط الموقع أو حساب المشروع
-                <small>Website / Social Profile</small>
-              </label>
-              <input
-                id="social-link"
-                name="social_link"
-                type="url"
-                dir="ltr"
-                placeholder="https://"
-                required
-              />
-            </div>
-          </div>
-        </section>
-
-        <!-- Submit -->
-        <section class="submit-section">
-          <div class="submit-copy">
-            <span class="submit-overline">YOUR BRAND STARTS HERE</span>
-            <h2>كل فكرة عظيمة تبدأ بتفاصيل واضحة.</h2>
-            <p>يرجى مراجعة بياناتك قبل الضغط على «إرسال الطلب».</p>
-          </div>
-
-          <button type="submit" class="submit-button" id="submit-button">
-            <span id="submit-label">إرسال الطلب</span>
-          </button>
-
-          <p
-            id="form-status"
-            class="form-status"
-            role="status"
-            aria-live="polite"
-          ></p>
-
-          <p class="privacy-note">
-            تُرسل بياناتك إلى فريق التصميم لمراجعة طلبك.
-          </p>
-        </section>
-      </form>
-
-      <footer class="footer">
-        <span>HELIOCORD</span>
-        <span>© 2026 ALL RIGHTS RESERVED</span>
-      </footer>
-    </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="app.js"></script>
-  </body>
 </html>
