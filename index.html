@@ -76,11 +76,7 @@
               <small>Logo Name</small>
             </label>
 
-            <input
-              id="brand-name"
-              name="brand_name"
-              type="text"
-              placeholder="اكتب الاسم كما تريد ظهوره في التصميم"
+            <input id="brand-name" name="brand_name" type="text" placeholder="اكتب الاسم كما تريد ظهوره في التصميم"
               required />
           </div>
 
@@ -90,12 +86,7 @@
               <small>Business Type</small>
             </label>
 
-            <input
-              id="industry"
-              name="industry"
-              type="text"
-              placeholder="مثال: أزياء، تقنية، مطاعم، خدمات"
-              required />
+            <input id="industry" name="industry" type="text" placeholder="مثال: أزياء، تقنية، مطاعم، خدمات" required />
           </div>
 
           <div class="field full-width">
@@ -117,11 +108,7 @@
               <small>Slogan / Tagline</small>
             </label>
 
-            <input
-              id="slogan"
-              name="slogan"
-              type="text"
-              placeholder="اكتب العبارة التي تريد إضافتها إلى الشعار" />
+            <input id="slogan" name="slogan" type="text" placeholder="اكتب العبارة التي تريد إضافتها إلى الشعار" />
           </div>
         </div>
       </section>
@@ -144,12 +131,7 @@
               <small>Age Group</small>
             </label>
 
-            <input
-              type="text"
-              id="age-group"
-              name="age_group"
-              placeholder="مثال: من 18 إلى 35 سنة"
-              required />
+            <input type="text" id="age-group" name="age_group" placeholder="مثال: من 18 إلى 35 سنة" required />
           </div>
 
           <div class="field full-width">
@@ -285,44 +267,34 @@
           </div>
         </div>
 
-        <p class="section-description">
-          حدد أين ستستخدم الشعار لنراعي وضوحه وملاءمته لمختلف الاستخدامات.
-        </p>
+        <div class="field full-width">
+          <label>
+            أين سيتم استخدام الشعار؟
+            <small>Where Will the Logo Be Used?</small>
+          </label>
+        </div>
 
         <div class="checkbox-grid">
           <label class="check-option">
-            <input
-              type="checkbox"
-              name="applications[]"
-              value="Social Media"
-              required />
+            <input type="checkbox" name="applications[]" value="Social Media" required />
 
             <span>منصات التواصل الاجتماعي / Social Media</span>
           </label>
 
           <label class="check-option">
-            <input
-              type="checkbox"
-              name="applications[]"
-              value="Website" />
+            <input type="checkbox" name="applications[]" value="Website" />
 
             <span>الموقع الإلكتروني / Website</span>
           </label>
 
           <label class="check-option">
-            <input
-              type="checkbox"
-              name="applications[]"
-              value="Print" />
+            <input type="checkbox" name="applications[]" value="Print" />
 
             <span>المطبوعات / Print Materials</span>
           </label>
 
           <label class="check-option">
-            <input
-              type="checkbox"
-              name="applications[]"
-              value="Other" />
+            <input type="checkbox" name="applications[]" value="Other" />
 
             <span>استخدامات أخرى / Other</span>
           </label>
@@ -347,12 +319,7 @@
               <small>Full Name</small>
             </label>
 
-            <input
-              id="client-name"
-              name="client_name"
-              type="text"
-              placeholder="اكتب اسمك بالكامل"
-              required />
+            <input id="client-name" name="client_name" type="text" placeholder="اكتب اسمك بالكامل" required />
           </div>
 
           <div class="field">
@@ -361,19 +328,9 @@
               <small>WhatsApp Contact Number</small>
             </label>
 
-            <input
-              id="phone"
-              name="phone"
-              type="tel"
-              dir="ltr"
-              placeholder="01XXXXXXXXX"
-              inputmode="numeric"
-              pattern="[0-9]{11}"
-              minlength="11"
-              maxlength="11"
-              title="يجب إدخال رقم مكون من 11 رقمًا"
-              oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 11)"
-              required />
+            <input id="phone" name="phone" type="tel" dir="ltr" placeholder="01XXXXXXXXX" inputmode="numeric"
+              pattern="[0-9]{11}" minlength="11" maxlength="11" title="يجب إدخال رقم مكون من 11 رقمًا"
+              oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 11)" required />
           </div>
         </div>
       </section>
