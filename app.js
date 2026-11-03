@@ -453,6 +453,11 @@ function createReferenceId() {
 function isCustomerField(item) {
   const label = normalizeText(item.label);
 
+  // إبقاء اسم البراند ضمن تفاصيل ومتطلبات الشعار
+  if (label.includes(normalizeText("الاسم المطلوب في الشعار"))) {
+    return false;
+  }
+
   const customerKeywords = [
     "اسم العميل",
     "اسمك",
@@ -521,7 +526,16 @@ function createReport(referenceId, answers) {
     (item) => !isCustomerField(item) && item.label !== "نوع الشعار",
   );
 
+  const brandNameAnswer = otherAnswers.find(
+    (item) => item.label.includes("الاسم المطلوب في الشعار")
+  );
+
+  const remainingAnswers = otherAnswers.filter(
+    (item) => item !== brandNameAnswer
+  );
+
   const detailsAnswers = [
+    ...(brandNameAnswer ? [brandNameAnswer] : []),
     ...(logoTypeAnswer
       ? [
         {
@@ -530,7 +544,7 @@ function createReport(referenceId, answers) {
         },
       ]
       : []),
-    ...otherAnswers,
+    ...remainingAnswers,
   ];
 
   const customerCards = customerAnswers
