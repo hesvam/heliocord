@@ -374,7 +374,9 @@ function collectAnswers() {
     // الاحتفاظ بقيمة نوع الشعار بالإنجليزية فقط
     if (element.name === "logo_type" && element.type === "radio") {
       value = element.value.trim();
-    } else if (element.type === "checkbox" || element.type === "radio") {
+    } else if (element.type === "checkbox") {
+      value = element.closest("label")?.querySelector("span")?.innerText.trim() || element.value;
+    } else if (element.type === "radio") {
       value = getFieldLabel(element);
     }
 
