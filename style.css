@@ -308,7 +308,7 @@ select {
   line-height: 1.9;
 }
 
-.field label > span {
+.field label>span {
   display: inline;
   color: #555555;
 }
@@ -707,8 +707,8 @@ select {
   }
 
   .brand-logo {
-    width: 70px;
-    height: 70px;
+    width: 65px;
+    height: 65px;
   }
 
   .hero {
@@ -728,7 +728,7 @@ select {
   }
 
   .hero h1 {
-    font-size: 26px;
+    font-size: 24px;
     letter-spacing: -0.7px;
   }
 
@@ -758,7 +758,11 @@ select {
   }
 
   .section-heading h2 {
-    font-size: 15px;
+    font-size: 14px;
+  }
+
+  .section-heading p {
+    font-size: 10px;
   }
 
   .form-grid {
@@ -796,6 +800,14 @@ select {
 
   .standalone-fields {
     margin-top: 21px;
+  }
+
+  .field label {
+    font-size: 11px;
+  }
+
+  .field label small {
+    font-size: 9px;
   }
 
   .submit-section {
