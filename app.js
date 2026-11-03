@@ -1,3 +1,4 @@
+
 const form = document.getElementById("brief-form");
 const submitButton = document.getElementById("submit-button");
 const submitLabel = document.getElementById("submit-label");
@@ -786,6 +787,227 @@ function setStatus(message, success = false) {
 }
 
 /* =========================================
+   8.1 SUCCESS SCREEN
+========================================= */
+
+function showSuccessScreen(referenceId) {
+  const successScreen = document.createElement("section");
+
+  successScreen.id = "submission-success";
+  successScreen.dir = "rtl";
+
+  Object.assign(successScreen.style, {
+    width: "100%",
+    maxWidth: "600px",
+    margin: "50px auto",
+    padding: "55px 30px",
+    background: "#ffffff",
+    border: "1px solid #e8e8e8",
+    borderRadius: "12px",
+    textAlign: "center",
+    boxSizing: "border-box",
+    animation: "successFadeIn 0.5s ease forwards",
+  });
+
+  successScreen.innerHTML = `
+    <div style="
+      width: 66px;
+      height: 66px;
+      margin: 0 auto 24px;
+      background: #111111;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    ">
+      <svg
+        width="30"
+        height="30"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="#ffffff"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
+        <path d="M5 12.5L10 17L19 7"/>
+      </svg>
+    </div>
+
+    <h2 style="
+      margin: 0 0 12px;
+      color: #111111;
+      font-family: Cairo, sans-serif;
+      font-size: 25px;
+      font-weight: 800;
+      line-height: 1.5;
+    ">
+      تم استلام طلبك بنجاح
+    </h2>
+
+    <p style="
+      max-width: 430px;
+      margin: 0 auto 30px;
+      color: #777777;
+      font-family: Cairo, sans-serif;
+      font-size: 14px;
+      line-height: 2;
+    ">
+      شكرًا لثقتك في HELIOCORD. وصلتنا تفاصيل مشروعك،
+      وفريق التصميم هيبدأ بمراجعتها وسنتواصل معك قريبًا.
+    </p>
+
+    <div style="
+      padding: 20px;
+      background: #f7f7f7;
+      border: 1px solid #eeeeee;
+      border-radius: 9px;
+    ">
+      <div style="
+        margin-bottom: 10px;
+        color: #888888;
+        font-family: Cairo, sans-serif;
+        font-size: 12px;
+      ">
+        رقم الطلب الخاص بك
+      </div>
+
+      <div
+        id="success-reference-id"
+        dir="ltr"
+        style="
+          color: #111111;
+          font-family: Inter, Arial, sans-serif;
+          font-size: 17px;
+          font-weight: 700;
+          letter-spacing: 0.5px;
+          overflow-wrap: anywhere;
+        "
+      >
+        ${escapeHTML(referenceId)}
+      </div>
+
+      <button
+        type="button"
+        id="copy-reference-button"
+        style="
+          margin-top: 17px;
+          padding: 9px 18px;
+          background: #111111;
+          color: #ffffff;
+          border: none;
+          border-radius: 6px;
+          font-family: Cairo, sans-serif;
+          font-size: 12px;
+          font-weight: 600;
+          cursor: pointer;
+          transition: opacity 0.2s ease;
+        "
+      >
+        نسخ رقم الطلب
+      </button>
+    </div>
+
+    <div style="
+      margin-top: 35px;
+      color: #999999;
+      font-family: Inter, Arial, sans-serif;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 2px;
+    ">
+      HELIOCORD — LOGO DESIGN
+    </div>
+  `;
+
+  // إضافة حركة ظهور شاشة النجاح
+  if (!document.getElementById("success-screen-styles")) {
+    const style = document.createElement("style");
+
+    style.id = "success-screen-styles";
+
+    style.textContent = `
+      @keyframes successFadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(12px);
+        }
+
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      #copy-reference-button:hover {
+        opacity: 0.85;
+      }
+
+      @media (max-width: 650px) {
+        #submission-success {
+          margin: 25px auto !important;
+          padding: 40px 20px !important;
+        }
+
+        #submission-success h2 {
+          font-size: 21px !important;
+        }
+
+        #success-reference-id {
+          font-size: 14px !important;
+        }
+      }
+    `;
+
+    document.head.appendChild(style);
+  }
+
+  // إخفاء الفورم وإظهار شاشة النجاح
+  form.style.display = "none";
+
+  form.insertAdjacentElement("afterend", successScreen);
+
+  // زر نسخ رقم الطلب
+  const copyButton = successScreen.querySelector(
+    "#copy-reference-button",
+  );
+
+  copyButton.addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(referenceId);
+
+      copyButton.textContent = "تم نسخ رقم الطلب";
+    } catch (error) {
+      // بديل في حالة عدم دعم Clipboard API
+      const temporaryInput = document.createElement("textarea");
+
+      temporaryInput.value = referenceId;
+      temporaryInput.style.position = "fixed";
+      temporaryInput.style.opacity = "0";
+
+      document.body.appendChild(temporaryInput);
+
+      temporaryInput.select();
+
+      const copied = document.execCommand("copy");
+
+      temporaryInput.remove();
+
+      copyButton.textContent = copied
+        ? "تم نسخ رقم الطلب"
+        : "تعذر النسخ، يرجى نسخ الرقم يدويًا";
+    }
+  });
+
+  // الانتقال إلى شاشة النجاح
+  successScreen.scrollIntoView({
+    behavior: "smooth",
+    block: "center",
+  });
+}
+
+/* =========================================
    9. WAIT FOR RENDERING
 ========================================= */
 
@@ -1059,12 +1281,9 @@ if (form && submitButton && submitLabel) {
         );
       }
 
-      setStatus(
-        `تم استلام طلبك رقم ${referenceId} بنجاح، وسيتم التواصل معك للتأكيد.`,
-        true,
-      );
+      // عرض شاشة النجاح بعد تأكيد نجاح الإرسال
+      showSuccessScreen(referenceId);
 
-      submitLabel.textContent = "تم إرسال طلبك";
     } catch (error) {
       console.error("Brief submission failed:", error);
 
