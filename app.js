@@ -374,16 +374,18 @@ function collectAnswers() {
     // الاحتفاظ بقيمة نوع الشعار بالإنجليزية فقط
     if (element.name === "logo_type" && element.type === "radio") {
       value = element.value.trim();
-    } else if (element.type === "checkbox") {
-      value = element.closest("label")?.querySelector("span")?.innerText.trim() || element.value;
-    } else if (element.type === "radio") {
+    } else if (element.type === "checkbox" || element.type === "radio") {
       value = getFieldLabel(element);
     }
 
     if (!value) continue;
 
     const label =
-      element.name === "logo_type" ? "نوع الشعار" : getFieldLabel(element);
+      element.name === "logo_type"
+        ? "نوع الشعار"
+        : element.name === "applications[]"
+          ? element.closest(".checkbox-grid")?.previousElementSibling?.querySelector("label")?.innerText.replace(/\s+/g, " ").trim() || "استخدامات الشعار"
+          : getFieldLabel(element);
 
     if (grouped.has(key)) {
       const existing = grouped.get(key);
