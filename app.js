@@ -59,7 +59,292 @@ function getFieldLabel(element) {
 }
 
 /* =========================================
-   2. COLLECT FORM ANSWERS
+   2. FORM VALIDATION
+========================================= */
+
+function clearValidationErrors() {
+  form.querySelectorAll(".is-invalid").forEach((element) => {
+    element.classList.remove("is-invalid");
+  });
+
+  form.querySelectorAll(".has-error").forEach((element) => {
+    element.classList.remove("has-error");
+  });
+
+  form.querySelectorAll(".field-error-message, .group-error-message").forEach(
+    (message) => {
+      message.remove();
+    },
+  );
+
+  form.querySelectorAll('[aria-invalid="true"]').forEach((element) => {
+    element.removeAttribute("aria-invalid");
+  });
+}
+
+function showFieldError(field, message) {
+  if (!field) return;
+
+  field.classList.add("is-invalid");
+
+  const input = field.querySelector("input, select, textarea");
+
+  if (input) {
+    input.setAttribute("aria-invalid", "true");
+  }
+
+  const error = document.createElement("span");
+
+  error.className = "field-error-message";
+  error.textContent = message;
+
+  field.appendChild(error);
+}
+
+function showGroupError(group, message) {
+  if (!group) return;
+
+  group.classList.add("has-error");
+
+  group.querySelectorAll("input").forEach((input) => {
+    input.setAttribute("aria-invalid", "true");
+  });
+
+  const error = document.createElement("span");
+
+  error.className = "group-error-message";
+  error.textContent = message;
+
+  group.insertAdjacentElement("afterend", error);
+}
+
+function getValidationMessage(element) {
+  if (element.validity.valueMissing) {
+    return getCustomErrorMessage(element);
+  }
+
+  if (element.validity.patternMismatch) {
+    if (element.name === "phone") {
+      return "يرجى إدخال رقم واتساب مكوّن من 11 رقمًا.";
+    }
+
+    return "يرجى إدخال البيانات بالتنسيق الصحيح.";
+  }
+
+  if (element.validity.tooShort || element.validity.tooLong) {
+    if (element.name === "phone") {
+      return "رقم واتساب يجب أن يتكون من 11 رقمًا بالضبط.";
+    }
+
+    return "عدد الأحرف المدخل غير صحيح.";
+  }
+
+  if (element.validity.typeMismatch) {
+    return "يرجى إدخال قيمة صحيحة.";
+  }
+
+  return "يرجى مراجعة هذا الحقل.";
+}
+
+function getElementsByName(name) {
+  return Array.from(form.elements).filter(
+    (element) => element.name === name,
+  );
+}
+
+function validateForm() {
+  clearValidationErrors();
+
+  const invalidItems = [];
+
+  /* -----------------------------
+     Required radio groups
+  ----------------------------- */
+
+  const requiredRadioGroups = new Set();
+
+  form.querySelectorAll('input[type="radio"][required]').forEach((radio) => {
+    if (radio.name) {
+      requiredRadioGroups.add(radio.name);
+    }
+  });
+
+  requiredRadioGroups.forEach((name) => {
+    const radios = getElementsByName(name).filter(
+      (element) => element.type === "radio",
+    );
+
+    const isChecked = radios.some((radio) => radio.checked);
+
+    if (!isChecked) {
+      const group = radios[0]?.closest(".choice-grid");
+
+      showGroupError(
+        group,
+        "يرجى اختيار نوع الشعار المناسب.",
+      );
+
+      invalidItems.push({
+        element: group,
+        focusElement: radios[0],
+      });
+    }
+  });
+
+  /* -----------------------------
+     Required checkbox groups
+  ----------------------------- */
+
+  const requiredCheckboxGroups = new Set();
+
+  form.querySelectorAll('input[type="checkbox"][required]').forEach((checkbox) => {
+    if (checkbox.name) {
+      requiredCheckboxGroups.add(checkbox.name);
+    }
+  });
+
+  requiredCheckboxGroups.forEach((name) => {
+    const checkboxes = getElementsByName(name).filter(
+      (element) => element.type === "checkbox",
+    );
+
+    const isChecked = checkboxes.some((checkbox) => checkbox.checked);
+
+    if (!isChecked) {
+      const group = checkboxes[0]?.closest(".checkbox-grid");
+
+      showGroupError(
+        group,
+        "يرجى اختيار استخدام واحد على الأقل للشعار.",
+      );
+
+      invalidItems.push({
+        element: group,
+        focusElement: checkboxes[0],
+      });
+    }
+  });
+
+  /* -----------------------------
+     Required normal fields
+  ----------------------------- */
+
+  const requiredFields = form.querySelectorAll(
+    "input[required], select[required], textarea[required]",
+  );
+
+  requiredFields.forEach((element) => {
+    if (
+      element.type === "radio" ||
+      element.type === "checkbox"
+    ) {
+      return;
+    }
+
+    if (!element.checkValidity()) {
+      const field = element.closest(".field");
+
+      showFieldError(field, getValidationMessage(element));
+
+      invalidItems.push({
+        element: field,
+        focusElement: element,
+      });
+    }
+  });
+
+  /* -----------------------------
+     Focus first invalid field
+  ----------------------------- */
+
+  if (invalidItems.length > 0) {
+    const firstInvalid = invalidItems[0];
+
+    firstInvalid.element?.scrollIntoView({
+      behavior: "smooth",
+      block: "center",
+    });
+
+    window.setTimeout(() => {
+      firstInvalid.focusElement?.focus({
+        preventScroll: true,
+      });
+    }, 350);
+
+    return false;
+  }
+
+  return true;
+}
+
+/* =========================================
+   3. CLEAR ERRORS WHILE EDITING
+========================================= */
+
+function clearFieldError(element) {
+  const field = element.closest(".field");
+
+  if (!field) return;
+
+  if (element.checkValidity()) {
+    field.classList.remove("is-invalid");
+
+    field.querySelector(".field-error-message")?.remove();
+
+    element.removeAttribute("aria-invalid");
+  }
+}
+
+function clearGroupError(element) {
+  const group = element.closest(".choice-grid, .checkbox-grid");
+
+  if (!group) return;
+
+  const checkedInput = group.querySelector("input:checked");
+
+  if (checkedInput) {
+    group.classList.remove("has-error");
+
+    group.nextElementSibling
+      ?.classList.contains("group-error-message") &&
+      group.nextElementSibling.remove();
+
+    group.querySelectorAll('[aria-invalid="true"]').forEach((input) => {
+      input.removeAttribute("aria-invalid");
+    });
+  }
+}
+
+if (form) {
+  form.addEventListener("input", (event) => {
+    const element = event.target;
+
+    if (
+      element.matches("input, select, textarea") &&
+      !["radio", "checkbox"].includes(element.type)
+    ) {
+      clearFieldError(element);
+    }
+  });
+
+  form.addEventListener("change", (event) => {
+    const element = event.target;
+
+    if (
+      element.matches('input[type="radio"], input[type="checkbox"]')
+    ) {
+      clearGroupError(element);
+      return;
+    }
+
+    if (element.matches("select")) {
+      clearFieldError(element);
+    }
+  });
+}
+
+/* =========================================
+   4. COLLECT FORM ANSWERS
 ========================================= */
 
 function collectAnswers() {
@@ -117,7 +402,7 @@ function collectAnswers() {
 }
 
 /* =========================================
-   3. REFERENCE NUMBER
+   5. REFERENCE NUMBER
 ========================================= */
 
 function createReferenceId() {
@@ -146,7 +431,7 @@ function createReferenceId() {
 }
 
 /* =========================================
-   4. IDENTIFY CUSTOMER INFORMATION
+   6. IDENTIFY CUSTOMER INFORMATION
 ========================================= */
 
 function isCustomerField(item) {
@@ -182,7 +467,7 @@ function isCustomerField(item) {
 }
 
 /* =========================================
-   5. CREATE PROFESSIONAL REPORT
+   7. CREATE PROFESSIONAL REPORT
 ========================================= */
 
 function createReport(referenceId, answers) {
@@ -210,30 +495,28 @@ function createReport(referenceId, answers) {
     overflow: "visible",
   });
 
-  // تقسيم الإجابات
   const customerAnswers = answers.filter(isCustomerField);
 
-  const logoTypeAnswer = answers.find((item) => item.label === "نوع الشعار");
+  const logoTypeAnswer = answers.find(
+    (item) => item.label === "نوع الشعار",
+  );
 
   const otherAnswers = answers.filter(
     (item) => !isCustomerField(item) && item.label !== "نوع الشعار",
   );
 
-  // نوع الشعار أول بطاقة داخل قسم التفاصيل
   const detailsAnswers = [
     ...(logoTypeAnswer
       ? [
-          {
-            label: "نوع الشعار",
-            value: logoTypeAnswer.value,
-          },
-        ]
+        {
+          label: "نوع الشعار",
+          value: logoTypeAnswer.value,
+        },
+      ]
       : []),
     ...otherAnswers,
   ];
 
-  // بطاقات بيانات العميل
-  // بطاقة الهاتف تمتد بعرض العمودين
   const customerCards = customerAnswers
     .map((item) => {
       const isPhoneField =
@@ -242,88 +525,85 @@ function createReport(referenceId, answers) {
         );
 
       return `
-    <div style="
-      grid-column: ${isPhoneField ? "1 / -1" : "auto"};
-      padding: 9px 11px;
-      border: 1px solid #e1e4e8;
-      border-radius: 6px;
-      background: #ffffff;
-      min-width: 0;
-      box-sizing: border-box;
-      overflow-wrap: anywhere;
-    ">
-      <div style="
-        font-size: 10px;
-        color: #737983;
-        margin-bottom: 3px;
-      ">${escapeHTML(item.label)}</div>
+        <div style="
+          grid-column: ${isPhoneField ? "1 / -1" : "auto"};
+          padding: 9px 11px;
+          border: 1px solid #e1e4e8;
+          border-radius: 6px;
+          background: #ffffff;
+          min-width: 0;
+          box-sizing: border-box;
+          overflow-wrap: anywhere;
+        ">
+          <div style="
+            font-size: 10px;
+            color: #737983;
+            margin-bottom: 3px;
+          ">${escapeHTML(item.label)}</div>
 
-      <div style="
-        font-size: 12px;
-        color: #171717;
-        font-weight: 700;
-        white-space: pre-wrap;
-        overflow-wrap: anywhere;
-      ">${escapeHTML(item.value)}</div>
-    </div>
-  `;
+          <div style="
+            font-size: 12px;
+            color: #171717;
+            font-weight: 700;
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
+          ">${escapeHTML(item.value)}</div>
+        </div>
+      `;
     })
     .join("");
 
-  // بطاقات تفاصيل ومتطلبات الشعار
-  // جميع القيم تستخدم نفس التنسيق بما فيها Wordmark
   const answerCards = detailsAnswers
     .map(
       (item, index) => `
-    <div style="
-      padding: 9px 11px;
-      border: 1px solid #e5e7eb;
-      border-radius: 6px;
-      background: #ffffff;
-      min-width: 0;
-      box-sizing: border-box;
-      overflow-wrap: anywhere;
-    ">
-      <div style="
-        display: flex;
-        align-items: flex-start;
-        gap: 7px;
-        margin-bottom: 4px;
-      ">
-        <span style="
-          display: inline-block;
-          min-width: 22px;
-          padding: 2px 4px;
-          background: #171717;
-          color: #ffffff;
-          border-radius: 4px;
-          font-size: 9px;
-          text-align: center;
+        <div style="
+          padding: 9px 11px;
+          border: 1px solid #e5e7eb;
+          border-radius: 6px;
+          background: #ffffff;
+          min-width: 0;
           box-sizing: border-box;
-        ">${String(index + 1).padStart(2, "0")}</span>
-
-        <span style="
-          font-size: 10px;
-          color: #6b7280;
-          font-weight: 700;
           overflow-wrap: anywhere;
-        ">${escapeHTML(item.label)}</span>
-      </div>
+        ">
+          <div style="
+            display: flex;
+            align-items: flex-start;
+            gap: 7px;
+            margin-bottom: 4px;
+          ">
+            <span style="
+              display: inline-block;
+              min-width: 22px;
+              padding: 2px 4px;
+              background: #171717;
+              color: #ffffff;
+              border-radius: 4px;
+              font-size: 9px;
+              text-align: center;
+              box-sizing: border-box;
+            ">${String(index + 1).padStart(2, "0")}</span>
 
-      <div style="
-        font-size: 11px;
-        color: #171717;
-        line-height: 1.65;
-        white-space: pre-wrap;
-        overflow-wrap: anywhere;
-        word-break: break-word;
-      ">${escapeHTML(item.value)}</div>
-    </div>
-  `,
+            <span style="
+              font-size: 10px;
+              color: #6b7280;
+              font-weight: 700;
+              overflow-wrap: anywhere;
+            ">${escapeHTML(item.label)}</span>
+          </div>
+
+          <div style="
+            font-size: 11px;
+            color: #171717;
+            line-height: 1.65;
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
+            word-break: break-word;
+          ">${escapeHTML(item.value)}</div>
+        </div>
+      `,
     )
     .join("");
 
-  // محتوى تقرير PDF
   report.innerHTML = `
     <header style="
       padding-bottom: 13px;
@@ -387,7 +667,6 @@ function createReport(referenceId, answers) {
       </div>
     </header>
 
-    <!-- 01: بيانات العميل -->
     <section style="margin-bottom: 14px;">
       <div style="
         font-size: 13px;
@@ -404,9 +683,8 @@ function createReport(referenceId, answers) {
         grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 7px;
       ">
-        ${
-          customerCards ||
-          `<div style="
+        ${customerCards ||
+    `<div style="
             grid-column: 1 / -1;
             padding: 9px 11px;
             border: 1px solid #e1e4e8;
@@ -414,11 +692,10 @@ function createReport(referenceId, answers) {
             color: #777777;
             font-size: 10px;
           ">بيانات العميل غير محددة بشكل منفصل. راجع أسماء الحقول في النموذج.</div>`
-        }
+    }
       </div>
     </section>
 
-    <!-- 02: تفاصيل ومتطلبات الشعار -->
     <section>
       <div style="
         font-size: 13px;
@@ -435,14 +712,13 @@ function createReport(referenceId, answers) {
         grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 7px;
       ">
-        ${
-          answerCards ||
-          `<div style="
+        ${answerCards ||
+    `<div style="
             padding: 10px;
             border: 1px solid #e5e7eb;
             color: #777777;
           ">لا توجد تفاصيل إضافية.</div>`
-        }
+    }
       </div>
     </section>
 
@@ -468,18 +744,23 @@ function createReport(referenceId, answers) {
 }
 
 /* =========================================
-   6. STATUS MESSAGES
+   8. STATUS MESSAGES
 ========================================= */
 
 function setStatus(message, success = false) {
   if (!statusBox) return;
 
   statusBox.textContent = message;
-  statusBox.dataset.state = success ? "success" : "error";
+
+  if (message) {
+    statusBox.dataset.state = success ? "success" : "error";
+  } else {
+    delete statusBox.dataset.state;
+  }
 }
 
 /* =========================================
-   7. WAIT FOR RENDERING
+   9. WAIT FOR RENDERING
 ========================================= */
 
 async function waitForRender() {
@@ -495,7 +776,7 @@ async function waitForRender() {
 }
 
 /* =========================================
-   8. GENERATE ONE-PAGE PDF
+   10. GENERATE ONE-PAGE PDF
 ========================================= */
 
 async function generatePDF(report) {
@@ -517,10 +798,14 @@ async function generatePDF(report) {
     scrollX: 0,
     scrollY: 0,
     windowWidth: 1000,
-    windowHeight: Math.max(window.innerHeight, report.scrollHeight + 100),
+    windowHeight: Math.max(
+      window.innerHeight,
+      report.scrollHeight + 100,
+    ),
 
     onclone: (clonedDocument) => {
-      const clonedReport = clonedDocument.getElementById(PDF_REPORT_ID);
+      const clonedReport =
+        clonedDocument.getElementById(PDF_REPORT_ID);
 
       if (!clonedReport) {
         throw new Error("لم يتم العثور على التقرير للتصوير.");
@@ -555,12 +840,21 @@ async function generatePDF(report) {
     throw new Error("تعذر قراءة صورة التقرير.");
   }
 
-  const pixels = context.getImageData(0, 0, canvas.width, canvas.height).data;
+  const pixels = context.getImageData(
+    0,
+    0,
+    canvas.width,
+    canvas.height,
+  ).data;
 
   let visiblePixels = 0;
 
   for (let i = 0; i < pixels.length; i += 4) {
-    if (pixels[i] < 245 || pixels[i + 1] < 245 || pixels[i + 2] < 245) {
+    if (
+      pixels[i] < 245 ||
+      pixels[i + 1] < 245 ||
+      pixels[i + 2] < 245
+    ) {
       visiblePixels++;
 
       if (visiblePixels > 100) break;
@@ -568,7 +862,9 @@ async function generatePDF(report) {
   }
 
   if (visiblePixels <= 100) {
-    throw new Error("تم التقاط التقرير كصفحة بيضاء. لم يتم إرسال PDF.");
+    throw new Error(
+      "تم التقاط التقرير كصفحة بيضاء. لم يتم إرسال PDF.",
+    );
   }
 
   const { jsPDF } = window.jspdf;
@@ -584,6 +880,7 @@ async function generatePDF(report) {
   const pageHeight = pdf.internal.pageSize.getHeight();
 
   const margin = 7;
+
   const availableWidth = pageWidth - margin * 2;
   const availableHeight = pageHeight - margin * 2;
 
@@ -617,7 +914,9 @@ async function generatePDF(report) {
     throw new Error("ملف PDF الناتج فارغ أو غير مكتمل.");
   }
 
-  const signature = new Uint8Array(await pdfBlob.slice(0, 5).arrayBuffer());
+  const signature = new Uint8Array(
+    await pdfBlob.slice(0, 5).arrayBuffer(),
+  );
 
   if (String.fromCharCode(...signature) !== "%PDF-") {
     throw new Error("ملف PDF الناتج غير صالح.");
@@ -627,7 +926,42 @@ async function generatePDF(report) {
 }
 
 /* =========================================
-   9. SUBMIT FORM AND SEND PDF
+   CUSTOM FIELD VALIDATION MESSAGES
+========================================= */
+
+function getCustomErrorMessage(element) {
+  const messages = {
+    brand_name: "يرجى إدخال اسم الشعار.",
+    industry: "يرجى تحديد نوع النشاط التجاري.",
+    brand_stage: "يرجى اختيار حالة المشروع.",
+    age_group: "يرجى تحديد الفئة العمرية المستهدفة.",
+    audience_gender: "يرجى اختيار النوع المستهدف.",
+    logo_language: "يرجى اختيار لغة الشعار.",
+    client_name: "يرجى إدخال اسمك بالكامل.",
+    phone: "يرجى إدخال رقم واتساب مكوّن من 11 رقمًا.",
+  };
+
+  if (element.name === "logo_type") {
+    return "يرجى اختيار نوع الشعار المناسب.";
+  }
+
+  if (element.name === "applications[]") {
+    return "يرجى تحديد استخدام واحد على الأقل للشعار.";
+  }
+
+  if (element.validity.valueMissing) {
+    return messages[element.name] || "يرجى استكمال هذا الحقل.";
+  }
+
+  if (element.name === "phone" && !element.validity.valid) {
+    return "رقم واتساب يجب أن يتكون من 11 رقمًا بالضبط.";
+  }
+
+  return messages[element.name] || "يرجى مراجعة البيانات المدخلة.";
+}
+
+/* =========================================
+   11. SUBMIT FORM AND SEND PDF
 ========================================= */
 
 if (form && submitButton && submitLabel) {
@@ -636,7 +970,12 @@ if (form && submitButton && submitLabel) {
 
     if (submitButton.disabled) return;
 
-    if (!form.reportValidity()) return;
+    setStatus("");
+
+    // التحقق من جميع الحقول المطلوبة قبل بدء الإرسال
+    if (!validateForm()) {
+      return;
+    }
 
     if (
       typeof html2canvas === "undefined" ||
@@ -646,11 +985,13 @@ if (form && submitButton && submitLabel) {
       setStatus(
         "تعذر تحميل مكتبات PDF. تأكد من تحميل html2canvas وjsPDF قبل app.js.",
       );
+
       return;
     }
 
     submitButton.disabled = true;
     submitLabel.textContent = "جاري تجهيز طلبك...";
+
     setStatus("");
 
     let report = null;
@@ -673,7 +1014,11 @@ if (form && submitButton && submitLabel) {
       requestData.append("referenceId", referenceId);
       requestData.append("payload", JSON.stringify(answers));
 
-      requestData.append("report", pdfBlob, `Logo-Brief-${referenceId}.pdf`);
+      requestData.append(
+        "report",
+        pdfBlob,
+        `Logo-Brief-${referenceId}.pdf`,
+      );
 
       const response = await fetch("/api/submit", {
         method: "POST",
@@ -683,10 +1028,15 @@ if (form && submitButton && submitLabel) {
       const result = await response.json().catch(() => ({}));
 
       if (!response.ok || !result.success) {
-        throw new Error(result.message || "لم نتمكن من إرسال طلبك.");
+        throw new Error(
+          result.message || "لم نتمكن من إرسال طلبك.",
+        );
       }
 
-      setStatus(`تم إرسال طلبك بنجاح! رقم الطلب: ${referenceId}`, true);
+      setStatus(
+        `تم استلام طلبك رقم ${referenceId} بنجاح، وسيتم التواصل معك للتأكيد.`,
+        true,
+      );
 
       submitLabel.textContent = "تم إرسال طلبك";
     } catch (error) {
