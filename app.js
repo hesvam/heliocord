@@ -656,7 +656,7 @@ function createReport(referenceId, answers) {
         align-items: center;
       ">
         <span style="font-size: 10px; color: #666666;">
-          رقم مرجع الطلب
+          رقم الطلب
         </span>
 
         <strong dir="ltr" style="
