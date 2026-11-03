@@ -549,37 +549,33 @@ function createReport(referenceId, answers) {
 
   const customerCards = customerAnswers
     .map((item) => {
-      const isPhoneField =
-        /phone|whatsapp|واتساب|رقم الهاتف|رقم الموبايل|رقم التليفون/i.test(
-          item.label,
-        );
-
       return `
+      <div style="
+        padding: 9px 11px;
+        border: 1px solid #e1e4e8;
+        border-radius: 6px;
+        background: #ffffff;
+        min-width: 0;
+        box-sizing: border-box;
+        overflow-wrap: anywhere;
+      ">
         <div style="
-          grid-column: ${isPhoneField ? "1 / -1" : "auto"};
-          padding: 9px 11px;
-          border: 1px solid #e1e4e8;
-          border-radius: 6px;
-          background: #ffffff;
-          min-width: 0;
-          box-sizing: border-box;
-          overflow-wrap: anywhere;
-        ">
-          <div style="
-            font-size: 10px;
-            color: #737983;
-            margin-bottom: 3px;
-          ">${escapeHTML(item.label)}</div>
+          font-size: 10px;
+          color: #737983;
+          margin-bottom: 4px;
+        ">${escapeHTML(item.label)}</div>
 
-          <div style="
-            font-size: 12px;
-            color: #171717;
-            font-weight: 700;
-            white-space: pre-wrap;
-            overflow-wrap: anywhere;
-          ">${escapeHTML(item.value)}</div>
-        </div>
-      `;
+        <div style="
+          font-size: 11px;
+          color: #171717;
+          font-weight: 700;
+          line-height: 1.65;
+          white-space: pre-wrap;
+          overflow-wrap: anywhere;
+          word-break: break-word;
+        ">${escapeHTML(item.value)}</div>
+      </div>
+    `;
     })
     .join("");
 
