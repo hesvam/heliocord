@@ -909,7 +909,7 @@ async function generatePDF(report) {
   const imageHeight = canvas.height * scale;
 
   const x = (pageWidth - imageWidth) / 2;
-  const y = (pageHeight - imageHeight) / 2;
+  const y = margin;
 
   const imageData = canvas.toDataURL("image/jpeg", 0.98);
 
