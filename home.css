@@ -1,0 +1,884 @@
+/* ==============================
+   HELIOCORD — HOME PAGE
+   Refined Services Cards
+============================== */
+
+
+/* ==============================
+   ROOT & RESET
+============================== */
+
+:root {
+  --bg: #080808;
+  --surface: #101010;
+  --surface-light: #151515;
+
+  --white: #ffffff;
+  --text: #eeeeee;
+  --muted: #888888;
+  --border: #252525;
+
+  --green: #65c98a;
+  --yellow: #e8bd63;
+
+  --transition: 250ms ease;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 20px;
+}
+
+body {
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Cairo", sans-serif;
+  font-size: 14px;
+  line-height: 1.8;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+::selection {
+  background: #fff;
+  color: #000;
+}
+
+
+/* ==============================
+   MAIN LAYOUT
+============================== */
+
+.home-shell {
+  width: min(100% - 64px, 1120px);
+  min-height: 100vh;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+
+/* ==============================
+   HEADER
+============================== */
+
+.site-header {
+  width: 100%;
+  height: 76px;
+  min-height: 76px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+}
+
+.brand-logo {
+  width: 68px;
+  height: 68px;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+}
+
+
+/* ==============================
+   HERO SECTION
+============================== */
+
+.home-hero {
+  min-height: 390px;
+  display: grid;
+  grid-template-columns: 1fr;
+  align-items: center;
+  gap: 35px;
+  padding: 50px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.hero-content {
+  animation: fadeUp .65s ease both;
+}
+
+.home-eyebrow,
+.section-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  color: var(--muted);
+  font: 600 9px/1.8 "Inter", "Cairo", sans-serif;
+  letter-spacing: 1.3px;
+}
+
+.status-dot {
+  width: 6px;
+  height: 6px;
+  background: #fff;
+  border-radius: 50%;
+}
+
+.home-hero h1 {
+  max-width: 620px;
+  margin-top: 18px;
+  color: #fff;
+  font-size: clamp(32px, 4.5vw, 48px);
+  font-weight: 800;
+  line-height: 1.4;
+  letter-spacing: -1.5px;
+}
+
+.home-hero h1 span {
+  display: block;
+  color: #777;
+}
+
+.home-hero p {
+  max-width: 470px;
+  margin-top: 15px;
+  color: #888;
+  font-size: 12px;
+  line-height: 2;
+}
+
+.hero-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 24px;
+}
+
+
+/* ==============================
+   BUTTON
+============================== */
+
+.primary-btn {
+  min-height: 43px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 13px;
+  padding: 0 17px;
+  color: #000;
+  background: #fff;
+  border: 1px solid #fff;
+  border-radius: 5px;
+  font-size: 11px;
+  font-weight: 700;
+  transition: var(--transition);
+}
+
+/* ==============================
+   SERVICES SECTION
+============================== */
+
+.services-section {
+  padding: 75px 0;
+}
+
+.section-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 25px;
+  margin-bottom: 32px;
+}
+
+.section-heading h2 {
+  margin-top: 8px;
+  color: #fff;
+  font-size: 29px;
+  font-weight: 800;
+}
+
+.section-heading h2 span {
+  color: #777;
+}
+
+.section-heading>p {
+  max-width: 320px;
+  color: #888;
+  font-size: 11px;
+  line-height: 2;
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+
+/* ==============================
+   SERVICE CARDS
+============================== */
+
+.service-card {
+  min-width: 0;
+  min-height: 365px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 27px;
+  color: #fff;
+
+  background:
+    radial-gradient(circle at 90% 0%,
+      rgba(255, 255, 255, .055),
+      transparent 45%),
+    linear-gradient(145deg, #141414, #0e0e0e);
+
+  border: 1px solid #282828;
+  border-radius: 12px;
+  overflow: hidden;
+  isolation: isolate;
+
+  transition:
+    border-color .35s ease,
+    background .35s ease;
+
+  animation: cardReveal .8s cubic-bezier(.2, .7, .2, 1) both;
+}
+
+/* TOP DECORATIVE LINE */
+
+.service-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg,
+      transparent,
+      rgba(255, 255, 255, .35),
+      transparent);
+  opacity: .7;
+}
+
+/* BACKGROUND DECORATION */
+
+.service-card::after {
+  content: "";
+  position: absolute;
+  width: 190px;
+  height: 190px;
+  top: -100px;
+  left: -85px;
+  border: 1px solid rgba(255, 255, 255, .045);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: -1;
+
+  animation: circleFloat 7s ease-in-out infinite alternate;
+}
+
+/* AVAILABLE SERVICES */
+
+.service-active {
+  cursor: pointer;
+  border-color: #353535;
+}
+
+/* COMING SOON */
+
+.coming-soon {
+  background:
+    radial-gradient(circle at 90% 0%,
+      rgba(232, 189, 99, .035),
+      transparent 48%),
+    linear-gradient(145deg, #131313, #0e0e0e);
+  cursor: default;
+}
+
+
+/* ==============================
+   CARD REVEAL ANIMATION
+============================== */
+
+.service-card:nth-child(2) {
+  animation-delay: 120ms;
+}
+
+.service-card:nth-child(3) {
+  animation-delay: 240ms;
+}
+
+.service-card:nth-child(4) {
+  animation-delay: 360ms;
+}
+
+.service-card:nth-child(5) {
+  animation-delay: 480ms;
+}
+
+@keyframes cardReveal {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+/* ==============================
+   DECORATIVE ANIMATION
+============================== */
+
+@keyframes circleFloat {
+  from {
+    transform: translate(0, 0) scale(1);
+  }
+
+  to {
+    transform: translate(-12px, 12px) scale(1.12);
+  }
+}
+
+
+/* ==============================
+   CARD TOP
+============================== */
+
+.service-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.service-number {
+  color: #d8d8d8;
+  font: 600 12px "Inter", sans-serif;
+  letter-spacing: 1px;
+}
+
+.service-number span {
+  color: #555;
+  font-weight: 400;
+}
+
+
+/* ==============================
+   STATUS
+============================== */
+
+.service-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 10px;
+  border: 1px solid transparent;
+  border-radius: 30px;
+  font-size: 9px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.status-indicator {
+  width: 6px;
+  height: 6px;
+  flex: 0 0 6px;
+  border-radius: 50%;
+}
+
+.available {
+  color: var(--green);
+  background: rgba(101, 201, 138, .07);
+  border-color: rgba(101, 201, 138, .16);
+}
+
+.available .status-indicator {
+  background: var(--green);
+  animation: statusPulse 2.5s ease-in-out infinite;
+}
+
+.upcoming {
+  color: var(--yellow);
+  background: rgba(232, 189, 99, .06);
+  border-color: rgba(232, 189, 99, .15);
+}
+
+.upcoming .status-indicator {
+  background: var(--yellow);
+  box-shadow: 0 0 8px rgba(232, 189, 99, .3);
+}
+
+@keyframes statusPulse {
+
+  0%,
+  100% {
+    opacity: .65;
+    box-shadow: 0 0 3px rgba(101, 201, 138, .3);
+  }
+
+  50% {
+    opacity: 1;
+    box-shadow: 0 0 10px rgba(101, 201, 138, .8);
+  }
+}
+
+
+/* ==============================
+   SERVICE ICON
+============================== */
+
+.service-icon {
+  width: 58px;
+  height: 58px;
+  position: relative;
+  display: grid;
+  place-items: center;
+  margin: 30px 0 21px;
+  background: linear-gradient(145deg, #202020, #141414);
+  border: 1px solid #363636;
+  border-radius: 11px;
+}
+
+.service-icon::before {
+  content: "";
+  position: absolute;
+  inset: 5px;
+  border: 1px solid rgba(255, 255, 255, .045);
+  border-radius: 7px;
+}
+
+.service-icon i {
+  position: relative;
+  z-index: 1;
+  color: #e2e2e2;
+  font-size: 16px;
+  line-height: 1;
+  animation: iconFloat 4s ease-in-out infinite;
+}
+
+@keyframes iconFloat {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-3px);
+  }
+}
+
+
+/* ==============================
+   SERVICE TEXT
+============================== */
+
+.service-info {
+  position: relative;
+}
+
+.service-info h3 {
+  color: #fff;
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 1.7;
+}
+
+.service-info>span {
+  display: block;
+  margin-top: 4px;
+  color: #777;
+  font: 9px/1.8 "Inter", "Cairo", sans-serif;
+  direction: ltr;
+  text-align: right;
+  letter-spacing: .2px;
+}
+
+.service-info p {
+  max-width: 390px;
+  margin-top: 11px;
+  color: #929292;
+  font-size: 11px;
+  line-height: 2.1;
+}
+
+
+/* ==============================
+   SERVICE PRICE
+============================== */
+
+.service-price {
+  min-height: 65px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: auto;
+  padding: 15px 0 0;
+  border-top: 1px solid #292929;
+}
+
+.price-label {
+  display: block;
+  color: #777;
+  font-size: 10px;
+  font-weight: 500;
+}
+
+.price-value {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.price-value strong {
+  color: #fff;
+  font: 700 25px/1 "Inter", sans-serif;
+  letter-spacing: -.8px;
+}
+
+.price-value>span {
+  color: #999;
+  font-size: 11px;
+}
+
+.price-arrow {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  color: #111;
+  background: #fff;
+  border-radius: 50%;
+  font-size: 17px;
+}
+
+/* ==============================
+   COMING SOON BOTTOM
+============================== */
+
+.coming-bottom {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: auto;
+  padding-top: 25px;
+}
+
+.coming-bottom>span {
+  color: #777;
+  font-size: 10px;
+}
+
+
+/* ==============================
+   FOOTER
+============================== */
+
+.site-footer {
+  min-height: 75px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: auto;
+  padding: 18px 0;
+  color: #666;
+  font: 9px "Inter", "Cairo", sans-serif;
+  letter-spacing: .8px;
+  border-top: 1px solid var(--border);
+}
+
+.copyright-text {
+  display: inline-block;
+  direction: ltr;
+  unicode-bidi: isolate;
+  text-align: center;
+}
+
+
+/* ==============================
+   GENERAL ANIMATION
+============================== */
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+/* ==============================
+   TABLET
+============================== */
+
+@media (max-width:800px) {
+
+  .home-shell {
+    width: calc(100% - 40px);
+  }
+
+  .home-hero {
+    min-height: 350px;
+    gap: 20px;
+    padding: 40px 0;
+  }
+
+  .service-card {
+    min-height: 365px;
+    padding: 23px;
+  }
+
+  .service-info h3 {
+    font-size: 16px;
+  }
+
+  .service-info p {
+    font-size: 10px;
+  }
+}
+
+
+/* ==============================
+   MOBILE
+============================== */
+
+@media (max-width:600px) {
+
+  .home-shell {
+    width: calc(100% - 32px);
+  }
+
+  /* HEADER */
+
+  .site-header {
+    height: 65px;
+    min-height: 65px;
+  }
+
+  .brand-logo {
+    width: 58px;
+    height: 58px;
+  }
+
+  /* HERO */
+
+  .home-hero {
+    min-height: auto;
+    gap: 25px;
+    padding: 43px 0 32px;
+  }
+
+  .home-eyebrow {
+    font-size: 8px;
+    letter-spacing: 1px;
+  }
+
+  .home-hero h1 {
+    margin-top: 15px;
+    font-size: clamp(28px, 8vw, 34px);
+    line-height: 1.45;
+    letter-spacing: -.8px;
+  }
+
+  .home-hero p {
+    margin-top: 11px;
+    font-size: 10px;
+    line-height: 2;
+  }
+
+  .hero-actions {
+    gap: 8px;
+    margin-top: 20px;
+  }
+
+  .primary-btn {
+    min-height: 40px;
+    padding: 0 12px;
+    gap: 9px;
+    font-size: 10px;
+  }
+
+  /* SERVICES */
+
+  .services-section {
+    padding: 43px 0;
+  }
+
+  .section-heading {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 23px;
+  }
+
+  .section-label {
+    font-size: 8px;
+  }
+
+  .section-heading h2 {
+    margin-top: 5px;
+    font-size: 24px;
+  }
+
+  .section-heading>p {
+    max-width: 100%;
+    font-size: 10px;
+  }
+
+  .services-grid {
+    grid-template-columns: 1fr;
+    gap: 13px;
+  }
+
+  /* SERVICE CARDS */
+
+  .service-card {
+    min-height: 0;
+    padding: 21px;
+    border-radius: 10px;
+  }
+
+  .service-number {
+    font-size: 11px;
+  }
+
+  .service-status {
+    gap: 7px;
+    padding: 5px 9px;
+    font-size: 8px;
+  }
+
+  .service-icon {
+    width: 49px;
+    height: 49px;
+    margin: 23px 0 16px;
+  }
+
+  .service-icon svg {
+    width: 25px;
+    height: 25px;
+  }
+
+  .service-info h3 {
+    font-size: 16px;
+  }
+
+  .service-info>span {
+    font-size: 8px;
+  }
+
+  .service-info p {
+    max-width: 100%;
+    margin-top: 8px;
+    font-size: 10px;
+    line-height: 2;
+  }
+
+  /* PRICE */
+
+  .service-price {
+    min-height: 60px;
+    margin-top: 20px;
+    padding-top: 13px;
+  }
+
+  .price-label {
+    font-size: 9px;
+  }
+
+  .price-value strong {
+    font-size: 18px;
+  }
+
+  .price-value>span {
+    font-size: 10px;
+  }
+
+  .price-arrow {
+    width: 32px;
+    height: 32px;
+    font-size: 15px;
+  }
+
+  /* COMING SOON */
+
+  .coming-bottom {
+    padding-top: 20px;
+  }
+
+  .coming-bottom>span {
+    font-size: 9px;
+  }
+
+  /* FOOTER */
+
+  .site-footer {
+    min-height: 65px;
+    justify-content: center;
+    gap: 8px 15px;
+    padding: 15px 0;
+    font-size: 8px;
+    text-align: center;
+  }
+}
+
+
+/* ==============================
+   SMALL MOBILE
+============================== */
+
+@media (max-width:370px) {
+
+  .home-shell {
+    width: calc(100% - 24px);
+  }
+
+  .home-hero h1 {
+    font-size: 28px;
+  }
+
+  .service-card {
+    padding: 18px;
+  }
+}
+
+
+/* ==============================
+   REDUCED MOTION
+============================== */
+
+@media (prefers-reduced-motion:reduce) {
+
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
