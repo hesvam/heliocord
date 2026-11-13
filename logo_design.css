@@ -441,11 +441,6 @@ select {
     transition: background var(--transition), color var(--transition);
 }
 
-.service-start-button:hover {
-    color: #ffffff;
-    background: transparent;
-}
-
 .service-start-button i {
     font-size: 17px;
 }
@@ -1840,5 +1835,292 @@ body.lightbox-open {
     .site-footer {
         color: #666666 !important;
         border-color: #dddddd !important;
+    }
+}
+
+/* =========================================
+   HELIOCORD — TOAST NOTIFICATIONS
+   Compact Premium Design
+========================================= */
+
+#form-status {
+    position: fixed !important;
+    top: 16px !important;
+    left: 50% !important;
+    z-index: 999999 !important;
+    width: calc(100% - 36px);
+    max-width: 300px;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 6px;
+    padding: 9px 12px;
+    background: #171717;
+    border: 1px solid #303030;
+    border-radius: 10px;
+    color: #fff;
+    font-family: "Cairo", sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1.7;
+    text-align: right;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translate(-50%, -12px) scale(.98);
+    box-shadow:
+        0 8px 25px rgba(0, 0, 0, .25),
+        0 2px 8px rgba(0, 0, 0, .12);
+
+    transition:
+        opacity .3s ease,
+        transform .3s cubic-bezier(.2, .8, .2, 1),
+        visibility .3s ease;
+}
+
+/* SHOW */
+
+#form-status.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, 0) scale(1);
+}
+
+/* SUCCESS */
+
+#form-status[data-state="success"] {
+    color: #5de39a;
+    background: #101d16;
+    border: 1px solid #286b45;
+}
+
+#form-status[data-state="success"] i {
+    color: #45d483;
+}
+
+/* ERROR */
+
+#form-status[data-state="error"] {
+    color: #ff6b6b;
+    background: #1d1010;
+    border: 1px solid #713333;
+}
+
+#form-status[data-state="error"] i {
+    color: #ff5555;
+}
+
+/* ICON */
+
+#form-status i {
+    width: 27px;
+    height: 27px;
+    flex: 0 0 27px;
+    display: grid;
+    place-items: center;
+    border-radius: 7px;
+    font-size: 15px;
+}
+
+/* MESSAGE */
+
+#form-status span {
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
+/* SMALL SCREENS */
+
+@media (max-width: 360px) {
+    #form-status {
+        width: calc(100% - 28px);
+        padding: 8px 10px;
+        gap: 6px;
+        font-size: 10px;
+    }
+
+    #form-status i {
+        width: 25px;
+        height: 25px;
+        flex-basis: 25px;
+        font-size: 14px;
+    }
+}
+
+
+/* =========================================
+   STACKED TOAST ANIMATION
+========================================= */
+
+#form-status {
+    position: fixed !important;
+    top: 16px !important;
+    left: 50% !important;
+    right: auto !important;
+    z-index: 999999 !important;
+
+    width: min(390px, calc(100% - 32px)) !important;
+    max-width: 390px !important;
+
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+
+    opacity: 1 !important;
+    visibility: visible !important;
+    overflow: visible !important;
+
+    transform: translateX(-50%) !important;
+    pointer-events: none !important;
+}
+
+/* MESSAGE */
+
+#form-status .toast-item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 6px;
+    width: 100%;
+    min-height: 48px;
+    box-sizing: border-box;
+    padding: 10px 13px;
+    border: 1px solid;
+    border-radius: 9px;
+    font-family: "Cairo", sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.6;
+    direction: rtl;
+    text-align: right;
+    opacity: 0;
+    transform: translateY(-12px) scale(.98);
+    transition:
+        opacity .3s ease,
+        transform .35s cubic-bezier(.2, .8, .2, 1),
+        max-height .35s ease,
+        padding .35s ease,
+        margin .35s ease,
+        border-width .35s ease;
+
+    max-height: 100px;
+    overflow: hidden;
+    pointer-events: auto;
+}
+
+/* SHOW */
+
+#form-status .toast-item.is-visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+/* SECOND MESSAGE */
+
+#form-status .toast-item.is-waiting {
+    transform: translateY(8px) scale(.98);
+}
+
+/* OLD MESSAGE */
+
+#form-status .toast-item.is-old {
+    opacity: .85;
+}
+
+/* EXIT */
+
+#form-status .toast-item.is-leaving {
+    max-height: 0;
+    min-height: 0;
+
+    padding-top: 0;
+    padding-bottom: 0;
+
+    margin: 0;
+    border-width: 0;
+
+    opacity: 0;
+    transform: translateY(-12px) scale(.97);
+
+    pointer-events: none;
+}
+
+/* SUCCESS */
+
+#form-status .toast-item[data-state="success"] {
+    color: #5de39a;
+    background: #101d16;
+    border-color: #286b47;
+}
+
+/* ERROR */
+
+#form-status .toast-item[data-state="error"] {
+    color: #ff7777;
+    background: #1d1010;
+    border-color: #873b3b;
+}
+
+/* ICON */
+#form-status .toast-item i {
+    flex: 0 0 22px;
+    width: 22px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+    line-height: 1;
+}
+
+/* TEXT */
+
+#form-status .toast-item span {
+    flex: 1;
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    line-height: 1.5;
+    text-align: right;
+}
+
+/* MOBILE */
+
+@media (max-width: 600px) {
+    #form-status {
+        top: 12px !important;
+        width: calc(100% - 36px) !important;
+        gap: 7px !important;
+    }
+
+    #form-status .toast-item {
+        min-height: 43px;
+        padding: 8px 10px;
+        gap: 7px;
+        font-size: 11px;
+        border-radius: 8px;
+    }
+
+    #form-status .toast-item i {
+        width: 22px;
+        height: 22px;
+        font-size: 17px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #form-status .toast-item {
+        transition: opacity .15s ease;
     }
 }
