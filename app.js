@@ -627,23 +627,6 @@ function collectAnswers() {
 
     if (!key) continue;
 
-    /* FILE INPUTS */
-
-    if (element.type === "file") {
-      if (!element.files || element.files.length === 0) continue;
-
-      const fileNames = Array.from(element.files)
-        .map((file) => file.name)
-        .join("، ");
-
-      answers.push({
-        label: "أسماء الصور المرجعية المختارة (لم يتم رفع الصور)",
-        value: fileNames,
-      });
-
-      continue;
-    }
-
     /* IGNORE UNCHECKED OPTIONS */
 
     if (
@@ -674,6 +657,7 @@ function collectAnswers() {
       logo_type: "نوع الشعار المطلوب",
       target_audience: "الجمهور المستهدف",
       brand_personality: "شخصية العلامة التجارية",
+      reference_links: "لينكات التصميمات المرجعية",
       reference_description: "وصف التصميمات المرجعية",
       avoid_elements: "العناصر والأفكار غير المرغوبة",
       additional_notes: "ملاحظات إضافية",
@@ -746,20 +730,105 @@ function createReferenceId() {
   return `HC-${year}${month}${day}-${randomPart}`;
 }
 
+
 /* =========================================
    10. STATUS MESSAGES
 ========================================= */
 
+/* =========================================
+   STACKED TOAST NOTIFICATIONS
+========================================= */
+
+let toastTimeout = null;
+let toastSwapTimeout = null;
+let toastRemoveTimeout = null;
+
 function setStatus(message, success = false) {
   if (!statusBox) return;
 
-  statusBox.textContent = message;
+  clearTimeout(toastTimeout);
+  clearTimeout(toastSwapTimeout);
+  clearTimeout(toastRemoveTimeout);
 
-  if (message) {
-    statusBox.dataset.state = success ? "success" : "error";
-  } else {
-    delete statusBox.dataset.state;
+  // إخفاء الرسائل السابقة عند طلب المسح
+  if (!message) {
+    statusBox.replaceChildren();
+    return;
   }
+
+  // الاحتفاظ بآخر رسالة فقط قبل إضافة الجديدة
+  const previousToasts = Array.from(statusBox.children);
+
+  previousToasts.slice(0, -1).forEach((toast) => {
+    toast.remove();
+  });
+
+  const previousToast = statusBox.lastElementChild;
+
+  if (previousToast) {
+    previousToast.classList.remove(
+      "is-old",
+      "is-leaving",
+      "is-waiting"
+    );
+  }
+
+  const toast = document.createElement("div");
+
+  toast.className = "toast-item";
+
+  if (previousToast) {
+    toast.classList.add("is-waiting");
+  }
+
+  const icon = success
+    ? "ri-checkbox-circle-fill"
+    : "ri-error-warning-fill";
+
+  toast.dataset.state = success ? "success" : "error";
+
+  toast.innerHTML = `
+        <i class="${icon}" aria-hidden="true"></i>
+        <span></span>
+    `;
+
+  toast.querySelector("span").textContent = message;
+
+  statusBox.appendChild(toast);
+
+  // إظهار الرسالة الجديدة
+  requestAnimationFrame(() => {
+    toast.classList.add("is-visible");
+  });
+
+  // تحريك الرسالة القديمة للخروج
+  if (previousToast) {
+    previousToast.classList.add("is-old");
+
+    toastSwapTimeout = setTimeout(() => {
+      previousToast.classList.add("is-leaving");
+      toast.classList.remove("is-waiting");
+
+      toastRemoveTimeout = setTimeout(() => {
+        previousToast.remove();
+      }, 350);
+
+    }, 650);
+  }
+
+  // إخفاء الرسالة الحالية تلقائياً
+  toastTimeout = setTimeout(() => {
+    const currentToast = statusBox.lastElementChild;
+
+    if (!currentToast) return;
+
+    currentToast.classList.add("is-leaving");
+
+    setTimeout(() => {
+      currentToast.remove();
+    }, 350);
+
+  }, 5000);
 }
 
 /* =========================================
@@ -994,7 +1063,14 @@ if (form && submitButton && submitLabel) {
 
     setStatus("");
 
-    if (!validateForm()) return;
+    if (!validateForm()) {
+      setStatus(
+        "يرجى مراجعة البيانات المطلوبة وتصحيح الأخطاء الموضحة.",
+        false
+      );
+
+      return;
+    }
 
     submitButton.disabled = true;
     submitLabel.textContent = "جاري إرسال طلبك...";
@@ -1023,6 +1099,8 @@ if (form && submitButton && submitLabel) {
           result.message || "لم نتمكن من إرسال طلبك."
         );
       }
+
+      setStatus("تم استلام طلبك بنجاح! شكرًا لثقتك في HELIOCORD.", true);
 
       showSuccessScreen(referenceId);
 
