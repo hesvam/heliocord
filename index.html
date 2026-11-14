@@ -24,7 +24,7 @@
       <a href="#home" class="brand" aria-label="HELIOCORD - الرئيسية">
         <img src="images/logo.png" alt="HELIOCORD" class="brand-logo" />
       </a>
-      <a class="header-cta" href="#services">ابدأ مشروعك <i class="ri-arrow-left-line"></i></a>
+      <a class="header-cta" href="#logo-design-form">ابدأ مشروعك <i class="ri-arrow-left-line"></i></a>
     </header>
 
     <section class="home-hero" id="home">
@@ -269,149 +269,452 @@
       </div>
     </section>
 
+
     <section class="brief-section" id="order">
       <div class="brief-intro">
         <span class="section-label">START A PROJECT / 03</span>
         <h2>محتاج ايه؟</h2>
-        <p>اختار الخدمة المتاحة وشاركنا تفاصيل مشروعك. هنراجع طلبك ونتواصل معاك على واتساب.</p>
+        <p>اختار الخدمة المناسبة لمشروعك وشاركنا التفاصيل، وهنراجع طلبك ونتواصل معاك على واتساب.</p>
       </div>
 
       <form class="logo-design-form" id="logo-design-form" novalidate>
-        <input type="hidden" name="service" value="تصميم اللوجو" />
+        <input type="hidden" name="service" id="selected-service" value="" />
+        <input type="hidden" name="service_price" id="selected-service-price" value="" />
+
         <div class="form-card">
+
           <div class="form-topline">
-            <div><span class="section-label">LOGO DESIGN BRIEF</span>
-              <h2>بريف تصميم اللوجو</h2>
-              <p>أجب عن الأسئلة خطوة بخطوة، ويمكنك الرجوع لتعديل إجاباتك في أي وقت.</p>
+            <div>
+              <span class="section-label">HELIOCORD PROJECT BRIEF</span>
+              <h2 id="form-title">تفاصيل مشروعك</h2>
+              <p id="form-description">أجب عن الأسئلة خطوة بخطوة لإرسال طلبك.</p>
             </div>
             <span class="form-step-count" id="step-count">01 / 04</span>
           </div>
-          <div class="progress-track" aria-label="تقدم النموذج"><span id="form-progress"></span></div>
 
+          <div class="progress-track">
+            <span id="form-progress"></span>
+          </div>
+
+          <!-- STEP 1: SERVICE SELECTION -->
           <section class="form-step is-active" data-step="0">
-            <div class="step-heading"><span>01</span>
+
+            <div class="step-heading">
+              <span>01</span>
+              <div>
+                <h3>اختار الخدمة المناسبة</h3>
+                <p>حدد الخدمة التي تحتاجها لمشروعك.</p>
+              </div>
+            </div>
+
+            <div class="service-selection-grid">
+
+              <label class="service-option">
+                <input type="radio" name="service_choice" value="logo-design" required />
+                <span class="service-option-content">
+                  <span class="service-option-top">
+                    <i class="ri-shapes-line"></i>
+                    <span class="service-option-check"><i class="ri-check-line"></i></span>
+                  </span>
+                  <strong>تصميم شعار</strong>
+                  <small>LOGO DESIGN</small>
+                  <span class="service-option-price">
+                    <span>يبدأ من</span>
+                    <strong>500 <small>ج.م</small></strong>
+                  </span>
+                </span>
+              </label>
+
+              <label class="service-option">
+                <input type="radio" name="service_choice" value="logo-redesign" />
+                <span class="service-option-content">
+                  <span class="service-option-top">
+                    <i class="ri-refresh-line"></i>
+                    <span class="service-option-check"><i class="ri-check-line"></i></span>
+                  </span>
+                  <strong>تحديث شعار</strong>
+                  <small>LOGO REDESIGN</small>
+                  <span class="service-option-price">
+                    <span>يبدأ من</span>
+                    <strong>400 <small>ج.م</small></strong>
+                  </span>
+                </span>
+              </label>
+
+              <label class="service-option">
+                <input type="radio" name="service_choice" value="visual-identity" />
+                <span class="service-option-content">
+                  <span class="service-option-top">
+                    <i class="ri-fingerprint-line"></i>
+                    <span class="service-option-check"><i class="ri-check-line"></i></span>
+                  </span>
+                  <strong>هوية بصرية</strong>
+                  <small>VISUAL IDENTITY</small>
+                  <span class="service-option-price">
+                    <span>يبدأ من</span>
+                    <strong>2500 <small>ج.م</small></strong>
+                  </span>
+                </span>
+              </label>
+
+              <label class="service-option">
+                <input type="radio" name="service_choice" value="social-media" />
+                <span class="service-option-content">
+                  <span class="service-option-top">
+                    <i class="ri-layout-grid-line"></i>
+                    <span class="service-option-check"><i class="ri-check-line"></i></span>
+                  </span>
+                  <strong>تصميم سوشيال ميديا</strong>
+                  <small>SOCIAL MEDIA DESIGN</small>
+                  <span class="service-option-price">
+                    <span>يبدأ من</span>
+                    <strong>300 <small>ج.م</small></strong>
+                  </span>
+                </span>
+              </label>
+
+            </div>
+          </section>
+
+          <!-- STEP 2: GENERAL PROJECT INFORMATION -->
+          <section class="form-step" data-step="1" hidden>
+
+            <div class="step-heading">
+              <span>02</span>
               <div>
                 <h3>معلومات المشروع</h3>
-                <p>ابدأ بالمعلومات الأساسية عن علامتك التجارية.</p>
+                <p>شاركنا المعلومات الأساسية عن علامتك التجارية.</p>
               </div>
             </div>
+
             <div class="form-grid">
-              <div class="field"><label for="brand-name">اسم الشركة أو المشروع</label><input id="brand-name"
-                  name="brand_name" type="text" placeholder="اكتب الاسم كما تريد ظهوره في اللوجو" required /></div>
-              <div class="field"><label for="industry">نوع النشاط</label><input id="industry" name="industry"
-                  type="text" placeholder="مثال: مطعم، شركة عقارات، متجر ملابس" required /></div>
-              <div class="field"><label for="slogan">الشعار النصي <span
-                    class="optional-label">(اختياري)</span></label><input id="slogan" name="slogan" type="text"
-                  placeholder="العبارة التي ترغب في إضافتها إلى اللوجو" /></div>
-              <div class="field"><label for="brand-stage">حالة المشروع <span
-                    class="optional-label">(اختياري)</span></label><select id="brand-stage" name="brand_stage">
+
+              <div class="field">
+                <label for="brand-name">اسم الشركة أو المشروع</label>
+                <input id="brand-name" name="brand_name" type="text" placeholder="اكتب اسم المشروع" required />
+              </div>
+
+              <div class="field">
+                <label for="industry">نوع النشاط</label>
+                <input id="industry" name="industry" type="text" placeholder="مثال: مطعم، شركة عقارات، متجر ملابس"
+                  required />
+              </div>
+
+              <div class="field">
+                <label for="slogan">الشعار النصي <span class="optional-label">(اختياري)</span></label>
+                <input id="slogan" name="slogan" type="text" placeholder="العبارة التي ترغب في إضافتها" />
+              </div>
+
+              <div class="field">
+                <label for="brand-stage">حالة المشروع</label>
+                <select id="brand-stage" name="brand_stage">
                   <option value="">اختر حالة المشروع</option>
                   <option value="مشروع جديد">مشروع جديد</option>
-                  <option value="إعادة تصميم هوية موجودة">إعادة تصميم هوية موجودة</option>
-                </select></div>
+                  <option value="مشروع قائم">مشروع قائم</option>
+                  <option value="إعادة تطوير العلامة التجارية">إعادة تطوير العلامة التجارية</option>
+                </select>
+              </div>
+
+              <div class="field full-width">
+                <label for="target-audience">الجمهور المستهدف <span class="optional-label">(اختياري)</span></label>
+                <textarea id="target-audience" name="target_audience" rows="3"
+                  placeholder="من هم الأشخاص الذين تستهدفهم بخدماتك أو منتجاتك؟"></textarea>
+              </div>
+
             </div>
           </section>
 
-          <section class="form-step" data-step="1" hidden>
-            <div class="step-heading"><span>02</span>
-              <div>
-                <h3>اتجاه التصميم</h3>
-                <p>حدد نوع اللوجو والانطباع الذي تريد أن يتركه.</p>
-              </div>
-            </div>
-            <div class="field full-width" id="logo-type-group"><label>نوع اللوجو المطلوب</label>
-              <div class="choice-grid">
-                <label class="choice-item"><input type="radio" name="logo_type" value="شعار نصي (Wordmark)"
-                    required /><span>شعار نصي <small>WORDMARK</small></span></label>
-                <label class="choice-item"><input type="radio" name="logo_type" value="شعار رمزي (Symbol)" /><span>شعار
-                    رمزي <small>SYMBOL</small></span></label>
-                <label class="choice-item"><input type="radio" name="logo_type"
-                    value="شعار مدمج (Combination Mark)" /><span>شعار مدمج <small>COMBINATION</small></span></label>
-                <label class="choice-item"><input type="radio" name="logo_type"
-                    value="شعار حروف (Lettermark)" /><span>شعار حروف <small>LETTERMARK</small></span></label>
-                <label class="choice-item"><input type="radio" name="logo_type" value="ليس لدي تصور محدد" /><span>ليس
-                    لدي تصور محدد</span></label>
-              </div>
-            </div>
-            <div class="form-grid step-extra">
-              <div class="field full-width"><label for="target-audience">الجمهور المستهدف <span
-                    class="optional-label">(اختياري)</span></label><textarea id="target-audience" name="target_audience"
-                  rows="3"
-                  placeholder="مثال: الشباب، أصحاب الشركات، العائلات، المهتمون بالمنتجات الفاخرة..."></textarea></div>
-            </div>
-            <div class="field full-width personality-field"><label>شخصية العلامة التجارية <span
-                  class="optional-label">(يمكن اختيار أكثر من وصف)</span></label>
-              <div class="choice-grid personality-grid">
-                <label class="choice-item"><input type="checkbox" name="brand_personality"
-                    value="احترافي ورسمي" /><span>احترافي ورسمي</span></label>
-                <label class="choice-item"><input type="checkbox" name="brand_personality"
-                    value="عصري ومبتكر" /><span>عصري ومبتكر</span></label>
-                <label class="choice-item"><input type="checkbox" name="brand_personality"
-                    value="فاخر وأنيق" /><span>فاخر وأنيق</span></label>
-                <label class="choice-item"><input type="checkbox" name="brand_personality"
-                    value="بسيط وهادئ" /><span>بسيط وهادئ</span></label>
-                <label class="choice-item"><input type="checkbox" name="brand_personality"
-                    value="جريء وقوي" /><span>جريء وقوي</span></label>
-                <label class="choice-item"><input type="checkbox" name="brand_personality"
-                    value="ودود وقريب من الناس" /><span>ودود وقريب من الناس</span></label>
-                <label class="choice-item"><input type="checkbox" name="brand_personality"
-                    value="إبداعي ومميز" /><span>إبداعي ومميز</span></label>
-                <label class="choice-item"><input type="checkbox" name="brand_personality"
-                    value="كلاسيكي وتقليدي" /><span>كلاسيكي وتقليدي</span></label>
-              </div>
-            </div>
-          </section>
-
+          <!-- STEP 3: DYNAMIC SERVICE QUESTIONS -->
           <section class="form-step" data-step="2" hidden>
-            <div class="step-heading"><span>03</span>
+
+            <div class="step-heading">
+              <span>03</span>
               <div>
-                <h3>المراجع والتفاصيل</h3>
-                <p>شاركنا ما يساعدنا على فهم ذوقك وتجنب أي اتجاه لا تفضله.</p>
+                <h3 id="service-step-title">تفاصيل الخدمة</h3>
+                <p id="service-step-description">شاركنا متطلباتك وتفاصيل التصميم.</p>
               </div>
             </div>
-            <div class="form-grid">
-              <div class="field"><label for="reference-links">روابط تصميمات مرجعية <span
-                    class="optional-label">(اختياري)</span></label><textarea id="reference-links" name="reference_links"
-                  rows="4" dir="ltr" placeholder="https://..."></textarea></div>
-              <div class="field"><label for="reference-description">ما الذي أعجبك في هذه التصميمات؟ <span
-                    class="optional-label">(اختياري)</span></label><textarea id="reference-description"
-                  name="reference_description" rows="4"
-                  placeholder="طريقة دمج الحروف، بساطة الرمز، شكل الخط..."></textarea></div>
-              <div class="field full-width"><label for="avoid-elements">عناصر أو أفكار لا ترغب في استخدامها <span
-                    class="optional-label">(اختياري)</span></label><textarea id="avoid-elements" name="avoid_elements"
-                  rows="3" placeholder="اكتب أي رموز أو أشكال تفضل الابتعاد عنها..."></textarea></div>
-              <div class="field full-width"><label for="additional-notes">ملاحظات إضافية <span
-                    class="optional-label">(اختياري)</span></label><textarea id="additional-notes"
-                  name="additional_notes" rows="3" placeholder="أي تفاصيل أخرى تحب تشاركها معنا..."></textarea></div>
+
+            <!-- LOGO DESIGN -->
+            <div class="service-fields" data-service-fields="logo-design" hidden>
+
+              <div class="field full-width" id="logo-type-group">
+                <label>نوع اللوجو المطلوب</label>
+                <div class="choice-grid">
+                  <label class="choice-item">
+                    <input type="radio" name="logo_type" value="شعار نصي (Wordmark)" />
+                    <span>شعار نصي <small>WORDMARK</small></span>
+                  </label>
+                  <label class="choice-item">
+                    <input type="radio" name="logo_type" value="شعار رمزي (Symbol)" />
+                    <span>شعار رمزي <small>SYMBOL</small></span>
+                  </label>
+                  <label class="choice-item">
+                    <input type="radio" name="logo_type" value="شعار مدمج (Combination Mark)" />
+                    <span>شعار مدمج <small>COMBINATION</small></span>
+                  </label>
+                  <label class="choice-item">
+                    <input type="radio" name="logo_type" value="شعار حروف (Lettermark)" />
+                    <span>شعار حروف <small>LETTERMARK</small></span>
+                  </label>
+                  <label class="choice-item">
+                    <input type="radio" name="logo_type" value="ليس لدي تصور محدد" />
+                    <span>ليس لدي تصور محدد</span>
+                  </label>
+                </div>
+              </div>
+
+              <div class="field full-width personality-field">
+                <label>شخصية العلامة التجارية <span class="optional-label">(يمكن اختيار أكثر من وصف)</span></label>
+                <div class="choice-grid personality-grid">
+                  <label class="choice-item"><input type="checkbox" name="brand_personality"
+                      value="احترافي ورسمي" /><span>احترافي ورسمي</span></label>
+                  <label class="choice-item"><input type="checkbox" name="brand_personality"
+                      value="عصري ومبتكر" /><span>عصري ومبتكر</span></label>
+                  <label class="choice-item"><input type="checkbox" name="brand_personality"
+                      value="فاخر وأنيق" /><span>فاخر وأنيق</span></label>
+                  <label class="choice-item"><input type="checkbox" name="brand_personality"
+                      value="بسيط وهادئ" /><span>بسيط وهادئ</span></label>
+                  <label class="choice-item"><input type="checkbox" name="brand_personality"
+                      value="جريء وقوي" /><span>جريء وقوي</span></label>
+                  <label class="choice-item"><input type="checkbox" name="brand_personality"
+                      value="ودود وقريب من الناس" /><span>ودود وقريب من الناس</span></label>
+                  <label class="choice-item"><input type="checkbox" name="brand_personality"
+                      value="إبداعي ومميز" /><span>إبداعي ومميز</span></label>
+                  <label class="choice-item"><input type="checkbox" name="brand_personality"
+                      value="كلاسيكي وتقليدي" /><span>كلاسيكي وتقليدي</span></label>
+                </div>
+              </div>
+
             </div>
+
+            <!-- LOGO REDESIGN -->
+            <div class="service-fields" data-service-fields="logo-redesign" hidden>
+
+              <div class="form-grid">
+
+                <div class="field full-width">
+                  <label for="current-logo">رابط الشعار الحالي</label>
+                  <input id="current-logo" name="current_logo" type="url" dir="ltr" placeholder="https://..."
+                    required />
+                </div>
+
+                <div class="field full-width">
+                  <label for="redesign-reason">ما الذي دفعك لتحديث الشعار؟</label>
+                  <textarea id="redesign-reason" name="redesign_reason" rows="3"
+                    placeholder="اشرح لنا ما الذي تريد تحسينه في شعارك الحالي." required></textarea>
+                </div>
+
+                <div class="field full-width">
+                  <label for="preserve-elements">ما العناصر التي تريد الاحتفاظ بها؟</label>
+                  <textarea id="preserve-elements" name="preserve_elements" rows="3"
+                    placeholder="مثل الألوان، الرمز، الحروف أو أي عنصر مميز."></textarea>
+                </div>
+
+                <div class="field full-width">
+                  <label for="redesign-direction">ما الاتجاه الذي تفضله للشعار الجديد؟</label>
+                  <textarea id="redesign-direction" name="redesign_direction" rows="3"
+                    placeholder="مثال: أكثر بساطة، أكثر عصرية، أكثر احترافية..."></textarea>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- VISUAL IDENTITY -->
+            <div class="service-fields" data-service-fields="visual-identity" hidden>
+
+              <div class="field full-width">
+                <label>ما التطبيقات التي تحتاجها في الهوية البصرية؟</label>
+                <div class="choice-grid personality-grid">
+                  <label class="choice-item"><input type="checkbox" name="identity_items" value="كارت شخصي" /><span>كارت
+                      شخصي</span></label>
+                  <label class="choice-item"><input type="checkbox" name="identity_items"
+                      value="ورق مراسلات" /><span>ورق مراسلات</span></label>
+                  <label class="choice-item"><input type="checkbox" name="identity_items" value="ظرف ومجلد" /><span>ظرف
+                      ومجلد</span></label>
+                  <label class="choice-item"><input type="checkbox" name="identity_items"
+                      value="تصميم بروفايل الشركة" /><span>بروفايل الشركة</span></label>
+                  <label class="choice-item"><input type="checkbox" name="identity_items"
+                      value="تصميمات السوشيال ميديا" /><span>السوشيال ميديا</span></label>
+                  <label class="choice-item"><input type="checkbox" name="identity_items"
+                      value="تصميمات المطبوعات" /><span>المطبوعات</span></label>
+                  <label class="choice-item"><input type="checkbox" name="identity_items"
+                      value="تصميم الزي الرسمي" /><span>الزي الرسمي</span></label>
+                  <label class="choice-item"><input type="checkbox" name="identity_items"
+                      value="تصميم اللافتات" /><span>اللافتات</span></label>
+                </div>
+              </div>
+
+              <div class="form-grid step-extra">
+
+                <div class="field full-width">
+                  <label for="identity-description">صف لنا الهوية التي تتخيلها</label>
+                  <textarea id="identity-description" name="identity_description" rows="3"
+                    placeholder="ما الانطباع الذي تريد أن تعكسه هويتك البصرية؟"></textarea>
+                </div>
+
+                <div class="field full-width">
+                  <label for="identity-requirements">متطلبات إضافية <span
+                      class="optional-label">(اختياري)</span></label>
+                  <textarea id="identity-requirements" name="identity_requirements" rows="3"
+                    placeholder="أي تطبيقات أو تفاصيل أخرى تحتاجها في الهوية."></textarea>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- SOCIAL MEDIA -->
+            <div class="service-fields" data-service-fields="social-media" hidden>
+
+              <div class="field full-width">
+                <label>ما المنصات التي تحتاج التصميمات لها؟</label>
+                <div class="choice-grid personality-grid">
+                  <label class="choice-item"><input type="checkbox" name="social_platforms"
+                      value="Facebook" /><span>Facebook</span></label>
+                  <label class="choice-item"><input type="checkbox" name="social_platforms"
+                      value="Instagram" /><span>Instagram</span></label>
+                  <label class="choice-item"><input type="checkbox" name="social_platforms"
+                      value="TikTok" /><span>TikTok</span></label>
+                  <label class="choice-item"><input type="checkbox" name="social_platforms"
+                      value="LinkedIn" /><span>LinkedIn</span></label>
+                  <label class="choice-item"><input type="checkbox" name="social_platforms"
+                      value="X" /><span>X</span></label>
+                  <label class="choice-item"><input type="checkbox" name="social_platforms"
+                      value="أخرى" /><span>أخرى</span></label>
+                </div>
+              </div>
+
+              <div class="form-grid step-extra">
+
+                <div class="field">
+                  <label for="design-count">عدد التصميمات المطلوبة</label>
+                  <select id="design-count" name="design_count" required>
+                    <option value="">اختر العدد</option>
+                    <option value="تصميم واحد">تصميم واحد</option>
+                    <option value="2 - 5 تصميمات">2 - 5 تصميمات</option>
+                    <option value="6 - 10 تصميمات">6 - 10 تصميمات</option>
+                    <option value="أكثر من 10 تصميمات">أكثر من 10 تصميمات</option>
+                  </select>
+                </div>
+
+                <div class="field">
+                  <label for="design-format">نوع التصميمات</label>
+                  <select id="design-format" name="design_format" required>
+                    <option value="">اختر نوع التصميم</option>
+                    <option value="تصميمات مربعة">تصميمات مربعة</option>
+                    <option value="تصميمات ستوري">تصميمات ستوري</option>
+                    <option value="النوعين معًا">النوعين معًا</option>
+                    <option value="تصميمات متنوعة">تصميمات متنوعة</option>
+                  </select>
+                </div>
+
+                <div class="field full-width">
+                  <label for="social-content">المحتوى المطلوب تصميمه</label>
+                  <textarea id="social-content" name="social_content" rows="3"
+                    placeholder="اكتب تفاصيل المحتوى أو الأفكار التي تريد تحويلها إلى تصميمات." required></textarea>
+                </div>
+
+                <div class="field full-width">
+                  <label for="social-notes">تفاصيل إضافية <span class="optional-label">(اختياري)</span></label>
+                  <textarea id="social-notes" name="social_notes" rows="3"
+                    placeholder="أي ملاحظات أو متطلبات أخرى."></textarea>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- SHARED REFERENCES -->
+            <div class="service-shared-fields">
+
+              <div class="form-grid step-extra">
+
+                <div class="field">
+                  <label for="reference-links">روابط تصميمات مرجعية <span
+                      class="optional-label">(اختياري)</span></label>
+                  <textarea id="reference-links" name="reference_links" rows="3" dir="ltr"
+                    placeholder="https://..."></textarea>
+                </div>
+
+                <div class="field">
+                  <label for="reference-description">ما الذي أعجبك في هذه التصميمات؟ <span
+                      class="optional-label">(اختياري)</span></label>
+                  <textarea id="reference-description" name="reference_description" rows="3"
+                    placeholder="طريقة التصميم، الألوان، الخطوط..."></textarea>
+                </div>
+
+                <div class="field full-width">
+                  <label for="additional-notes">ملاحظات إضافية <span class="optional-label">(اختياري)</span></label>
+                  <textarea id="additional-notes" name="additional_notes" rows="3"
+                    placeholder="أي تفاصيل أخرى تحب تشاركها معنا."></textarea>
+                </div>
+
+              </div>
+            </div>
+
           </section>
 
+          <!-- STEP 4: CONTACT -->
           <section class="form-step" data-step="3" hidden>
-            <div class="step-heading"><span>04</span>
+
+            <div class="step-heading">
+              <span>04</span>
               <div>
                 <h3>بيانات التواصل</h3>
-                <p>أدخل بياناتك حتى نتمكن من متابعة الطلب معك.</p>
+                <p>باقي خطوة واحدة ونكون استلمنا تفاصيل مشروعك.</p>
               </div>
             </div>
+
             <div class="form-grid">
-              <div class="field"><label for="client-name">الاسم بالكامل</label><input id="client-name"
-                  name="client_name" type="text" placeholder="اكتب اسمك بالكامل" required /></div>
-              <div class="field"><label for="phone">رقم واتساب</label><input id="phone" name="phone" type="tel"
-                  dir="ltr" inputmode="numeric" placeholder="01XXXXXXXXX" pattern="[0-9]{11}" minlength="11"
-                  maxlength="11" required /></div>
+
+              <div class="field">
+                <label for="client-name">الاسم بالكامل</label>
+                <input id="client-name" name="client_name" type="text" placeholder="اكتب اسمك بالكامل" required />
+              </div>
+
+              <div class="field">
+                <label for="phone">رقم واتساب</label>
+                <input id="phone" name="phone" type="tel" dir="ltr" inputmode="numeric" placeholder="01XXXXXXXXX"
+                  pattern="[0-9]{11}" minlength="11" maxlength="11" required />
+              </div>
+
             </div>
+
+            <div class="selected-service-summary">
+              <span class="selected-service-summary-icon"><i class="ri-checkbox-circle-line"></i></span>
+              <div>
+                <span>الخدمة المختارة</span>
+                <strong id="summary-service-name">تصميم شعار</strong>
+              </div>
+              <div class="selected-service-summary-price">
+                <span>يبدأ من</span>
+                <strong id="summary-service-price">500 ج.م</strong>
+              </div>
+            </div>
+
             <p class="privacy-note">بياناتك تُستخدم فقط لمراجعة طلبك والتواصل معك بشأن الخدمة.</p>
+
           </section>
 
+          <!-- NAVIGATION -->
           <div class="form-navigation">
-            <button type="button" class="step-button secondary" id="prev-step" hidden><i
-                class="ri-arrow-right-line"></i> السابق</button>
+
+            <button type="button" class="step-button secondary" id="prev-step" hidden>
+              <i class="ri-arrow-right-line"></i> السابق
+            </button>
+
             <span class="step-hint" id="step-hint">الخطوة الأولى من أربع خطوات</span>
-            <button type="button" class="step-button primary" id="next-step">التالي <i
-                class="ri-arrow-left-line"></i></button>
-            <button type="submit" class="step-button primary submit-button" id="submit-button" hidden><span
-                id="submit-label">إرسال الطلب</span><i class="ri-send-plane-line"></i></button>
+
+            <button type="button" class="step-button primary" id="next-step">
+              التالي <i class="ri-arrow-left-line"></i>
+            </button>
+
+            <button type="submit" class="step-button primary submit-button" id="submit-button" hidden>
+              <span id="submit-label">إرسال الطلب</span>
+              <i class="ri-send-plane-line"></i>
+            </button>
+
           </div>
+
         </div>
       </form>
     </section>
