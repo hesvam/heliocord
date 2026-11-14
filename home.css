@@ -913,7 +913,8 @@ button.service-card {
 .choice-grid {
    display: grid;
    grid-template-columns: repeat(2, minmax(0, 1fr));
-   gap: 10px
+   gap: 12px;
+   width: 100%;
 }
 
 .choice-item {
@@ -2283,4 +2284,194 @@ button.service-card {
 
 .form-step[data-step="3"].is-active~.form-navigation #submit-button {
    display: inline-flex !important;
+}
+
+
+/* =========================================
+   HELIOCORD — RADIO BUTTON FIX
+========================================= */
+
+/* إخفاء الشكل الافتراضي للـ Radio */
+.choice-item input[type="radio"] {
+   position: absolute !important;
+   width: 1px !important;
+   height: 1px !important;
+   min-width: 1px !important;
+   padding: 0 !important;
+   margin: 0 !important;
+   opacity: 0 !important;
+   pointer-events: none;
+   overflow: hidden;
+}
+
+/* تجهيز الكارت */
+.choice-item:has(input[type="radio"]) {
+   position: relative;
+   padding-right: 38px;
+}
+
+/* الدائرة الخارجية */
+.choice-item:has(input[type="radio"])::before {
+   content: "";
+   position: absolute;
+   right: 12px;
+   top: 50%;
+   transform: translateY(-50%);
+   width: 16px;
+   height: 16px;
+   box-sizing: border-box;
+   border: 1px solid #666;
+   border-radius: 50%;
+   background: #101010;
+   transition: .2s ease;
+}
+
+/* النقطة الداخلية */
+.choice-item:has(input[type="radio"])::after {
+   content: "";
+   position: absolute;
+   right: 17px;
+   top: 50%;
+   width: 6px;
+   height: 6px;
+   border-radius: 50%;
+   background: #080808;
+   transform: translateY(-50%) scale(0);
+   transition: .2s ease;
+}
+
+/* حالة الاختيار */
+.choice-item:has(input[type="radio"]:checked)::before {
+   background: #fff;
+   border-color: #fff;
+   box-shadow: 0 0 0 3px rgba(255, 255, 255, .08);
+}
+
+.choice-item:has(input[type="radio"]:checked)::after {
+   transform: translateY(-50%) scale(1);
+}
+
+/* تحسين الكارت المحدد */
+.choice-item:has(input[type="radio"]:checked) {
+   border-color: #777;
+   background: #191919;
+}
+
+/* مؤشر التركيز */
+.choice-item:has(input[type="radio"]:focus-visible) {
+   outline: 2px solid #fff;
+   outline-offset: 3px;
+}
+
+
+
+/* =========================================
+   HELIOCORD — CHECKBOX SIZE & STYLE FIX
+========================================= */
+
+.choice-item input[type="checkbox"] {
+   appearance: none !important;
+   -webkit-appearance: none !important;
+   position: relative !important;
+   display: grid !important;
+   place-items: center !important;
+   background-image: none !important;
+   width: 17px !important;
+   height: 17px !important;
+   min-width: 17px !important;
+   max-width: 17px !important;
+   min-height: 17px !important;
+   max-height: 17px !important;
+   flex: 0 0 17px !important;
+   align-self: center !important;
+   box-sizing: border-box !important;
+   margin: 0 !important;
+   padding: 0 !important;
+   background: #101010 !important;
+   border: 1px solid #555 !important;
+   border-radius: 4px !important;
+   cursor: pointer;
+   transition: .2s ease;
+}
+
+/* علامة الصح */
+.choice-item input[type="checkbox"]::after {
+   content: "";
+   width: 4px;
+   height: 8px;
+   border: solid #080808;
+   border-width: 0 2px 2px 0;
+   transform: rotate(45deg) scale(0);
+   transition: transform .2s ease;
+}
+
+/* عند التحديد */
+.choice-item input[type="checkbox"]:checked {
+   background-color: #fff !important;
+   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3 8l3.2 3.2L13 4.5' fill='none' stroke='%23080808' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
+   background-repeat: no-repeat !important;
+   background-position: center center !important;
+   background-size: 12px 12px !important;
+   border-color: #fff !important;
+}
+
+.choice-item input[type="checkbox"]:checked::after {
+   transform: rotate(45deg) scale(1);
+}
+
+/* الكارت المحدد */
+.choice-item:has(input[type="checkbox"]:checked) {
+   color: #fff;
+   background: #191919;
+   border-color: #777;
+}
+
+/* التركيز */
+.choice-item input[type="checkbox"]:focus-visible {
+   outline: 2px solid #fff;
+   outline-offset: 3px;
+}
+
+
+/* FIX — SINGLE CHECKMARK ONLY */
+
+/* إلغاء علامة الصح القديمة */
+.choice-item input[type="checkbox"]::after {
+   content: none !important;
+   display: none !important;
+}
+
+/* علامة صح واحدة في المنتصف */
+.choice-item input[type="checkbox"]:checked {
+   background-color: #fff !important;
+   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3 8l3.2 3.2L13 4.5' fill='none' stroke='%23080808' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
+   background-repeat: no-repeat !important;
+   background-position: center !important;
+   background-size: 12px 12px !important;
+}
+
+/* تثبيت ارتفاع كارت الخدمة ومكان السعر */
+.service-card {
+   display: flex;
+   flex-direction: column;
+   min-height: 260px;
+   box-sizing: border-box;
+}
+
+.service-card .service-price {
+   margin-top: auto !important;
+   flex-shrink: 0;
+   width: 100%;
+}
+
+/* نقل الخط الفاصل أسفل محتويات الخدمة */
+.services-grid .service-deliverables {
+   padding-bottom: 5px;
+   border-bottom: 1px solid #292929;
+}
+
+/* إزالة الخط من أعلى السعر مع تثبيته في الأسفل */
+.services-grid .service-price {
+   border-top: none !important;
+   margin-top: auto !important;
 }
