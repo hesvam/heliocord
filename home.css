@@ -112,12 +112,6 @@ select {
    transition: var(--transition)
 }
 
-.header-cta:hover,
-.primary-btn:hover {
-   background: transparent;
-   color: #fff
-}
-
 .home-hero {
    min-height: 420px;
    position: relative;
@@ -206,10 +200,6 @@ select {
    color: #aaa;
    font-size: 11px;
    transition: var(--transition)
-}
-
-.text-link:hover {
-   color: #fff
 }
 
 .hero-side {
@@ -488,7 +478,7 @@ button.service-card {
    align-items: center;
    justify-content: space-between;
    gap: 12px;
-   margin-top: auto;
+   margin-top: 5px;
    padding: 15px 0 0;
    border-top: 1px solid #292929
 }
@@ -986,13 +976,30 @@ button.service-card {
    padding: 9px
 }
 
+/* Center form navigation buttons */
 .form-navigation {
    display: flex;
+   justify-content: center;
+   align-items: stretch;
+   gap: 12px;
+   width: 100%;
+   margin: 30px auto 0;
+}
+
+/* Respect hidden state */
+.form-navigation .step-button[hidden] {
+   display: none !important;
+}
+
+.form-navigation .step-button {
+   flex: 1;
+   width: 100%;
+   min-width: 0;
+   display: inline-flex;
+   justify-content: center;
    align-items: center;
-   gap: 10px;
-   margin-top: 30px;
-   padding-top: 20px;
-   border-top: 1px solid #292929
+   text-align: center;
+   margin: 0;
 }
 
 .step-hint {
@@ -1020,19 +1027,10 @@ button.service-card {
    background: #fff
 }
 
-.step-button.primary:hover {
-   color: #fff;
-   background: transparent
-}
-
 .step-button.secondary {
    color: #ddd;
    background: #171717;
    border-color: #383838
-}
-
-.step-button.secondary:hover {
-   border-color: #777
 }
 
 .step-button:disabled {
@@ -1694,7 +1692,7 @@ button.service-card {
    grid-template-columns: repeat(2, minmax(0, 1fr));
    align-items: start;
    column-gap: 9px;
-   row-gap: 3px;
+   row-gap: 6px;
 }
 
 .deliverable-item {
@@ -1705,7 +1703,7 @@ button.service-card {
    color: #aaa;
    font-size: 8px;
    font-weight: 600;
-   line-height: 1.55;
+   line-height: 1.7;
    text-align: right;
 }
 
@@ -1795,7 +1793,7 @@ button.service-card {
    }
 
    .service-description {
-      margin-top: 4px;
+      margin-top: 3px;
       font-size: 9px;
       line-height: 1.6;
    }
@@ -1811,13 +1809,13 @@ button.service-card {
 
    .deliverables-list {
       column-gap: 8px;
-      row-gap: 3px;
+      row-gap: 5px;
    }
 
    .deliverable-item {
       gap: 3px;
       font-size: 8px;
-      line-height: 1.5;
+      line-height: 1.65;
    }
 
    .deliverable-item i {
@@ -1934,8 +1932,8 @@ button.service-card {
    .service-card .service-price {
       min-height: 45px;
       flex-basis: 45px;
-      margin-top: auto;
-      padding-top: 7px;
+      margin-top: 3px;
+      padding-top: 10px;
    }
 
    .service-card .price-arrow {
@@ -1959,4 +1957,330 @@ button.service-card {
    .deliverable-item {
       font-size: 7.5px;
    }
+}
+
+
+/* =========================================
+   HELIOCORD — DYNAMIC SERVICE FORM
+========================================= */
+
+/* SERVICE SELECTION */
+
+.service-selection-grid {
+   display: grid;
+   grid-template-columns: repeat(2, minmax(0, 1fr));
+   gap: 13px;
+}
+
+.service-option {
+   min-width: 0;
+   display: block;
+   position: relative;
+   cursor: pointer;
+}
+
+.service-option>input {
+   position: absolute;
+   width: 1px;
+   height: 1px;
+   opacity: 0;
+   pointer-events: none;
+}
+
+.service-option-content {
+   min-height: 155px;
+   display: flex;
+   flex-direction: column;
+   padding: 17px;
+   background: #101010;
+   border: 1px solid #303030;
+   border-radius: 9px;
+   transition: background .25s ease, border-color .25s ease;
+}
+
+.service-option:hover .service-option-content {
+   background: #151515;
+   border-color: #555;
+}
+
+.service-option input:checked+.service-option-content {
+   background: #191919;
+   border-color: #999;
+   box-shadow: inset 0 0 0 1px #555;
+}
+
+.service-option input:focus-visible+.service-option-content {
+   outline: 2px solid #fff;
+   outline-offset: 3px;
+}
+
+.service-option-top {
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   margin-bottom: 15px;
+}
+
+.service-option-top>i {
+   width: 37px;
+   height: 37px;
+   display: grid;
+   place-items: center;
+   color: #eee;
+   background: #202020;
+   border: 1px solid #383838;
+   border-radius: 8px;
+   font-size: 19px;
+}
+
+.service-option-check {
+   width: 21px;
+   height: 21px;
+   display: grid;
+   place-items: center;
+   color: #080808;
+   background: #fff;
+   border-radius: 50%;
+   opacity: 0;
+   transform: scale(.7);
+   transition: opacity .2s ease, transform .2s ease;
+}
+
+.service-option input:checked+.service-option-content .service-option-check {
+   opacity: 1;
+   transform: scale(1);
+}
+
+.service-option-check i {
+   font-size: 13px;
+}
+
+.service-option-content>strong {
+   color: #fff;
+   font-size: 13px;
+   font-weight: 800;
+   line-height: 1.7;
+}
+
+.service-option-content>small {
+   margin-top: 2px;
+   color: #777;
+   font: 8px "Inter", sans-serif;
+   letter-spacing: .6px;
+}
+
+.service-option-price {
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   gap: 8px;
+   margin-top: auto;
+   padding-top: 12px;
+   border-top: 1px solid #292929;
+}
+
+.service-option-price>span {
+   color: #888;
+   font-size: 9px;
+}
+
+.service-option-price>strong {
+   color: #fff;
+   font: 700 18px "Inter", sans-serif;
+}
+
+.service-option-price>strong small {
+   color: #999;
+   font: 600 9px "Cairo", sans-serif;
+}
+
+/* DYNAMIC SERVICE FIELDS */
+
+.service-fields[hidden] {
+   display: none !important;
+}
+
+.service-fields {
+   animation: fadeUp .3s ease both;
+}
+
+.service-shared-fields {
+   margin-top: 22px;
+   padding-top: 18px;
+   border-top: 1px solid #292929;
+}
+
+/* SELECTED SERVICE SUMMARY */
+
+.selected-service-summary {
+   display: flex;
+   align-items: center;
+   gap: 12px;
+   margin-top: 25px;
+   padding: 15px;
+   background: #171717;
+   border: 1px solid #343434;
+   border-radius: 8px;
+}
+
+.selected-service-summary-icon {
+   width: 36px;
+   height: 36px;
+   flex: 0 0 36px;
+   display: grid;
+   place-items: center;
+   color: #fff;
+   background: #242424;
+   border: 1px solid #3a3a3a;
+   border-radius: 8px;
+   font-size: 18px;
+}
+
+.selected-service-summary>div:nth-child(2) {
+   min-width: 0;
+   display: flex;
+   flex-direction: column;
+   gap: 2px;
+}
+
+.selected-service-summary>div:nth-child(2)>span,
+.selected-service-summary-price>span {
+   color: #888;
+   font-size: 9px;
+}
+
+.selected-service-summary>div:nth-child(2)>strong {
+   color: #fff;
+   font-size: 12px;
+   font-weight: 800;
+}
+
+.selected-service-summary-price {
+   display: flex;
+   flex-direction: column;
+   align-items: flex-start;
+   gap: 2px;
+   margin-inline-start: auto;
+   text-align: left;
+}
+
+.selected-service-summary-price>strong {
+   color: #fff;
+   font: 700 15px "Inter", sans-serif;
+}
+
+/* FORM VALIDATION */
+
+.field.is-invalid input,
+.field.is-invalid textarea,
+.field.is-invalid select {
+   border-color: #a94a4a;
+   box-shadow: 0 0 0 2px rgba(169, 74, 74, .08);
+}
+
+.field-error-message,
+.group-error-message {
+   display: block;
+   margin-top: 2px;
+   color: #ef8585;
+   font-size: 9px;
+   line-height: 1.8;
+   animation: fadeUp .2s ease both;
+}
+
+.choice-grid.has-error,
+.service-selection-grid.has-error {
+   padding: 7px;
+   border: 1px solid rgba(169, 74, 74, .5);
+   border-radius: 8px;
+}
+
+/* MOBILE */
+
+@media (max-width: 600px) {
+
+   .service-selection-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 9px;
+   }
+
+   .service-option-content {
+      min-height: 143px;
+      padding: 12px;
+   }
+
+   .service-option-top {
+      margin-bottom: 12px;
+   }
+
+   .service-option-top>i {
+      width: 33px;
+      height: 33px;
+      font-size: 17px;
+   }
+
+   .service-option-content>strong {
+      font-size: 11px;
+   }
+
+   .service-option-content>small {
+      font-size: 7px;
+   }
+
+   .service-option-price {
+      padding-top: 10px;
+   }
+
+   .service-option-price>strong {
+      font-size: 15px;
+   }
+
+   .service-option-price>span {
+      font-size: 8px;
+   }
+
+   .selected-service-summary {
+      gap: 9px;
+      padding: 12px;
+   }
+
+   .selected-service-summary-icon {
+      width: 32px;
+      height: 32px;
+      flex-basis: 32px;
+      font-size: 16px;
+   }
+
+   .selected-service-summary-price>strong {
+      font-size: 13px;
+   }
+
+   .service-shared-fields {
+      margin-top: 18px;
+      padding-top: 15px;
+   }
+}
+
+@media (max-width: 350px) {
+
+   .service-option-content {
+      padding: 10px;
+   }
+
+   .service-option-content>strong {
+      font-size: 10px;
+   }
+
+   .service-option-price>strong {
+      font-size: 13px;
+   }
+}
+
+/* إخفاء زر الإرسال خارج الخطوة الأخيرة */
+.form-navigation #submit-button {
+   display: none !important;
+}
+
+.form-step[data-step="3"].is-active~.form-navigation #submit-button {
+   display: inline-flex !important;
 }
