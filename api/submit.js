@@ -1,4 +1,3 @@
-
 export default async function handler(req, res) {
   if (req.method !== "POST") {
     return res.status(405).json({
@@ -18,11 +17,14 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { referenceId, payload } = req.body || {};
+    const { referenceId, service, payload } = req.body || {};
 
     if (
-      !referenceId ||
+      typeof referenceId !== "string" ||
       !/^[A-Za-z0-9-]{1,80}$/.test(referenceId) ||
+      typeof service !== "string" ||
+      !service.trim() ||
+      service.length > 100 ||
       !Array.isArray(payload) ||
       payload.length > 100
     ) {
@@ -31,6 +33,18 @@ export default async function handler(req, res) {
         message: "بيانات الطلب غير مكتملة أو غير صحيحة.",
       });
     }
+
+    const safeItems = payload
+      .filter(item =>
+        item &&
+        typeof item.label === "string" &&
+        typeof item.value === "string"
+      )
+      .map(item => ({
+        label: item.label.trim().slice(0, 120),
+        value: item.value.trim().slice(0, 2500),
+      }))
+      .filter(item => item.label && item.value);
 
     const customerKeywords = [
       "الاسم بالكامل",
@@ -42,47 +56,34 @@ export default async function handler(req, res) {
       "phone",
     ];
 
-    const normalize = (value) =>
-      String(value || "").trim().toLowerCase();
-
-    const isCustomerField = (item) => {
-      const label = normalize(item.label);
-      return customerKeywords.some((keyword) =>
-        label.includes(normalize(keyword))
-      );
+    const isCustomerField = label => {
+      const normalized = label.toLowerCase().replace(/\s+/g, " ").trim();
+      return customerKeywords.some(keyword => normalized.includes(keyword));
     };
+
+    const customerItems = safeItems.filter(item => isCustomerField(item.label));
+    const projectItems = safeItems.filter(item => !isCustomerField(item.label));
 
     const formatSection = (title, items) => {
       if (!items.length) return "";
-
       return [
-        title,
-        "--------------------------------",
-        ...items.map(
-          (item) =>
-            `${String(item.label).trim()}\n${String(item.value).trim()}`
-        ),
-        "",
+        `【 ${title} 】`,
+        ...items.map(item => `• ${item.label}: ${item.value}`),
       ].join("\n");
     };
 
-    const customerItems = payload.filter(isCustomerField);
-    const projectItems = payload.filter((item) => !isCustomerField(item));
-
     const message = [
-      "طلب تصميم شعار جديد",
+      "طلب خدمة جديد",
       "HELIOCORD",
       "================================",
+      `الخدمة: ${service.trim()}`,
       `رقم الطلب: ${referenceId}`,
       "",
       formatSection("بيانات العميل", customerItems),
-      formatSection("تفاصيل المشروع ومتطلبات التصميم", projectItems),
+      formatSection("تفاصيل الطلب", projectItems),
       "================================",
       "تم استلام الطلب عبر موقع HELIOCORD.",
-    ]
-      .filter(Boolean)
-      .join("\n")
-      .trim();
+    ].filter(Boolean).join("\n").trim();
 
     if (message.length > 4000) {
       return res.status(413).json({
@@ -95,20 +96,19 @@ export default async function handler(req, res) {
       `https://api.telegram.org/bot${token}/sendMessage`,
       {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           chat_id: chatId,
           text: message,
+          disable_web_page_preview: true,
         }),
       }
     );
 
-    const result = await telegramResponse.json();
+    const telegramResult = await telegramResponse.json();
 
-    if (!telegramResponse.ok || !result.ok) {
-      console.error("Telegram sendMessage failed:", result);
+    if (!telegramResponse.ok || !telegramResult.ok) {
+      console.error("Telegram API error:", telegramResult);
       throw new Error("Telegram message delivery failed.");
     }
 
@@ -118,12 +118,11 @@ export default async function handler(req, res) {
       message: "تم استلام طلبك بنجاح.",
     });
   } catch (error) {
-    console.error("Brief submission error:", error);
+    console.error("Order submission error:", error);
 
     return res.status(500).json({
       success: false,
-      message:
-        "نعتذر، لم نتمكن من استلام طلبك. يرجى المحاولة مرة أخرى.",
+      message: "حدثت مشكلة أثناء إرسال الطلب. يرجى المحاولة مرة أخرى.",
     });
   }
 }
