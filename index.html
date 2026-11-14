@@ -5,255 +5,428 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#080808" />
-  <title>HELIOCORD | Creative Studio</title>
-
+  <title>HELIOCORD | Logo Design Studio</title>
   <link rel="icon" type="image/png" href="images/fav.png" />
-  <link rel="stylesheet" href="home.css" />
-
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
-    href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap"
     rel="stylesheet" />
   <link href="https://cdn.jsdelivr.net/npm/remixicon@4.6.0/fonts/remixicon.css" rel="stylesheet" />
+  <link rel="stylesheet" href="home.css" />
 </head>
 
-<body class="home-page">
+<body>
+  <div id="form-status" class="form-status" role="status" aria-live="polite"></div>
 
   <main class="home-shell">
-
-    <!-- HEADER -->
     <header class="site-header">
-      <a href="index.html" class="brand" aria-label="HELIOCORD">
+      <a href="#home" class="brand" aria-label="HELIOCORD - الرئيسية">
         <img src="images/logo.png" alt="HELIOCORD" class="brand-logo" />
       </a>
+      <a class="header-cta" href="#services">ابدأ مشروعك <i class="ri-arrow-left-line"></i></a>
     </header>
 
-    <!-- HERO -->
-    <section class="home-hero">
-
+    <section class="home-hero" id="home">
       <div class="hero-content">
-        <div class="home-eyebrow">
-          <span class="status-dot"></span>
-          HELIOCORD / CREATIVE STUDIO
-        </div>
-
-        <h1>
-          نصنع هويتك،
-          <span>ونمنح أفكارك حضورًا.</span>
-        </h1>
-
-        <p>
-          نقدم حلولًا إبداعية تساعد علامتك التجارية على الظهور
-          بشكل احترافي، وبناء حضور يترك انطباعًا لا يُنسى.
-        </p>
-
+        <span class="home-eyebrow"><span class="status-dot"></span> HELIOCORD / CREATIVE STUDIO</span>
+        <h1>نبني هوية بصرية<br /><span>تُعبّر عن قيمة مشروعك.</span></h1>
+        <p>نساعدك على تقديم مشروعك بصورة احترافية من خلال تصميم شعارات وهويات بصرية مدروسة، تعكس شخصيتك وتترك انطباعًا
+          واضحًا.</p>
         <div class="hero-actions">
-          <a href="#services" class="primary-btn">
-            اكتشف خدماتنا
-            <span>↙</span>
-          </a>
+          <a class="primary-btn" href="#services">اكتشف خدماتنا <i class="ri-arrow-left-line"></i></a>
+          <a class="text-link" href="#portfolio">شاهد أعمالنا <i class="ri-arrow-down-line"></i></a>
         </div>
       </div>
-
+      <div class="hero-side" aria-hidden="true">
+        <span class="hero-side-mark">H</span>
+        <span class="hero-side-caption">IDEAS INTO IDENTITIES</span>
+      </div>
     </section>
 
-    <!-- SERVICES -->
-    <section class="services-section" id="services">
 
+    <section class="services-section" id="services">
       <div class="section-heading">
         <div>
-          <span class="section-label">WHAT WE DO / 01—05</span>
-          <h2>خدماتنا <span>الإبداعية.</span></h2>
+          <span class="section-label">WHAT WE DO / 01</span>
+          <h2>خدماتنا</h2>
         </div>
-
-        <p>
-          نوفر لك الحلول التي تحتاجها
-          لبناء علامة تجارية قوية.
-        </p>
+        <p>اختر الخدمة المناسبة لمشروعك، وابدأ بإرسال تفاصيل طلبك في خطوات بسيطة.</p>
       </div>
 
       <div class="services-grid">
 
-        <!-- SERVICE 01: LOGO DESIGN -->
-        <a href="logo_design.html" class="service-card service-active" aria-label="طلب خدمة تصميم شعار بسعر 500 جنيه">
+        <!-- 01 — LOGO DESIGN -->
+        <button class="service-card service-active" type="button" data-service="logo-design"
+          aria-label="اختيار خدمة تصميم اللوجو">
 
-          <div class="service-top">
-            <span class="service-number">01 <span>/ 05</span></span>
-
+          <span class="service-top">
+            <span class="service-number">01 <span>/ 04</span></span>
             <span class="service-status available">
-              <span class="status-indicator"></span>
-              متاح الآن
+              <span class="status-indicator"></span> متاحة الآن
             </span>
-          </div>
+          </span>
 
-          <div class="service-icon logo-icon">
-            <i class="ri-pen-nib-line"></i>
-          </div>
+          <span class="service-icon"><i class="ri-shapes-line"></i></span>
 
-          <div class="service-info">
-            <h3>تصميم شعار</h3>
-            <p>
-              تصميم شعار احترافي يعكس هوية علامتك التجارية ويمنحها طابعًا مميزًا وفريدًا.
-            </p>
-          </div>
-
-          <div class="service-price">
-            <span class="price-label">سعر الخدمة</span>
-
-            <div class="price-value">
-              <strong>500</strong>
-              <span>جنيه</span>
-            </div>
-
-            <span class="price-arrow">
-              <i class="ri-arrow-left-up-line"></i>
+          <span class="service-info">
+            <strong>تصميم شعار</strong>
+            <span>LOGO DESIGN</span>
+            <span class="service-description">
+              تصميم لوجو احترافي يعكس شخصية مشروعك ويمنحه حضورًا مميزًا.
             </span>
-          </div>
+          </span>
 
-        </a>
+          <span class="service-deliverables">
+            <span class="deliverables-heading">
+              <span>محتويات الخدمة</span>
+              <span>WHAT YOU GET</span>
+            </span>
 
-        <!-- SERVICE 02: LOGO REDESIGN -->
-        <!-- <a href="logo_design.html" class="service-card service-active" aria-label="طلب خدمة تحديث شعار بسعر 300 جنيه">
+            <span class="deliverables-list">
+              <span class="deliverable-item"><i class="ri-check-line"></i> الشعار الأساسي (SVG)</span>
+              <span class="deliverable-item"><i class="ri-check-line"></i> الشعار الأساسي (PDF)</span>
+              <span class="deliverable-item"><i class="ri-check-line"></i> الشعار الأساسي (PNG شفاف)</span>
+              <span class="deliverable-item"><i class="ri-check-line"></i> نسخة سوداء (PNG)</span>
+              <span class="deliverable-item"><i class="ri-check-line"></i> نسخة بيضاء (PNG)</span>
+              <span class="deliverable-item"><i class="ri-check-line"></i> الملف الأصلي القابل للتعديل (AI)</span>
+              <span class="deliverable-item"><i class="ri-check-line"></i> لوحة الألوان</span>
+            </span>
+          </span>
 
-          <div class="service-top">
-            <span class="service-number">02 <span>/ 05</span></span>
+          <span class="service-price">
+            <span>
+              <span class="price-label">يبدأ من</span>
+              <span class="price-value"><strong>500</strong><span>ج.م</span></span>
+            </span>
+            <span class="price-arrow"><i class="ri-arrow-left-line"></i></span>
+          </span>
+        </button>
 
+
+        <!-- 02 — LOGO REDESIGN -->
+        <button class="service-card service-active" type="button" data-service="logo-redesign"
+          aria-label="اختيار خدمة تحديث الشعار">
+
+          <span class="service-top">
+            <span class="service-number">02 <span>/ 04</span></span>
             <span class="service-status available">
-              <span class="status-indicator"></span>
-              متاح الآن
+              <span class="status-indicator"></span> متاحة الآن
             </span>
-          </div>
+          </span>
 
-          <div class="service-icon logo-icon">
-            <i class="ri-refresh-line"></i>
-          </div>
+          <span class="service-icon"><i class="ri-refresh-line"></i></span>
 
-          <div class="service-info">
-            <h3>تحديث شعار</h3>
-            <p>
-              تطوير الشعار الحالي وتحسين مظهره ليصبح أكثر عصرية واحترافية مع الحفاظ على هويته الأساسية.
-            </p>
-          </div>
-
-          <div class="service-price">
-            <span class="price-label">سعر الخدمة</span>
-
-            <div class="price-value">
-              <strong>300</strong>
-              <span>جنيه</span>
-            </div>
-
-            <span class="price-arrow">
-              <i class="ri-arrow-left-up-line"></i>
+          <span class="service-info">
+            <strong>تحديث شعار</strong>
+            <span>LOGO REDESIGN</span>
+            <span class="service-description">
+              طوّر شعارك الحالي بمظهر أكثر احترافية وتميزًا، مع الحفاظ على جوهر علامتك التجارية.
             </span>
-          </div>
+          </span>
 
-        </a> -->
-
-        <!-- SERVICE 03 -->
-        <div class="service-card coming-soon">
-
-          <div class="service-top">
-            <span class="service-number">03 <span>/ 05</span></span>
-
-            <span class="service-status upcoming">
-              <span class="status-indicator"></span>
-              قريبًا
+          <span class="service-deliverables">
+            <span class="deliverables-heading">
+              <span>محتويات الخدمة</span>
+              <span>WHAT YOU GET</span>
             </span>
-          </div>
 
-          <div class="service-icon">
-            <i class="ri-layout-grid-line"></i>
-          </div>
-
-          <div class="service-info">
-            <h3>تصميم محتوى السوشيال ميديا</h3>
-            <span>Social Media Design</span>
-            <p>
-              تصميمات إبداعية ومنشورات احترافية
-              تعزز حضور علامتك التجارية.
-            </p>
-          </div>
-
-          <div class="service-bottom coming-bottom">
-            <span>نعمل على تجهيز هذه الخدمة</span>
-          </div>
-
-        </div>
-
-        <!-- SERVICE 04 -->
-        <div class="service-card coming-soon">
-
-          <div class="service-top">
-            <span class="service-number">04 <span>/ 05</span></span>
-
-            <span class="service-status upcoming">
-              <span class="status-indicator"></span>
-              قريبًا
+            <span class="deliverables-list">
+              <span class="deliverable-item"><i class="ri-check-line"></i> الشعار الأساسي (SVG)</span>
+              <span class="deliverable-item"><i class="ri-check-line"></i> الشعار الأساسي (PDF)</span>
+              <span class="deliverable-item"><i class="ri-check-line"></i> الشعار الأساسي (PNG شفاف)</span>
+              <span class="deliverable-item"><i class="ri-check-line"></i> نسخة سوداء (PNG)</span>
+              <span class="deliverable-item"><i class="ri-check-line"></i> نسخة بيضاء (PNG)</span>
+              <span class="deliverable-item"><i class="ri-check-line"></i> الملف الأصلي القابل للتعديل (AI)</span>
+              <span class="deliverable-item"><i class="ri-check-line"></i> لوحة الألوان</span>
             </span>
-          </div>
+          </span>
 
-          <div class="service-icon">
-            <i class="ri-megaphone-line"></i>
-          </div>
-
-          <div class="service-info">
-            <h3>الإعلانات والتسويق الرقمي</h3>
-            <span>Media Buying & Digital Advertising</span>
-            <p>
-              حملات إعلانية مدروسة تساعدك على الوصول
-              إلى جمهورك وتحقيق أهدافك.
-            </p>
-          </div>
-
-          <div class="service-bottom coming-bottom">
-            <span>نعمل على تجهيز هذه الخدمة</span>
-          </div>
-
-        </div>
-
-        <!-- SERVICE 05 -->
-        <div class="service-card coming-soon">
-
-          <div class="service-top">
-            <span class="service-number">05 <span>/ 05</span></span>
-
-            <span class="service-status upcoming">
-              <span class="status-indicator"></span>
-              قريبًا
+          <span class="service-price">
+            <span>
+              <span class="price-label">يبدأ من</span>
+              <span class="price-value"><strong>400</strong><span>ج.م</span></span>
             </span>
-          </div>
+            <span class="price-arrow"><i class="ri-arrow-left-line"></i></span>
+          </span>
+        </button>
 
-          <div class="service-icon">
-            <i class="ri-film-line"></i>
-          </div>
 
-          <div class="service-info">
-            <h3>مونتاج الفيديو والموشن جرافيك</h3>
-            <span>Video Editing & Motion Graphics</span>
-            <p>
-              محتوى مرئي احترافي يحول أفكارك
-              إلى تجربة بصرية جذابة.
-            </p>
-          </div>
+        <!-- 03 — VISUAL IDENTITY -->
+        <button class="service-card service-active" type="button" data-service="visual-identity"
+          aria-label="اختيار خدمة الهوية البصرية">
 
-          <div class="service-bottom coming-bottom">
-            <span>نعمل على تجهيز هذه الخدمة</span>
-          </div>
+          <span class="service-top">
+            <span class="service-number">03 <span>/ 04</span></span>
+            <span class="service-status available">
+              <span class="status-indicator"></span> متاحة الآن
+            </span>
+          </span>
 
-        </div>
+          <span class="service-icon"><i class="ri-fingerprint-line"></i></span>
+
+          <span class="service-info">
+            <strong>هوية بصرية</strong>
+            <span>VISUAL IDENTITY</span>
+            <span class="service-description">
+              هوية بصرية متكاملة تمنح علامتك التجارية مظهرًا متناسقًا وحضورًا مميزًا.
+            </span>
+          </span>
+
+          <span class="service-deliverables">
+            <span class="deliverables-heading">
+              <span>محتويات الخدمة</span>
+              <span>WHAT YOU GET</span>
+            </span>
+
+            <span class="deliverables-list">
+              <span class="deliverable-item"><i class="ri-check-line"></i> الشعار الأساسي (SVG)</span>
+              <span class="deliverable-item"><i class="ri-check-line"></i> الشعار الأساسي (PNG شفاف)</span>
+              <span class="deliverable-item"><i class="ri-check-line"></i> نسخة سوداء (PNG)</span>
+              <span class="deliverable-item"><i class="ri-check-line"></i> نسخة بيضاء (PNG)</span>
+              <span class="deliverable-item"><i class="ri-check-line"></i> دليل الهوية البصرية (PDF)</span>
+              <span class="deliverable-item"><i class="ri-check-line"></i> تصميم المطبوعات (PDF)</span>
+              <span class="deliverable-item"><i class="ri-check-line"></i> الملفات الأصلية القابلة للتعديل (AI)</span>
+            </span>
+          </span>
+
+          <span class="service-price">
+            <span>
+              <span class="price-label">يبدأ من</span>
+              <span class="price-value"><strong>2500</strong><span>ج.م</span></span>
+            </span>
+            <span class="price-arrow"><i class="ri-arrow-left-line"></i></span>
+          </span>
+        </button>
+
+
+        <!-- 04 — SOCIAL MEDIA DESIGN -->
+        <button class="service-card service-active" type="button" data-service="social-media"
+          aria-label="اختيار خدمة تصميم السوشيال ميديا">
+
+          <span class="service-top">
+            <span class="service-number">04 <span>/ 04</span></span>
+            <span class="service-status available">
+              <span class="status-indicator"></span> متاحة الآن
+            </span>
+          </span>
+
+          <span class="service-icon"><i class="ri-layout-grid-line"></i></span>
+
+          <span class="service-info">
+            <strong>تصميم سوشيال ميديا</strong>
+            <span>SOCIAL MEDIA DESIGN</span>
+            <span class="service-description">
+              تصميمات متناسقة تساعد علامتك التجارية على الظهور بصورة احترافية وجذابة.
+            </span>
+          </span>
+
+          <span class="service-deliverables">
+            <span class="deliverables-heading">
+              <span>محتويات الخدمة</span>
+              <span>WHAT YOU GET</span>
+            </span>
+
+            <span class="deliverables-list">
+              <span class="deliverable-item"><i class="ri-check-line"></i> تصميم مربع (1080 × 1080)</span>
+              <span class="deliverable-item"><i class="ri-check-line"></i> تصميم ستوري (1080 × 1920)</span>
+              <span class="deliverable-item"><i class="ri-check-line"></i> الملفات الأصلية القابلة للتعديل</span>
+            </span>
+          </span>
+
+          <span class="service-price">
+            <span>
+              <span class="price-label">يبدأ من</span>
+              <span class="price-value"><strong>300</strong><span>ج.م</span></span>
+            </span>
+            <span class="price-arrow"><i class="ri-arrow-left-line"></i></span>
+          </span>
+        </button>
 
       </div>
     </section>
 
-    <!-- FOOTER -->
+    <section class="portfolio-section" id="portfolio">
+      <div class="section-heading portfolio-heading">
+        <div><span class="section-label">SELECTED WORK / 02</span>
+          <h2>نماذج من أعمالنا</h2>
+        </div>
+        <p>مجموعة من تصميمات الشعارات التي نفذناها لمشاريع وعلامات تجارية مختلفة.</p>
+      </div>
+      <div class="portfolio-grid">
+        <div class="portfolio-item">
+          <div class="portfolio-image"><img src="images/1.jpg" alt="نموذج تصميم شعار من أعمال HELIOCORD"
+              loading="lazy" /><span class="portfolio-tag">LOGO DESIGN</span></div>
+        </div>
+        <div class="portfolio-item">
+          <div class="portfolio-image"><img src="images/2.jpg" alt="نموذج تصميم شعار من أعمال HELIOCORD"
+              loading="lazy" /><span class="portfolio-tag">LOGO DESIGN</span></div>
+        </div>
+        <div class="portfolio-item">
+          <div class="portfolio-image"><img src="images/3.jpg" alt="نموذج تصميم شعار من أعمال HELIOCORD"
+              loading="lazy" /><span class="portfolio-tag">LOGO DESIGN</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="brief-section" id="order">
+      <div class="brief-intro">
+        <span class="section-label">START A PROJECT / 03</span>
+        <h2>محتاج ايه؟</h2>
+        <p>اختار الخدمة المتاحة وشاركنا تفاصيل مشروعك. هنراجع طلبك ونتواصل معاك على واتساب.</p>
+      </div>
+
+      <form class="logo-design-form" id="logo-design-form" novalidate>
+        <input type="hidden" name="service" value="تصميم اللوجو" />
+        <div class="form-card">
+          <div class="form-topline">
+            <div><span class="section-label">LOGO DESIGN BRIEF</span>
+              <h2>بريف تصميم اللوجو</h2>
+              <p>أجب عن الأسئلة خطوة بخطوة، ويمكنك الرجوع لتعديل إجاباتك في أي وقت.</p>
+            </div>
+            <span class="form-step-count" id="step-count">01 / 04</span>
+          </div>
+          <div class="progress-track" aria-label="تقدم النموذج"><span id="form-progress"></span></div>
+
+          <section class="form-step is-active" data-step="0">
+            <div class="step-heading"><span>01</span>
+              <div>
+                <h3>معلومات المشروع</h3>
+                <p>ابدأ بالمعلومات الأساسية عن علامتك التجارية.</p>
+              </div>
+            </div>
+            <div class="form-grid">
+              <div class="field"><label for="brand-name">اسم الشركة أو المشروع</label><input id="brand-name"
+                  name="brand_name" type="text" placeholder="اكتب الاسم كما تريد ظهوره في اللوجو" required /></div>
+              <div class="field"><label for="industry">نوع النشاط</label><input id="industry" name="industry"
+                  type="text" placeholder="مثال: مطعم، شركة عقارات، متجر ملابس" required /></div>
+              <div class="field"><label for="slogan">الشعار النصي <span
+                    class="optional-label">(اختياري)</span></label><input id="slogan" name="slogan" type="text"
+                  placeholder="العبارة التي ترغب في إضافتها إلى اللوجو" /></div>
+              <div class="field"><label for="brand-stage">حالة المشروع <span
+                    class="optional-label">(اختياري)</span></label><select id="brand-stage" name="brand_stage">
+                  <option value="">اختر حالة المشروع</option>
+                  <option value="مشروع جديد">مشروع جديد</option>
+                  <option value="إعادة تصميم هوية موجودة">إعادة تصميم هوية موجودة</option>
+                </select></div>
+            </div>
+          </section>
+
+          <section class="form-step" data-step="1" hidden>
+            <div class="step-heading"><span>02</span>
+              <div>
+                <h3>اتجاه التصميم</h3>
+                <p>حدد نوع اللوجو والانطباع الذي تريد أن يتركه.</p>
+              </div>
+            </div>
+            <div class="field full-width" id="logo-type-group"><label>نوع اللوجو المطلوب</label>
+              <div class="choice-grid">
+                <label class="choice-item"><input type="radio" name="logo_type" value="شعار نصي (Wordmark)"
+                    required /><span>شعار نصي <small>WORDMARK</small></span></label>
+                <label class="choice-item"><input type="radio" name="logo_type" value="شعار رمزي (Symbol)" /><span>شعار
+                    رمزي <small>SYMBOL</small></span></label>
+                <label class="choice-item"><input type="radio" name="logo_type"
+                    value="شعار مدمج (Combination Mark)" /><span>شعار مدمج <small>COMBINATION</small></span></label>
+                <label class="choice-item"><input type="radio" name="logo_type"
+                    value="شعار حروف (Lettermark)" /><span>شعار حروف <small>LETTERMARK</small></span></label>
+                <label class="choice-item"><input type="radio" name="logo_type" value="ليس لدي تصور محدد" /><span>ليس
+                    لدي تصور محدد</span></label>
+              </div>
+            </div>
+            <div class="form-grid step-extra">
+              <div class="field full-width"><label for="target-audience">الجمهور المستهدف <span
+                    class="optional-label">(اختياري)</span></label><textarea id="target-audience" name="target_audience"
+                  rows="3"
+                  placeholder="مثال: الشباب، أصحاب الشركات، العائلات، المهتمون بالمنتجات الفاخرة..."></textarea></div>
+            </div>
+            <div class="field full-width personality-field"><label>شخصية العلامة التجارية <span
+                  class="optional-label">(يمكن اختيار أكثر من وصف)</span></label>
+              <div class="choice-grid personality-grid">
+                <label class="choice-item"><input type="checkbox" name="brand_personality"
+                    value="احترافي ورسمي" /><span>احترافي ورسمي</span></label>
+                <label class="choice-item"><input type="checkbox" name="brand_personality"
+                    value="عصري ومبتكر" /><span>عصري ومبتكر</span></label>
+                <label class="choice-item"><input type="checkbox" name="brand_personality"
+                    value="فاخر وأنيق" /><span>فاخر وأنيق</span></label>
+                <label class="choice-item"><input type="checkbox" name="brand_personality"
+                    value="بسيط وهادئ" /><span>بسيط وهادئ</span></label>
+                <label class="choice-item"><input type="checkbox" name="brand_personality"
+                    value="جريء وقوي" /><span>جريء وقوي</span></label>
+                <label class="choice-item"><input type="checkbox" name="brand_personality"
+                    value="ودود وقريب من الناس" /><span>ودود وقريب من الناس</span></label>
+                <label class="choice-item"><input type="checkbox" name="brand_personality"
+                    value="إبداعي ومميز" /><span>إبداعي ومميز</span></label>
+                <label class="choice-item"><input type="checkbox" name="brand_personality"
+                    value="كلاسيكي وتقليدي" /><span>كلاسيكي وتقليدي</span></label>
+              </div>
+            </div>
+          </section>
+
+          <section class="form-step" data-step="2" hidden>
+            <div class="step-heading"><span>03</span>
+              <div>
+                <h3>المراجع والتفاصيل</h3>
+                <p>شاركنا ما يساعدنا على فهم ذوقك وتجنب أي اتجاه لا تفضله.</p>
+              </div>
+            </div>
+            <div class="form-grid">
+              <div class="field"><label for="reference-links">روابط تصميمات مرجعية <span
+                    class="optional-label">(اختياري)</span></label><textarea id="reference-links" name="reference_links"
+                  rows="4" dir="ltr" placeholder="https://..."></textarea></div>
+              <div class="field"><label for="reference-description">ما الذي أعجبك في هذه التصميمات؟ <span
+                    class="optional-label">(اختياري)</span></label><textarea id="reference-description"
+                  name="reference_description" rows="4"
+                  placeholder="طريقة دمج الحروف، بساطة الرمز، شكل الخط..."></textarea></div>
+              <div class="field full-width"><label for="avoid-elements">عناصر أو أفكار لا ترغب في استخدامها <span
+                    class="optional-label">(اختياري)</span></label><textarea id="avoid-elements" name="avoid_elements"
+                  rows="3" placeholder="اكتب أي رموز أو أشكال تفضل الابتعاد عنها..."></textarea></div>
+              <div class="field full-width"><label for="additional-notes">ملاحظات إضافية <span
+                    class="optional-label">(اختياري)</span></label><textarea id="additional-notes"
+                  name="additional_notes" rows="3" placeholder="أي تفاصيل أخرى تحب تشاركها معنا..."></textarea></div>
+            </div>
+          </section>
+
+          <section class="form-step" data-step="3" hidden>
+            <div class="step-heading"><span>04</span>
+              <div>
+                <h3>بيانات التواصل</h3>
+                <p>أدخل بياناتك حتى نتمكن من متابعة الطلب معك.</p>
+              </div>
+            </div>
+            <div class="form-grid">
+              <div class="field"><label for="client-name">الاسم بالكامل</label><input id="client-name"
+                  name="client_name" type="text" placeholder="اكتب اسمك بالكامل" required /></div>
+              <div class="field"><label for="phone">رقم واتساب</label><input id="phone" name="phone" type="tel"
+                  dir="ltr" inputmode="numeric" placeholder="01XXXXXXXXX" pattern="[0-9]{11}" minlength="11"
+                  maxlength="11" required /></div>
+            </div>
+            <p class="privacy-note">بياناتك تُستخدم فقط لمراجعة طلبك والتواصل معك بشأن الخدمة.</p>
+          </section>
+
+          <div class="form-navigation">
+            <button type="button" class="step-button secondary" id="prev-step" hidden><i
+                class="ri-arrow-right-line"></i> السابق</button>
+            <span class="step-hint" id="step-hint">الخطوة الأولى من أربع خطوات</span>
+            <button type="button" class="step-button primary" id="next-step">التالي <i
+                class="ri-arrow-left-line"></i></button>
+            <button type="submit" class="step-button primary submit-button" id="submit-button" hidden><span
+                id="submit-label">إرسال الطلب</span><i class="ri-send-plane-line"></i></button>
+          </div>
+        </div>
+      </form>
+    </section>
+
     <footer class="site-footer">
       <span class="copyright-text">© 2026 HELIOCORD. ALL RIGHTS RESERVED</span>
+      <a href="#home">العودة للأعلى <i class="ri-arrow-up-line"></i></a>
     </footer>
-
   </main>
 
+  <div id="image-lightbox" class="image-lightbox" role="dialog" aria-modal="true" aria-label="عرض الصورة بالحجم الكامل">
+    <button class="lightbox-close" type="button" aria-label="إغلاق"><i class="ri-close-line"></i></button>
+    <img id="lightbox-image" src="" alt="معاينة الصورة" />
+  </div>
+  <script src="app.js"></script>
 </body>
 
 </html>
