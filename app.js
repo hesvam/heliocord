@@ -554,28 +554,31 @@
     const values = new Map();
 
     Array.from(form.elements).forEach(element => {
+      // Ignore unnamed or disabled controls
       if (!element.name || element.disabled) return;
 
+      // Ignore technical and button fields
       if (
         ["submit", "button", "hidden", "reset"].includes(element.type)
       ) return;
 
-      // Ignore inactive service sections
-      if (element.closest("[hidden]")) return;
-
-      // Ignore the service-selection technical value
+      // Ignore service selection technical value
       if (element.name === "service_choice") return;
 
+      // Ignore unchecked radio and checkbox controls
       if (
         (element.type === "radio" || element.type === "checkbox") &&
         !element.checked
       ) return;
 
-      const label = fieldLabels[element.name] || element.name;
+      // Ignore empty values
       const value = String(element.value ?? "").trim();
 
       if (!value) return;
 
+      const label = fieldLabels[element.name] || element.name;
+
+      // Combine repeated fields such as checkboxes
       if (values.has(label)) {
         values.set(label, `${values.get(label)}، ${value}`);
       } else {
