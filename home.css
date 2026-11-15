@@ -202,45 +202,8 @@ select {
    transition: var(--transition)
 }
 
-.hero-side {
-   width: 260px;
-   height: 260px;
-   flex: 0 0 260px;
-   display: grid;
-   place-items: center;
-   position: relative;
-   border: 1px solid #222;
-   border-radius: 50%;
-   background: radial-gradient(circle, #171717 0, transparent 68%)
-}
-
-.hero-side:before,
-.hero-side:after {
-   content: "";
-   position: absolute;
-   inset: 18px;
-   border: 1px solid #242424;
-   border-radius: 50%
-}
-
-.hero-side:after {
-   inset: 40px;
-   border-style: dashed;
-   opacity: .6
-}
-
-.hero-side-mark {
-   font: 700 130px/1 "Inter", sans-serif;
-   color: #eee;
-   letter-spacing: -12px
-}
-
-.hero-side-caption {
-   position: absolute;
-   bottom: 24px;
-   color: #666;
-   font: 600 8px "Inter", sans-serif;
-   letter-spacing: 2px
+.services-section {
+   animation: fadeUp .65s ease both;
 }
 
 .services-section,
@@ -292,7 +255,6 @@ select {
    overflow: hidden;
    isolation: isolate;
    transition: border-color .35s ease, transform .35s ease;
-   animation: cardReveal .8s cubic-bezier(.2, .7, .2, 1) both
 }
 
 button.service-card {
@@ -338,18 +300,6 @@ button.service-card {
 .coming-soon {
    background: radial-gradient(circle at 90% 0%, rgba(232, 189, 99, .035), transparent 48%), linear-gradient(145deg, #131313, #0e0e0e);
    cursor: default
-}
-
-.service-card:nth-child(2) {
-   animation-delay: 120ms
-}
-
-.service-card:nth-child(3) {
-   animation-delay: 240ms
-}
-
-.service-card:nth-child(4) {
-   animation-delay: 360ms
 }
 
 .service-top {
@@ -979,12 +929,12 @@ button.service-card {
 
 /* Center form navigation buttons */
 .form-navigation {
+   margin-top: 20px;
    display: flex;
-   justify-content: center;
-   align-items: stretch;
-   gap: 12px;
-   width: 100%;
-   margin: 30px auto 0;
+   flex-wrap: wrap;
+   align-items: center;
+   justify-content: space-between;
+   gap: 10px;
 }
 
 /* Respect hidden state */
@@ -1004,9 +954,13 @@ button.service-card {
 }
 
 .step-hint {
-   margin-inline-end: auto;
+   order: 3;
+   flex: 0 0 100%;
+   width: 100%;
+   margin: 0;
    color: #777;
-   font-size: 9px
+   font-size: 9px;
+   text-align: center;
 }
 
 .step-button {
@@ -1110,10 +1064,18 @@ button.service-card {
    color: #d9f5e2
 }
 
+.toast-item.is-success i {
+   color: #48c78e;
+}
+
 .toast-item.is-error {
    border-color: #8d3838;
    background: #260f0f;
    color: #ffe2e2
+}
+
+.toast-item.is-error i {
+   color: #ff6262;
 }
 
 .toast-item.is-visible {
@@ -1234,16 +1196,6 @@ button.service-card {
       width: calc(100% - 40px)
    }
 
-   .hero-side {
-      width: 200px;
-      height: 200px;
-      flex-basis: 200px
-   }
-
-   .hero-side-mark {
-      font-size: 100px
-   }
-
    .service-card {
       min-height: 345px;
       padding: 23px
@@ -1282,10 +1234,6 @@ button.service-card {
    .home-hero {
       min-height: auto;
       padding: 43px 0 35px
-   }
-
-   .hero-side {
-      display: none
    }
 
    .home-eyebrow,
@@ -1540,13 +1488,6 @@ button.service-card {
    .image-lightbox {
       padding: 18px
    }
-
-   .lightbox-close {
-      top: 12px;
-      left: 12px;
-      width: 36px;
-      height: 36px
-   }
 }
 
 @media(max-width:370px) {
@@ -1795,6 +1736,7 @@ button.service-card {
 
    .service-description {
       margin-top: 3px;
+      margin-bottom: 5px;
       font-size: 9px;
       line-height: 1.6;
    }
@@ -2277,16 +2219,6 @@ button.service-card {
    }
 }
 
-/* إخفاء زر الإرسال خارج الخطوة الأخيرة */
-.form-navigation #submit-button {
-   display: none !important;
-}
-
-.form-step[data-step="3"].is-active~.form-navigation #submit-button {
-   display: inline-flex !important;
-}
-
-
 /* =========================================
    HELIOCORD — RADIO BUTTON FIX
 ========================================= */
@@ -2474,4 +2406,555 @@ button.service-card {
 .services-grid .service-price {
    border-top: none !important;
    margin-top: auto !important;
+}
+
+#image-lightbox {
+   padding-left: 0 !important;
+   padding-right: 0 !important;
+}
+
+#lightbox-image {
+   display: block;
+   width: 100vw !important;
+   max-width: none !important;
+   height: auto;
+   max-height: 100vh;
+   object-fit: contain;
+}
+
+html:has(body.lightbox-open),
+body.lightbox-open {
+   overflow: hidden !important;
+   overscroll-behavior: none;
+}
+
+
+/* =========================================
+   INSTAGRAM STYLE LIGHTBOX SLIDER
+========================================= */
+
+#image-lightbox {
+   overflow: hidden;
+   touch-action: pan-y;
+}
+
+.lightbox-track {
+   position: absolute;
+   inset: 0;
+
+   display: flex;
+   flex-direction: row;
+
+   width: 100%;
+   height: 100%;
+
+   direction: ltr;
+
+   will-change: transform;
+   touch-action: pan-y;
+}
+
+.lightbox-slide {
+   position: relative;
+
+   flex: 0 0 100%;
+   width: 100%;
+   height: 100%;
+
+   display: flex;
+   align-items: center;
+   justify-content: center;
+
+   overflow: hidden;
+}
+
+.lightbox-slide img {
+   display: block;
+
+   width: 100%;
+   height: 100%;
+
+   object-fit: contain;
+
+   user-select: none;
+   -webkit-user-select: none;
+   -webkit-user-drag: none;
+
+   pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+   .lightbox-track {
+      transition-duration: 0ms !important;
+   }
+}
+
+
+/* LIGHTBOX VISIBILITY FIX */
+
+.image-lightbox {
+   position: fixed !important;
+   inset: 0 !important;
+   width: 100% !important;
+   height: 100% !important;
+   padding: 0 !important;
+   overflow: hidden !important;
+}
+
+.image-lightbox .lightbox-viewport {
+   position: absolute !important;
+   inset: 0 !important;
+   display: block !important;
+   width: 100% !important;
+   height: 100% !important;
+   z-index: 1;
+   overflow: hidden !important;
+}
+
+.image-lightbox .lightbox-track {
+   position: absolute !important;
+   top: 0 !important;
+   left: 0 !important;
+   height: 100% !important;
+}
+
+.image-lightbox .lightbox-track .lightbox-slide {
+   display: block !important;
+   height: 100% !important;
+   max-height: 100% !important;
+   object-fit: contain !important;
+   visibility: visible !important;
+   opacity: 1 !important;
+}
+
+.image-lightbox .lightbox-close {
+   z-index: 5 !important;
+}
+
+/* =========================================
+   SWIPER — PORTFOLIO LIGHTBOX
+========================================= */
+
+.image-lightbox .portfolio-swiper {
+   width: 100%;
+   height: 100%;
+   direction: ltr;
+   overflow: hidden;
+}
+
+.portfolio-swiper .swiper-slide {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   width: 100%;
+   height: 100%;
+}
+
+.portfolio-swiper .swiper-slide img {
+   display: block;
+   width: auto;
+   height: auto;
+   max-width: 100%;
+   max-height: 100%;
+   object-fit: contain;
+   user-select: none;
+   -webkit-user-select: none;
+   -webkit-user-drag: none;
+   pointer-events: auto;
+}
+
+.image-lightbox .lightbox-close {
+   z-index: 10;
+}
+
+.portfolio-swiper .swiper-pagination {
+   bottom: 22px;
+}
+
+.portfolio-swiper .swiper-pagination-bullet {
+   width: 6px;
+   height: 6px;
+   background: #fff;
+   opacity: .4;
+}
+
+.portfolio-swiper .swiper-pagination-bullet-active {
+   opacity: 1;
+}
+
+.lightbox-nav {
+   position: absolute;
+   top: 50%;
+   transform: translateY(-50%);
+   width: 40px;
+   height: 40px;
+   display: grid;
+   place-items: center;
+   color: #fff;
+   background: #1a1a1a;
+   border: 1px solid #444;
+   border-radius: 50%;
+   font-size: 20px;
+   cursor: pointer;
+}
+
+.lightbox-prev {
+   right: 18px;
+}
+
+.lightbox-next {
+   left: 18px;
+}
+
+
+/* FIX LIGHTBOX NAVIGATION */
+.image-lightbox .lightbox-nav {
+   position: absolute !important;
+   z-index: 9999 !important;
+   pointer-events: auto !important;
+   cursor: pointer;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+}
+
+.image-lightbox .lightbox-prev {
+   right: 20px;
+}
+
+.image-lightbox .lightbox-next {
+   left: 20px;
+}
+
+.image-lightbox .lightbox-nav i {
+   pointer-events: none;
+}
+
+/* إخفاء أسهم الـ Lightbox على الموبايل */
+@media (max-width: 768px) {
+
+   .image-lightbox .lightbox-prev,
+   .image-lightbox .lightbox-next {
+      display: none !important;
+   }
+}
+
+/* Lightbox Image Frame */
+.image-lightbox .swiper-slide {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+}
+
+.image-lightbox .lightbox-image-frame {
+   position: relative;
+   display: inline-block;
+   max-width: 100%;
+}
+
+.image-lightbox .lightbox-image-frame img {
+   display: block;
+   max-width: 100%;
+}
+
+
+/* =========================================
+   HELIOCORD — SCROLL REVEAL ANIMATION
+========================================= */
+
+/* الحالة الأولية */
+.scroll-reveal {
+   opacity: 0;
+   transform: translateY(35px);
+   transition:
+      opacity 0.8s ease,
+      transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+   will-change: opacity, transform;
+}
+
+/* عند ظهور العنصر */
+.scroll-reveal.is-visible {
+   opacity: 1;
+   transform: translateY(0);
+}
+
+/* تأخير ظهور العناصر المتتالية */
+.scroll-reveal.delay-1 {
+   transition-delay: 0.1s;
+}
+
+.scroll-reveal.delay-2 {
+   transition-delay: 0.2s;
+}
+
+.scroll-reveal.delay-3 {
+   transition-delay: 0.3s;
+}
+
+.scroll-reveal.delay-4 {
+   transition-delay: 0.4s;
+}
+
+/* احترام إعدادات تقليل الحركة */
+@media (prefers-reduced-motion: reduce) {
+   .scroll-reveal {
+      opacity: 1;
+      transform: none;
+      transition: none;
+   }
+}
+
+
+/* =========================================
+   SERVICE CARDS — SMOOTH REVEAL
+========================================= */
+
+.services-grid .service-card.reveal-card {
+   opacity: 0 !important;
+   transform: translate3d(0, 55px, 0) !important;
+
+   transition:
+      opacity 1.1s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 1.1s cubic-bezier(0.16, 1, 0.3, 1) !important;
+
+   will-change: opacity, transform;
+}
+
+.services-grid .service-card.reveal-card.reveal-card-visible {
+   opacity: 1 !important;
+   transform: translate3d(0, 0, 0) !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+   .services-grid .service-card.reveal-card,
+   .services-grid .service-card.reveal-card.reveal-card-visible {
+      opacity: 1 !important;
+      transform: none !important;
+      transition: none !important;
+   }
+}
+
+
+/* =========================================
+   HELIOCORD — GLOBAL SCROLL REVEAL
+========================================= */
+
+/* العناصر قبل الظهور */
+html.js-reveal-enabled .reveal-item:not(.is-revealed) {
+   opacity: 0;
+   transform: translate3d(0, 35px, 0);
+
+   transition:
+      opacity 850ms cubic-bezier(.16, 1, .3, 1),
+      transform 850ms cubic-bezier(.16, 1, .3, 1);
+
+   transition-delay: var(--reveal-delay, 0ms);
+   will-change: opacity, transform;
+}
+
+/* العناصر بعد الظهور */
+html.js-reveal-enabled .reveal-item.is-revealed {
+   opacity: 1;
+   transform: translate3d(0, 0, 0);
+
+   transition:
+      opacity 850ms cubic-bezier(.16, 1, .3, 1),
+      transform 850ms cubic-bezier(.16, 1, .3, 1);
+
+   transition-delay: var(--reveal-delay, 0ms);
+}
+
+/* منع التأثير من التأثير على الحركات الداخلية */
+@media (prefers-reduced-motion: reduce) {
+
+   html.js-reveal-enabled .reveal-item,
+   html.js-reveal-enabled .reveal-item.is-revealed {
+      opacity: 1 !important;
+      transform: none !important;
+      transition: none !important;
+      transition-delay: 0ms !important;
+   }
+}
+
+/* =========================================
+   HELIOCORD — IMAGE UPLOAD
+========================================= */
+
+.upload-box {
+   position: relative;
+   display: flex;
+   align-items: center;
+   gap: 16px;
+   width: 100%;
+   min-height: 112px;
+   padding: 22px;
+   border: 1px dashed #383838;
+   border-radius: 12px;
+   background: #101010;
+   cursor: pointer;
+   transition:
+      border-color 0.3s ease,
+      background 0.3s ease,
+      transform 0.3s ease;
+}
+
+.upload-box input[type="file"] {
+   position: absolute;
+   width: 1px;
+   height: 1px;
+   opacity: 0;
+   overflow: hidden;
+   pointer-events: none;
+}
+
+.upload-icon {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   flex-shrink: 0;
+   width: 48px;
+   height: 48px;
+   border-radius: 10px;
+   background: #1c1c1c;
+   color: #ddd;
+   font-size: 23px;
+   transition: 0.3s ease;
+}
+
+.upload-content {
+   display: flex;
+   flex-direction: column;
+   gap: 5px;
+   min-width: 0;
+}
+
+.upload-title {
+   color: #eee;
+   font-size: 13px;
+   font-weight: 600;
+}
+
+.upload-description {
+   color: #858585;
+   font-size: 11px;
+}
+
+.upload-formats {
+   color: #606060;
+   font-size: 10px;
+   margin-top: 3px;
+}
+
+.upload-action {
+   margin-inline-start: auto;
+   flex-shrink: 0;
+   padding: 9px 14px;
+   border: 1px solid #353535;
+   border-radius: 7px;
+   color: #ddd;
+   font-size: 11px;
+   transition: 0.3s ease;
+}
+
+.upload-box:hover .upload-action {
+   background: #eee;
+   border-color: #eee;
+   color: #111;
+}
+
+.upload-file-name {
+   display: block;
+   margin-top: 9px;
+   color: #777;
+   font-size: 11px;
+   direction: rtl;
+   overflow-wrap: anywhere;
+}
+
+.upload-file-name.has-file {
+   color: #bbb;
+}
+
+/* Mobile */
+
+@media (max-width: 600px) {
+   .upload-box {
+      gap: 11px;
+      padding: 16px 12px;
+      min-height: 100px;
+   }
+
+   .upload-icon {
+      width: 40px;
+      height: 40px;
+      font-size: 20px;
+   }
+
+   .upload-title {
+      font-size: 11px;
+   }
+
+   .upload-description,
+   .upload-formats {
+      font-size: 9px;
+   }
+
+   .upload-action {
+      padding: 8px 9px;
+      font-size: 10px;
+   }
+}
+
+.upload-file-name {
+   display: block;
+   margin-top: 3px;
+   color: #777;
+   font-size: 10px;
+   direction: rtl;
+   overflow-wrap: anywhere;
+}
+
+.upload-file-name.has-file {
+   color: #ccc;
+}
+
+/* FORM SUBMIT BUTTON — LAST STEP ONLY */
+
+#submit-button[hidden] {
+   display: none !important;
+}
+
+#submit-button:not([hidden]) {
+   display: inline-flex !important;
+}
+
+#slogan {
+   display: block;
+}
+
+#slogan:disabled {
+   display: none;
+}
+
+.field:has(#slogan[disabled]) {
+   display: none !important;
+}
+
+/* SOCIAL MEDIA — FIELD SPACING FIX */
+
+.service-fields[data-service-fields="social-media"] .form-grid {
+   row-gap: 18px;
+}
+
+.service-fields[data-service-fields="social-media"] .field {
+   gap: 8px;
+}
+
+.service-fields[data-service-fields="social-media"] .upload-box {
+   margin-top: 2px;
+}
+
+.service-fields[data-service-fields="social-media"] .field textarea {
+   margin-top: 0;
 }
