@@ -42,6 +42,7 @@
   let currentStep = 0;
   let toastTimer = null;
   let toastRemoveTimer = null;
+  let toastElement = null;
 
   /* =========================================
      2. SERVICE CONFIGURATION
@@ -66,13 +67,13 @@
       name: "هوية بصرية",
       price: 2500,
       stepTitle: "تفاصيل الهوية البصرية",
-      description: "حدد التطبيقات التي تحتاجها في هويتك البصرية."
+      description: "شاركنا تفاصيل تصميم الشعار والتطبيقات التي تحتاجها في هويتك البصرية."
     },
 
     "social-media": {
       name: "تصميم سوشيال ميديا",
       price: 300,
-      stepTitle: "تفاصيل تصميمات السوشيال ميديا",
+      stepTitle: "تفاصيل التصميم",
       description: "حدد المنصات وعدد التصميمات والمحتوى المطلوب."
     }
   };
@@ -83,29 +84,24 @@
     slogan: "الشعار النصي",
     brand_stage: "حالة المشروع",
     target_audience: "الجمهور المستهدف",
-
-    logo_type: "نوع اللوجو المطلوب",
-    brand_personality: "شخصية العلامة التجارية",
-
-    current_logo: "رابط الشعار الحالي",
+    brand_colors: "ألوان البراند المستخدمة في التصميم",
+    logo_type: "نوع الشعار المطلوب",
+    brand_personality: "الانطباع المطلوب من الشعار",
+    current_logo: "صورة الشعار الحالي",
     redesign_reason: "سبب تحديث الشعار",
     preserve_elements: "العناصر المطلوب الحفاظ عليها",
     redesign_direction: "اتجاه التصميم الجديد",
-
     identity_items: "تطبيقات الهوية البصرية",
     identity_description: "وصف الهوية البصرية",
     identity_requirements: "متطلبات الهوية الإضافية",
-
     social_platforms: "منصات السوشيال ميديا",
     design_count: "عدد التصميمات المطلوبة",
     design_format: "نوع التصميمات",
     social_content: "محتوى التصميمات",
     social_notes: "تفاصيل إضافية للسوشيال ميديا",
-
     reference_links: "روابط التصميمات المرجعية",
     reference_description: "وصف التصميمات المرجعية",
     additional_notes: "ملاحظات إضافية",
-
     client_name: "الاسم بالكامل",
     phone: "رقم واتساب"
   };
@@ -122,6 +118,8 @@
   function selectService(serviceKey) {
     const service = services[serviceKey];
     if (!service) return;
+
+    updateSloganVisibility(serviceKey);
 
     const radio = form.querySelector(
       `input[name="service_choice"][value="${serviceKey}"]`
@@ -141,17 +139,28 @@
       });
     });
 
-    serviceStepTitle.textContent = service.stepTitle;
-    serviceStepDescription.textContent = service.description;
+    serviceStepTitle.textContent =
+      serviceKey === "visual-identity"
+        ? "تفاصيل تصميم الشعار"
+        : service.stepTitle;
+
+    serviceStepDescription.textContent =
+      serviceKey === "visual-identity"
+        ? "حدد نوع الشعار والانطباع الذي تريد أن يتركه لدى جمهورك."
+        : service.description;
 
     summaryServiceName.textContent = service.name;
-    summaryServicePrice.textContent = `${service.price.toLocaleString("en-US")} ج.م`;
+    summaryServicePrice.textContent =
+      `${service.price.toLocaleString("en-US")} ج.م`;
 
     clearErrors(steps[0]);
     clearErrors(steps[2]);
 
     form.querySelectorAll(".service-option").forEach(option => {
-      const optionInput = option.querySelector('input[name="service_choice"]');
+      const optionInput = option.querySelector(
+        'input[name="service_choice"]'
+      );
+
       option.classList.toggle("selected", !!optionInput?.checked);
     });
   }
@@ -163,6 +172,29 @@
   });
 
   /* =========================================
+   SLOGAN FIELD — SERVICE VISIBILITY
+  ========================================= */
+
+  const sloganField = document
+    .getElementById("slogan")
+    ?.closest(".field");
+
+  const sloganInput = document.getElementById("slogan");
+
+  function updateSloganVisibility(serviceKey) {
+    if (!sloganField || !sloganInput) return;
+
+    const showSlogan = serviceKey !== "social-media";
+
+    sloganField.hidden = !showSlogan;
+    sloganInput.disabled = !showSlogan;
+
+    if (!showSlogan) {
+      sloganInput.value = "";
+    }
+  }
+
+  /* =========================================
      4. ERROR HANDLING
   ========================================= */
 
@@ -171,7 +203,9 @@
       element.classList.remove("is-invalid", "has-error");
     });
 
-    scope.querySelectorAll(".field-error-message,.group-error-message").forEach(element => {
+    scope.querySelectorAll(
+      ".field-error-message,.group-error-message"
+    ).forEach(element => {
       element.remove();
     });
 
@@ -245,7 +279,10 @@
       if (!selected || !services[selected]) {
         const group = step.querySelector(".service-selection-grid");
 
-        showGroupError(group, "يرجى اختيار الخدمة المناسبة لمشروعك.");
+        showGroupError(
+          group,
+          "يرجى اختيار الخدمة المناسبة لمشروعك."
+        );
 
         firstInvalid = group;
       }
@@ -266,7 +303,9 @@
 
       if (control.closest("[hidden]")) return false;
 
-      if (["button", "submit", "hidden", "reset"].includes(control.type)) {
+      if (
+        ["button", "submit", "hidden", "reset"].includes(control.type)
+      ) {
         return false;
       }
 
@@ -278,24 +317,34 @@
     controls.forEach(control => {
       if (!control.required) return;
 
-      if (control.type === "radio" || control.type === "checkbox") {
+      if (
+        control.type === "radio" ||
+        control.type === "checkbox"
+      ) {
         const key = `${control.type}:${control.name}`;
 
         if (handledGroups.has(key)) return;
         handledGroups.add(key);
 
         const groupControls = controls.filter(item => {
-          return item.name === control.name && item.type === control.type;
+          return (
+            item.name === control.name &&
+            item.type === control.type
+          );
         });
 
         const isChecked = groupControls.some(item => item.checked);
 
         if (!isChecked) {
-          const group = control.closest(".field") ||
+          const group =
+            control.closest(".field") ||
             control.closest(".service-selection-grid") ||
             control.parentElement;
 
-          showGroupError(group, "يرجى اختيار الإجابة المناسبة.");
+          showGroupError(
+            group,
+            "يرجى اختيار الإجابة المناسبة."
+          );
 
           firstInvalid ||= group;
         }
@@ -303,7 +352,9 @@
         return;
       }
 
-      const value = control.value.trim();
+      const value = control.type === "file"
+        ? control.files?.length ? control.files[0].name : ""
+        : control.value.trim();
 
       let message = "";
 
@@ -318,17 +369,23 @@
                 ? "يرجى إدخال رقم واتساب."
                 : "يرجى استكمال هذا الحقل.";
 
-      } else if (control.name === "phone" && !/^01\d{9}$/.test(value)) {
-        message = "يرجى إدخال رقم واتساب مصري صحيح مكوّن من 11 رقمًا.";
+      } else if (
+        control.name === "phone" &&
+        !/^01\d{9}$/.test(value)
+      ) {
+        message =
+          "يرجى إدخال رقم واتساب مصري صحيح مكوّن من 11 رقمًا.";
 
       } else if (!control.checkValidity()) {
         message = control.name === "current_logo"
-          ? "يرجى إدخال رابط صحيح للشعار الحالي."
+          ? "يرجى اختيار صورة بصيغة JPG أو PNG."
           : "يرجى مراجعة البيانات المدخلة.";
       }
 
       if (message) {
-        const field = control.closest(".field") || control.parentElement;
+        const field =
+          control.closest(".field") ||
+          control.parentElement;
 
         showFieldError(field, message);
 
@@ -337,33 +394,46 @@
     });
 
     // Service-specific checkbox requirements
-    if (index === 2) {
-      const selectedService = getSelectedService();
 
-      const requiredGroups = {
-        "logo-design": [],
-        "logo-redesign": [],
-        "visual-identity": ["identity_items"],
-        "social-media": ["social_platforms"]
-      };
+    const selectedService = getSelectedService();
 
-      (requiredGroups[selectedService] || []).forEach(name => {
-        const groupControls = controls.filter(control => {
-          return control.name === name && control.type === "checkbox";
-        });
+    const requiredGroups = {
+      "logo-design": {},
+      "logo-redesign": {},
+      "visual-identity": {
+        3: ["identity_items"]
+      },
+      "social-media": {
+        2: ["social_platforms"]
+      }
+    };
 
-        if (!groupControls.length) return;
+    const groupsForStep =
+      requiredGroups[selectedService]?.[index] || [];
 
-        if (!groupControls.some(control => control.checked)) {
-          const group = groupControls[0].closest(".field");
-
-          if (group && !group.classList.contains("has-error")) {
-            showGroupError(group, "يرجى اختيار عنصر واحد على الأقل.");
-            firstInvalid ||= group;
-          }
-        }
+    groupsForStep.forEach(name => {
+      const groupControls = controls.filter(control => {
+        return (
+          control.name === name &&
+          control.type === "checkbox"
+        );
       });
-    }
+
+      if (!groupControls.length) return;
+
+      if (!groupControls.some(control => control.checked)) {
+        const group = groupControls[0].closest(".field");
+
+        if (group && !group.classList.contains("has-error")) {
+          showGroupError(
+            group,
+            "يرجى اختيار عنصر واحد على الأقل."
+          );
+
+          firstInvalid ||= group;
+        }
+      }
+    });
 
     if (firstInvalid) {
       focusError(firstInvalid);
@@ -377,8 +447,12 @@
      6. STEP RENDERING
   ========================================= */
 
+
   function renderStep(index) {
-    currentStep = Math.max(0, Math.min(index, steps.length - 1));
+    currentStep = Math.max(
+      0,
+      Math.min(index, steps.length - 1)
+    );
 
     steps.forEach((step, i) => {
       const active = i === currentStep;
@@ -398,9 +472,15 @@
     stepHint.textContent =
       `الخطوة ${currentStep + 1} من ${steps.length}`;
 
+    const isLastStep = currentStep === steps.length - 1;
+
     prevButton.hidden = currentStep === 0;
-    nextButton.hidden = currentStep === steps.length - 1;
-    submitButton.hidden = currentStep !== steps.length - 1;
+    nextButton.hidden = isLastStep;
+
+    submitButton.hidden = !isLastStep;
+
+    // إزالة أي display inline قديم
+    submitButton.style.removeProperty("display");
 
     clearErrors(form);
   }
@@ -433,7 +513,9 @@
     const control = event.target;
 
     if (control.name === "phone") {
-      control.value = control.value.replace(/\D/g, "").slice(0, 11);
+      control.value = control.value
+        .replace(/\D/g, "")
+        .slice(0, 11);
     }
 
     const field = control.closest(".field");
@@ -441,11 +523,15 @@
     if (field) {
       field.classList.remove("is-invalid");
 
-      field.querySelectorAll(".field-error-message").forEach(error => {
+      field.querySelectorAll(
+        ".field-error-message"
+      ).forEach(error => {
         error.remove();
       });
 
-      field.querySelectorAll('[aria-invalid="true"]').forEach(input => {
+      field.querySelectorAll(
+        '[aria-invalid="true"]'
+      ).forEach(input => {
         input.removeAttribute("aria-invalid");
       });
     }
@@ -454,16 +540,22 @@
   form.addEventListener("change", event => {
     const control = event.target;
 
-    const group = control.closest(".field,.service-selection-grid");
+    const group = control.closest(
+      ".field,.service-selection-grid"
+    );
 
     if (group) {
       group.classList.remove("has-error");
 
-      group.querySelectorAll(".group-error-message").forEach(error => {
+      group.querySelectorAll(
+        ".group-error-message"
+      ).forEach(error => {
         error.remove();
       });
 
-      group.querySelectorAll('[aria-invalid="true"]').forEach(input => {
+      group.querySelectorAll(
+        '[aria-invalid="true"]'
+      ).forEach(input => {
         input.removeAttribute("aria-invalid");
       });
     }
@@ -480,26 +572,11 @@
   function showToast(message, success = false) {
     if (!statusBox) return;
 
-    clearTimeout(toastTimer);
-    clearTimeout(toastRemoveTimer);
-
-    const oldToast = statusBox.querySelector(".toast-item");
-
-    if (oldToast) {
-      oldToast.classList.remove("is-visible");
-      oldToast.classList.add("is-leaving");
-
-      toastRemoveTimer = setTimeout(() => {
-        oldToast.remove();
-      }, 260);
-    }
-
     const toast = document.createElement("div");
 
     toast.className = `toast-item ${success ? "is-success" : "is-error"}`;
 
     const icon = document.createElement("i");
-
     icon.className = success
       ? "ri-checkbox-circle-fill"
       : "ri-error-warning-fill";
@@ -508,19 +585,31 @@
     text.textContent = message;
 
     toast.append(icon, text);
+
     statusBox.appendChild(toast);
 
+    // تشغيل تأثير الظهور
     requestAnimationFrame(() => {
-      toast.classList.add("is-visible");
+      requestAnimationFrame(() => {
+        toast.classList.add("is-visible");
+      });
     });
 
-    toastTimer = setTimeout(() => {
+    // إخفاء الرسالة بعد 5 ثوانٍ
+    setTimeout(() => {
       toast.classList.remove("is-visible");
       toast.classList.add("is-leaving");
 
-      toastRemoveTimer = setTimeout(() => {
+      toast.addEventListener("transitionend", (event) => {
+        if (event.target !== toast) return;
+
         toast.remove();
-      }, 280);
+      }, { once: true });
+
+      // حماية في حالة عدم تنفيذ transitionend
+      setTimeout(() => {
+        toast.remove();
+      }, 500);
 
     }, 5000);
   }
@@ -554,33 +643,32 @@
     const values = new Map();
 
     Array.from(form.elements).forEach(element => {
-      // Ignore unnamed or disabled controls
       if (!element.name || element.disabled) return;
 
-      // Ignore technical and button fields
       if (
-        ["submit", "button", "hidden", "reset"].includes(element.type)
+        ["submit", "button", "hidden", "reset", "file"].includes(element.type)
       ) return;
 
-      // Ignore service selection technical value
       if (element.name === "service_choice") return;
 
-      // Ignore unchecked radio and checkbox controls
       if (
-        (element.type === "radio" || element.type === "checkbox") &&
+        (element.type === "radio" ||
+          element.type === "checkbox") &&
         !element.checked
       ) return;
 
-      // Ignore empty values
       const value = String(element.value ?? "").trim();
 
       if (!value) return;
 
-      const label = fieldLabels[element.name] || element.name;
+      const label =
+        fieldLabels[element.name] || element.name;
 
-      // Combine repeated fields such as checkboxes
       if (values.has(label)) {
-        values.set(label, `${values.get(label)}، ${value}`);
+        values.set(
+          label,
+          `${values.get(label)}، ${value}`
+        );
       } else {
         values.set(label, value);
       }
@@ -620,17 +708,22 @@
     const referenceId = createReferenceId();
 
     try {
+      const formData = new FormData();
+
+      formData.append("referenceId", referenceId);
+      formData.append("service", service.name);
+      formData.append("servicePrice", service.price);
+      formData.append("payload", JSON.stringify(payload));
+
+      const socialLogoInput = document.getElementById("social-logo");
+
+      if (socialLogoInput?.files?.length) {
+        formData.append("socialLogo", socialLogoInput.files[0]);
+      }
+
       const response = await fetch("/api/submit", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          referenceId,
-          service: service.name,
-          servicePrice: service.price,
-          payload
-        })
+        body: formData
       });
 
       const result = await response.json().catch(() => ({}));
@@ -642,15 +735,17 @@
         );
       }
 
-      // Reset form after successful submission
       form.reset();
+      updateSloganVisibility("");
 
       clearErrors(form);
 
       serviceFields.forEach(container => {
         container.hidden = true;
 
-        container.querySelectorAll("input,textarea,select").forEach(control => {
+        container.querySelectorAll(
+          "input,textarea,select"
+        ).forEach(control => {
           control.disabled = true;
         });
       });
@@ -683,7 +778,9 @@
       nextButton.disabled = false;
       prevButton.disabled = false;
 
-      if (submitLabel.textContent === "جاري إرسال الطلب...") {
+      if (
+        submitLabel.textContent === "جاري إرسال الطلب..."
+      ) {
         submitLabel.textContent = "إرسال الطلب";
       }
     }
@@ -694,85 +791,162 @@
   ========================================= */
 
   const lightbox = document.getElementById("image-lightbox");
-  const lightboxImage = document.getElementById("lightbox-image");
+  const slider = document.getElementById("lightbox-slider");
 
   const galleryImages = [
     ...document.querySelectorAll(".portfolio-image img")
   ];
 
-  if (lightbox && lightboxImage && galleryImages.length) {
-    let activeIndex = 0;
-    let startX = 0;
-    let startY = 0;
-    let dragging = false;
+  let portfolioSwiper = null;
 
-    const showImage = index => {
-      activeIndex = (index + galleryImages.length) % galleryImages.length;
+  if (lightbox && slider && galleryImages.length) {
 
-      lightboxImage.src = galleryImages[activeIndex].src;
-      lightboxImage.alt =
-        galleryImages[activeIndex].alt || "معاينة الصورة";
-    };
+    const prevButton =
+      lightbox.querySelector("#lightbox-prev");
 
-    const close = () => {
+    const nextButton =
+      lightbox.querySelector("#lightbox-next");
+
+    const closeButton =
+      lightbox.querySelector(".lightbox-close");
+
+    const pagination =
+      lightbox.querySelector(".swiper-pagination");
+
+    // إنشاء شرائح الصور
+    galleryImages.forEach(image => {
+      const slide = document.createElement("div");
+      slide.className = "swiper-slide";
+
+      const slideImage = document.createElement("img");
+      slideImage.src = image.currentSrc || image.src;
+      slideImage.alt = image.alt || "معاينة الصورة";
+      slideImage.draggable = false;
+
+      const imageFrame = document.createElement("div");
+      imageFrame.className = "lightbox-image-frame";
+
+      imageFrame.appendChild(slideImage);
+      slide.appendChild(imageFrame);
+
+      slider.appendChild(slide);
+    });
+
+    // فتح المعاينة
+    function openLightbox(index) {
+      lightbox.classList.add("active");
+      document.body.classList.add("lightbox-open");
+
+      if (!portfolioSwiper) {
+        portfolioSwiper = new Swiper(
+          lightbox.querySelector(".portfolio-swiper"),
+          {
+            initialSlide: index,
+            slidesPerView: 1,
+            spaceBetween: 0,
+            speed: 350,
+
+            loop: false,
+            rewind: false,
+
+            resistance: true,
+            resistanceRatio: 0.70,
+            touchRatio: 1,
+            touchReleaseOnEdges: false,
+
+            direction: "horizontal",
+
+            pagination: {
+              el: pagination,
+              clickable: true
+            },
+
+            keyboard: {
+              enabled: false,
+              onlyInViewport: false
+            }
+          }
+        );
+
+      } else {
+        portfolioSwiper.update();
+        portfolioSwiper.slideTo(index, 0);
+      }
+
+      portfolioSwiper.keyboard.enable();
+    }
+
+    // إغلاق المعاينة
+    function closeLightbox() {
       lightbox.classList.remove("active");
       document.body.classList.remove("lightbox-open");
-    };
 
+      if (portfolioSwiper) {
+        portfolioSwiper.keyboard.disable();
+      }
+    }
+
+    // الأسهم - ربط مباشر
+    prevButton?.addEventListener("click", event => {
+      event.preventDefault();
+      event.stopPropagation();
+
+      if (portfolioSwiper) {
+        portfolioSwiper.slidePrev();
+      }
+    });
+
+    nextButton?.addEventListener("click", event => {
+      event.preventDefault();
+      event.stopPropagation();
+
+      if (portfolioSwiper) {
+        portfolioSwiper.slideNext();
+      }
+    });
+
+    // فتح الصور
     galleryImages.forEach((image, index) => {
       image.addEventListener("click", () => {
-        showImage(index);
-
-        lightbox.classList.add("active");
-        document.body.classList.add("lightbox-open");
+        openLightbox(index);
       });
     });
 
-    lightbox.addEventListener("click", event => {
-      if (
-        event.target === lightbox ||
-        event.target.closest(".lightbox-close")
-      ) {
-        close();
-      }
+    // زر الإغلاق
+    closeButton?.addEventListener("click", event => {
+      event.preventDefault();
+      event.stopPropagation();
+
+      closeLightbox();
     });
 
-    lightbox.addEventListener("pointerdown", event => {
-      if (!lightbox.classList.contains("active")) return;
+    // // إغلاق عند الضغط خارج الصورة - موبايل فقط
+    // lightbox.addEventListener("click", (event) => {
+    //   if (window.innerWidth > 768) return;
 
-      dragging = true;
-      startX = event.clientX;
-      startY = event.clientY;
-    });
+    //   // تجاهل الضغط على الأسهم أو زر الإغلاق
+    //   if (
+    //     event.target.closest(".lightbox-nav") ||
+    //     event.target.closest(".lightbox-close")
+    //   ) {
+    //     return;
+    //   }
 
-    lightbox.addEventListener("pointerup", event => {
-      if (!dragging) return;
+    //   // تجاهل الضغط على الصورة نفسها
+    //   if (event.target.closest(".portfolio-swiper img")) {
+    //     return;
+    //   }
 
-      dragging = false;
+    //   // إغلاق عند الضغط خارج الصورة
+    //   closeLightbox();
+    // });
 
-      const dx = event.clientX - startX;
-      const dy = event.clientY - startY;
-
-      if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) {
-        showImage(activeIndex + (dx < 0 ? 1 : -1));
-      }
-    });
-
-    lightbox.addEventListener("pointercancel", () => {
-      dragging = false;
-    });
-
+    // إغلاق باستخدام Escape
     document.addEventListener("keydown", event => {
       if (!lightbox.classList.contains("active")) return;
 
-      if (event.key === "Escape") close();
-
-      if (event.key === "ArrowLeft") {
-        showImage(activeIndex + 1);
-      }
-
-      if (event.key === "ArrowRight") {
-        showImage(activeIndex - 1);
+      if (event.key === "Escape") {
+        closeLightbox();
       }
     });
   }
@@ -790,7 +964,8 @@
 
   serviceCards.forEach(card => {
     card.addEventListener("click", () => {
-      const serviceKey = serviceCardMap[card.dataset.service];
+      const serviceKey =
+        serviceCardMap[card.dataset.service];
 
       if (serviceKey) {
         selectService(serviceKey);
@@ -813,6 +988,26 @@
     });
   });
 
+
+  /* =========================================
+     IMAGE UPLOAD — FILE NAME
+  ========================================= */
+
+  const logoInput = document.getElementById("current-logo");
+  const uploadFileName = document.getElementById("upload-file-name");
+
+  if (logoInput && uploadFileName) {
+    logoInput.addEventListener("change", () => {
+      const file = logoInput.files?.[0];
+
+      uploadFileName.textContent = file
+        ? `تم اختيار: ${file.name}`
+        : "لم يتم اختيار أي صورة";
+
+      uploadFileName.classList.toggle("has-file", !!file);
+    });
+  }
+
   /* =========================================
      14. INITIALIZATION
   ========================================= */
@@ -820,11 +1015,112 @@
   serviceFields.forEach(container => {
     container.hidden = true;
 
-    container.querySelectorAll("input,textarea,select").forEach(control => {
+    container.querySelectorAll(
+      "input,textarea,select"
+    ).forEach(control => {
       control.disabled = true;
     });
   });
 
   renderStep(0);
+
+})();
+
+/* =========================================
+   HELIOCORD — GLOBAL SCROLL REVEAL
+   Smooth reveal for all page sections
+========================================= */
+
+(() => {
+  "use strict";
+
+  // العناصر التي سيظهر عليها التأثير
+  const revealGroups = [
+    {
+      selector: ".hero-side",
+      delay: 100
+    },
+    {
+      selector: ".services-section .section-heading",
+      delay: 0
+    },
+    {
+      selector: ".services-grid .service-card",
+      delay: 110
+    },
+    {
+      selector: ".portfolio-section .section-heading",
+      delay: 0
+    },
+    {
+      selector: ".portfolio-grid .portfolio-item",
+      delay: 110
+    },
+    {
+      selector: ".brief-intro",
+      delay: 0
+    },
+    {
+      selector: ".brief-section .form-card",
+      delay: 100
+    }
+  ];
+
+  const elements = [];
+
+  revealGroups.forEach((group) => {
+    const items = document.querySelectorAll(group.selector);
+
+    items.forEach((item, index) => {
+      item.classList.add("reveal-item");
+
+      const delay = group.delay
+        ? index * group.delay
+        : 0;
+
+      item.style.setProperty(
+        "--reveal-delay",
+        `${delay}ms`
+      );
+
+      elements.push(item);
+    });
+  });
+
+  if (!elements.length) return;
+
+  // في حالة عدم دعم IntersectionObserver
+  if (!("IntersectionObserver" in window)) {
+    elements.forEach((item) => {
+      item.classList.add("is-revealed");
+    });
+
+    return;
+  }
+
+  const observer = new IntersectionObserver(
+    (entries, observer) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+
+        entry.target.classList.add("is-revealed");
+
+        observer.unobserve(entry.target);
+      });
+    },
+    {
+      threshold: 0.08,
+      rootMargin: "0px 0px -45px 0px"
+    }
+  );
+
+  // تفعيل الإخفاء بعد تجهيز العناصر والمراقب
+  document.documentElement.classList.add(
+    "js-reveal-enabled"
+  );
+
+  elements.forEach((item) => {
+    observer.observe(item);
+  });
 
 })();
