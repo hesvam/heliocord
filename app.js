@@ -715,21 +715,15 @@
       formData.append("servicePrice", service.price);
       formData.append("payload", JSON.stringify(payload));
 
-
       const socialLogoInput = document.getElementById("social-logo");
       const currentLogoInput = document.getElementById("current-logo");
 
-      // اختيار الصورة حسب الخدمة المحددة
-      const logoFile =
-        selectedService === "social-media"
-          ? socialLogoInput?.files?.[0]
-          : selectedService === "logo-redesign"
-            ? currentLogoInput?.files?.[0]
-            : null;
+      if (socialLogoInput?.files?.length) {
+        formData.append("socialLogo", socialLogoInput.files[0]);
+      }
 
-      // إرسال الصورة بنفس الاسم الذي يستقبله الـ API
-      if (logoFile) {
-        formData.append("logoImage", logoFile, logoFile.name);
+      if (currentLogoInput?.files?.length) {
+        formData.append("logoImage", currentLogoInput.files[0]);
       }
 
       const response = await fetch("/api/submit", {
@@ -745,6 +739,11 @@
           "حدثت مشكلة أثناء إرسال الطلب. حاول مرة أخرى."
         );
       }
+
+      // Clear uploaded images after successful submission
+      form.querySelectorAll('input[type="file"]').forEach(input => {
+        input.value = "";
+      });
 
       form.reset();
       updateSloganVisibility("");
