@@ -718,7 +718,7 @@
       const socialLogoInput = document.getElementById("social-logo");
 
       if (socialLogoInput?.files?.length) {
-        formData.append("socialLogo", socialLogoInput.files[0]);
+        formData.append("logoImage", socialLogoInput.files[0]);
       }
 
       const response = await fetch("/api/submit", {
