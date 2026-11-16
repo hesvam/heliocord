@@ -447,7 +447,6 @@
      6. STEP RENDERING
   ========================================= */
 
-
   function renderStep(index) {
     currentStep = Math.max(
       0,
@@ -741,6 +740,29 @@
       }
 
       form.reset();
+
+      // تفريغ حقول الصور وإعادة أسماء الملفات للحالة الافتراضية
+      const uploadFileName = document.getElementById("upload-file-name");
+      const socialLogoFileName = document.getElementById("social-logo-file-name");
+
+      if (currentLogoInput) {
+        currentLogoInput.value = "";
+      }
+
+      if (socialLogoInput) {
+        socialLogoInput.value = "";
+      }
+
+      if (uploadFileName) {
+        uploadFileName.textContent = "لم يتم اختيار أي صورة";
+        uploadFileName.classList.remove("has-file");
+      }
+
+      if (socialLogoFileName) {
+        socialLogoFileName.textContent = "لم يتم اختيار أي صورة";
+        socialLogoFileName.classList.remove("has-file");
+      }
+
       updateSloganVisibility("");
 
       clearErrors(form);
@@ -992,8 +1014,6 @@
       }, 450);
     });
   });
-
-
 
   /* =========================================
      IMAGE UPLOAD — FILE NAME
