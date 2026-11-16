@@ -59,6 +59,7 @@ async function parseMultipart(req) {
 
   const delimiter = Buffer.from(`--${boundary}`);
   const separator = Buffer.from("\r\n\r\n");
+
   const nextDelimiter = Buffer.concat([
     Buffer.from("\r\n"),
     delimiter,
@@ -66,6 +67,7 @@ async function parseMultipart(req) {
 
   const fields = {};
   let logoImage = null;
+
   let position = body.indexOf(delimiter);
 
   while (position !== -1) {
@@ -79,7 +81,9 @@ async function parseMultipart(req) {
     }
 
     // تخطي CRLF
-    if (body.subarray(position, position + 2).toString() === "\r\n") {
+    if (
+      body.subarray(position, position + 2).toString() === "\r\n"
+    ) {
       position += 2;
     }
 
@@ -348,14 +352,23 @@ export default async function handler(req, res) {
       );
 
       photoForm.append("chat_id", chatId);
+
       photoForm.append(
         "photo",
         imageBlob,
         logoImage.filename || "current-logo"
       );
+
+      // IMAGE CAPTION — SERVICE SPECIFIC
+
+      const imageCaption =
+        service.trim() === "تصميم سوشيال ميديا"
+          ? "الشعار المرفق لاستخدامه في تصميم السوشيال ميديا"
+          : "صورة الشعار الحالي";
+
       photoForm.append(
         "caption",
-        `صورة الشعار الحالي\nرقم الطلب: ${referenceId}`
+        `${imageCaption}\nرقم الطلب: ${referenceId}`
       );
 
       await telegramRequest(token, "sendPhoto", photoForm);
