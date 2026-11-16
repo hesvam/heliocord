@@ -8,11 +8,10 @@ export const config = {
 // =========================================
 // HELIOCORD — MULTI SERVICE FORM API
 // Native multipart parsing + Telegram
-// No external packages required
 // =========================================
 
-const MAX_REQUEST_SIZE = 4 * 1024 * 1024; // 4 MB
-const MAX_IMAGE_SIZE = 4 * 1024 * 1024;   // 4 MB
+const MAX_REQUEST_SIZE = 4.5 * 1024 * 1024;
+const MAX_IMAGE_SIZE = 4 * 1024 * 1024;
 
 // =========================================
 // 1. READ REQUEST BODY
@@ -65,31 +64,37 @@ async function parseMultipart(req) {
     delimiter,
   ]);
 
-  const fields = {};
-  let logoImage = null;
+  const fields = Object.create(null);
+  const files = Object.create(null);
 
   let position = body.indexOf(delimiter);
+
+  if (position === -1) {
+    const error = new Error("تعذر قراءة البيانات المرسلة.");
+    error.statusCode = 400;
+    throw error;
+  }
 
   while (position !== -1) {
     position += delimiter.length;
 
     // نهاية البيانات
-    if (
-      body.subarray(position, position + 2).toString() === "--"
-    ) {
+    if (body.subarray(position, position + 2).toString() === "--") {
       break;
     }
 
     // تخطي CRLF
-    if (
-      body.subarray(position, position + 2).toString() === "\r\n"
-    ) {
+    if (body.subarray(position, position + 2).toString() === "\r\n") {
       position += 2;
     }
 
     const headerEnd = body.indexOf(separator, position);
 
-    if (headerEnd === -1) break;
+    if (headerEnd === -1) {
+      const error = new Error("تعذر قراءة بيانات النموذج.");
+      error.statusCode = 400;
+      throw error;
+    }
 
     const headers = body
       .subarray(position, headerEnd)
@@ -98,7 +103,11 @@ async function parseMultipart(req) {
     const dataStart = headerEnd + separator.length;
     const dataEnd = body.indexOf(nextDelimiter, dataStart);
 
-    if (dataEnd === -1) break;
+    if (dataEnd === -1) {
+      const error = new Error("بيانات النموذج غير مكتملة.");
+      error.statusCode = 400;
+      throw error;
+    }
 
     const data = body.subarray(dataStart, dataEnd);
 
@@ -118,8 +127,9 @@ async function parseMultipart(req) {
       /content-type:\s*([^\r\n]+)/i
     )?.[1]?.trim().toLowerCase();
 
-    if (name === "logoImage" && filename) {
-      logoImage = {
+    if (name && filename) {
+      files[name] = {
+        fieldName: name,
         filename: filename.replace(/[\r\n]/g, "").slice(0, 150),
         contentType: partContentType || "",
         data: Buffer.from(data),
@@ -132,7 +142,7 @@ async function parseMultipart(req) {
     position = dataEnd + 2;
   }
 
-  return { fields, logoImage };
+  return { fields, files };
 }
 
 // =========================================
@@ -187,7 +197,7 @@ export default async function handler(req, res) {
   try {
     // REQUEST DATA
 
-    const { fields, logoImage } = await parseMultipart(req);
+    const { fields, files } = await parseMultipart(req);
 
     const referenceId = fields.referenceId;
     const service = fields.service;
@@ -227,7 +237,34 @@ export default async function handler(req, res) {
       });
     }
 
-    // IMAGE VALIDATION
+    // =========================================
+    // 5. SELECT IMAGE BY SERVICE
+    // =========================================
+
+    let logoImage = null;
+
+    if (service.trim() === "تصميم سوشيال ميديا") {
+      // Social media image
+      // Supports all previous field names
+
+      logoImage =
+        files.socialLogo ||
+        files.social_logo ||
+        files.logoImage ||
+        null;
+
+    } else if (service.trim() === "تحديث شعار") {
+      // Current logo image
+
+      logoImage =
+        files.logoImage ||
+        files.current_logo ||
+        null;
+    }
+
+    // =========================================
+    // 6. IMAGE VALIDATION
+    // =========================================
 
     if (logoImage) {
       const allowedTypes = [
@@ -251,9 +288,20 @@ export default async function handler(req, res) {
           message: "حجم الصورة غير مناسب. الحد الأقصى 4 ميجابايت.",
         });
       }
+
+      console.log("Image received:", {
+        field: logoImage.fieldName,
+        filename: logoImage.filename,
+        contentType: logoImage.contentType,
+        size: logoImage.size,
+      });
+    } else {
+      console.log("No image attached to this order.");
     }
 
-    // SANITIZE PAYLOAD
+    // =========================================
+    // 7. SANITIZE PAYLOAD
+    // =========================================
 
     const safeItems = payload
       .filter(item =>
@@ -267,7 +315,9 @@ export default async function handler(req, res) {
       }))
       .filter(item => item.label && item.value);
 
-    // CUSTOMER FIELD DETECTION
+    // =========================================
+    // 8. CUSTOMER FIELD DETECTION
+    // =========================================
 
     const customerKeywords = [
       "الاسم بالكامل",
@@ -298,7 +348,9 @@ export default async function handler(req, res) {
       !isCustomerField(item.label)
     );
 
-    // FORMAT TELEGRAM SECTIONS
+    // =========================================
+    // 9. FORMAT TELEGRAM SECTIONS
+    // =========================================
 
     const formatSection = (title, items) => {
       if (!items.length) return "";
@@ -311,7 +363,9 @@ export default async function handler(req, res) {
       ].join("\n");
     };
 
-    // BUILD TELEGRAM MESSAGE
+    // =========================================
+    // 10. BUILD TELEGRAM MESSAGE
+    // =========================================
 
     const formattedPrice = servicePrice.toLocaleString("en-US");
 
@@ -341,7 +395,9 @@ export default async function handler(req, res) {
       });
     }
 
-    // SEND IMAGE FIRST, IF AVAILABLE
+    // =========================================
+    // 11. SEND IMAGE FIRST, IF AVAILABLE
+    // =========================================
 
     if (logoImage) {
       const photoForm = new FormData();
@@ -356,10 +412,8 @@ export default async function handler(req, res) {
       photoForm.append(
         "photo",
         imageBlob,
-        logoImage.filename || "current-logo"
+        logoImage.filename || "uploaded-image"
       );
-
-      // IMAGE CAPTION — SERVICE SPECIFIC
 
       const imageCaption =
         service.trim() === "تصميم سوشيال ميديا"
@@ -374,7 +428,9 @@ export default async function handler(req, res) {
       await telegramRequest(token, "sendPhoto", photoForm);
     }
 
-    // SEND ORDER DETAILS
+    // =========================================
+    // 12. SEND ORDER DETAILS
+    // =========================================
 
     const messageForm = new FormData();
 
@@ -384,7 +440,9 @@ export default async function handler(req, res) {
 
     await telegramRequest(token, "sendMessage", messageForm);
 
-    // SUCCESS RESPONSE
+    // =========================================
+    // 13. SUCCESS RESPONSE
+    // =========================================
 
     return res.status(200).json({
       success: true,
