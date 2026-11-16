@@ -715,15 +715,21 @@
       formData.append("servicePrice", service.price);
       formData.append("payload", JSON.stringify(payload));
 
+
       const socialLogoInput = document.getElementById("social-logo");
       const currentLogoInput = document.getElementById("current-logo");
 
-      if (socialLogoInput?.files?.length) {
-        formData.append("socialLogo", socialLogoInput.files[0]);
-      }
+      // اختيار الصورة حسب الخدمة المحددة
+      const logoFile =
+        selectedService === "social-media"
+          ? socialLogoInput?.files?.[0]
+          : selectedService === "logo-redesign"
+            ? currentLogoInput?.files?.[0]
+            : null;
 
-      if (currentLogoInput?.files?.length) {
-        formData.append("logoImage", currentLogoInput.files[0]);
+      // إرسال الصورة بنفس الاسم الذي يستقبله الـ API
+      if (logoFile) {
+        formData.append("logoImage", logoFile, logoFile.name);
       }
 
       const response = await fetch("/api/submit", {
