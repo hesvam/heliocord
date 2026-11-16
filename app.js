@@ -989,24 +989,38 @@
   });
 
 
+
   /* =========================================
      IMAGE UPLOAD — FILE NAME
   ========================================= */
 
-  const logoInput = document.getElementById("current-logo");
-  const uploadFileName = document.getElementById("upload-file-name");
+  const uploadFields = [
+    {
+      inputId: "current-logo",
+      fileNameId: "upload-file-name"
+    },
+    {
+      inputId: "social-logo",
+      fileNameId: "social-logo-file-name"
+    }
+  ];
 
-  if (logoInput && uploadFileName) {
-    logoInput.addEventListener("change", () => {
-      const file = logoInput.files?.[0];
+  uploadFields.forEach(({ inputId, fileNameId }) => {
+    const input = document.getElementById(inputId);
+    const fileName = document.getElementById(fileNameId);
 
-      uploadFileName.textContent = file
+    if (!input || !fileName) return;
+
+    input.addEventListener("change", () => {
+      const file = input.files?.[0];
+
+      fileName.textContent = file
         ? `تم اختيار: ${file.name}`
         : "لم يتم اختيار أي صورة";
 
-      uploadFileName.classList.toggle("has-file", !!file);
+      fileName.classList.toggle("has-file", !!file);
     });
-  }
+  });
 
   /* =========================================
      14. INITIALIZATION
