@@ -740,11 +740,6 @@
         );
       }
 
-      // Clear uploaded images after successful submission
-      form.querySelectorAll('input[type="file"]').forEach(input => {
-        input.value = "";
-      });
-
       form.reset();
       updateSloganVisibility("");
 
