@@ -53,7 +53,7 @@
       name: "تصميم شعار",
       price: 500,
       stepTitle: "تفاصيل تصميم الشعار",
-      description: "حدد نوع اللوجو وشخصية العلامة التجارية التي تريدها."
+      description: "حدد نوع الشعار وشخصية العلامة التجارية التي تريدها."
     },
 
     "logo-redesign": {
@@ -91,7 +91,7 @@
     redesign_reason: "سبب تحديث الشعار",
     preserve_elements: "العناصر المطلوب الحفاظ عليها",
     redesign_direction: "اتجاه التصميم الجديد",
-    identity_items: "تطبيقات الهوية البصرية",
+    identity_applications: "تطبيقات الهوية البصرية",
     identity_description: "وصف الهوية البصرية",
     identity_requirements: "متطلبات الهوية الإضافية",
     social_platforms: "منصات السوشيال ميديا",
@@ -199,16 +199,19 @@
   ========================================= */
 
   function clearErrors(scope = form) {
-    scope.querySelectorAll(".is-invalid,.has-error").forEach(element => {
+    // إزالة كلاسات الأخطاء
+    scope.querySelectorAll(".is-invalid, .has-error").forEach(element => {
       element.classList.remove("is-invalid", "has-error");
     });
 
+    // إزالة رسائل الخطأ
     scope.querySelectorAll(
-      ".field-error-message,.group-error-message"
-    ).forEach(element => {
-      element.remove();
+      ".field-error-message, .group-error-message"
+    ).forEach(error => {
+      error.remove();
     });
 
+    // إزالة حالة عدم صلاحية الحقول
     scope.querySelectorAll('[aria-invalid="true"]').forEach(element => {
       element.removeAttribute("aria-invalid");
     });
@@ -225,6 +228,13 @@
       control.setAttribute("aria-invalid", "true");
     }
 
+    // إظهار إطار رفع الصورة باللون الأحمر
+    const uploadBox = field.querySelector(".upload-box");
+
+    if (uploadBox) {
+      uploadBox.classList.add("is-invalid");
+    }
+
     const error = document.createElement("span");
     error.className = "field-error-message";
     error.textContent = message;
@@ -236,6 +246,7 @@
     if (!group) return;
 
     group.classList.add("has-error");
+    group.querySelector(".choice-grid")?.classList.add("is-invalid");
 
     group.querySelectorAll("input").forEach(input => {
       input.setAttribute("aria-invalid", "true");
@@ -341,10 +352,13 @@
             control.closest(".service-selection-grid") ||
             control.parentElement;
 
-          showGroupError(
-            group,
-            "يرجى اختيار الإجابة المناسبة."
-          );
+          const message = control.name === "logo_type"
+            ? "يرجى اختيار نوع الشعار المناسب."
+            : control.name === "social_platforms"
+              ? "يرجى اختيار منصة واحدة على الأقل للتصميم."
+              : "يرجى اختيار الإجابة المناسبة.";
+
+          showGroupError(group, message);
 
           firstInvalid ||= group;
         }
@@ -357,7 +371,6 @@
         : control.value.trim();
 
       let message = "";
-
       if (!value) {
         message = control.name === "brand_name"
           ? "يرجى إدخال اسم الشركة أو المشروع."
@@ -367,8 +380,21 @@
               ? "يرجى إدخال اسمك بالكامل."
               : control.name === "phone"
                 ? "يرجى إدخال رقم واتساب."
-                : "يرجى استكمال هذا الحقل.";
-
+                : control.name === "identity_applications"
+                  ? "يرجى تحديد التطبيقات المطلوبة للهوية البصرية."
+                  : control.name === "logo_type"
+                    ? "يرجى اختيار نوع الشعار المناسب."
+                    : control.name === "redesign_reason"
+                      ? "يرجى توضيح سبب رغبتك في تحديث الشعار."
+                      : control.name === "current_logo"
+                        ? "يرجى رفع صورة الشعار الحالي."
+                        : control.name === "social_logo"
+                          ? "يرجى إرفاق الشعار الذي تريد إضافته إلى التصميم."
+                          : control.name === "brand_colors"
+                            ? "يرجى تحديد ألوان البراند التي سيتم استخدامها في التصميم."
+                            : control.name === "social_content"
+                              ? "يرجى إدخال المحتوى المطلوب تصميمه."
+                              : "يرجى استكمال هذا الحقل.";
       } else if (
         control.name === "phone" &&
         !/^01\d{9}$/.test(value)
@@ -401,7 +427,7 @@
       "logo-design": {},
       "logo-redesign": {},
       "visual-identity": {
-        3: ["identity_items"]
+        3: ["identity_applications"]
       },
       "social-media": {
         2: ["social_platforms"]
@@ -539,26 +565,41 @@
   form.addEventListener("change", event => {
     const control = event.target;
 
-    const group = control.closest(
-      ".field,.service-selection-grid"
-    );
+    // تحديد مجموعة الاختيارات
+    const group = control.closest(".field, .service-selection-grid");
 
     if (group) {
-      group.classList.remove("has-error");
+      const isCheckbox = control.type === "checkbox";
+      const isRadio = control.type === "radio";
 
-      group.querySelectorAll(
-        ".group-error-message"
-      ).forEach(error => {
-        error.remove();
-      });
+      // التأكد من وجود اختيار فعلي قبل إزالة الخطأ
+      const hasSelection = isCheckbox
+        ? !!group.querySelector('input[type="checkbox"]:checked')
+        : isRadio
+          ? !!group.querySelector('input[type="radio"]:checked')
+          : true;
 
-      group.querySelectorAll(
-        '[aria-invalid="true"]'
-      ).forEach(input => {
-        input.removeAttribute("aria-invalid");
-      });
+      if (hasSelection) {
+        group.classList.remove("has-error", "is-invalid");
+
+        // إزالة أي إطار خطأ داخلي
+        group.querySelectorAll(".is-invalid").forEach(element => {
+          element.classList.remove("is-invalid");
+        });
+
+        // إزالة رسالة الخطأ
+        group.querySelectorAll(".group-error-message").forEach(error => {
+          error.remove();
+        });
+
+        // إزالة حالة الخطأ من عناصر المجموعة
+        group.querySelectorAll('[aria-invalid="true"]').forEach(element => {
+          element.removeAttribute("aria-invalid");
+        });
+      }
     }
 
+    // تحديث الخدمة المختارة
     if (control.name === "service_choice") {
       selectService(control.value);
     }
@@ -787,7 +828,7 @@
       renderStep(0);
 
       showToast(
-        "تم استلام طلبك بنجاح! شكرًا لثقتك في HELIOCORD.",
+        "تم استلام طلبك بنجاح، سنتواصل معك عبر واتساب للتأكيد.",
         true
       );
 
@@ -1038,6 +1079,10 @@
 
     input.addEventListener("change", () => {
       const file = input.files?.[0];
+
+      input.closest(".field")
+        ?.querySelector(".upload-box")
+        ?.classList.remove("is-invalid");
 
       fileName.textContent = file
         ? `تم اختيار: ${file.name}`
