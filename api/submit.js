@@ -374,7 +374,7 @@ export default async function handler(req, res) {
       "HELIOCORD",
       "================================",
       `الخدمة: ${service.trim()}`,
-      `السعر المبدئي: ${formattedPrice} ج.م`,
+      `تكلفة الخدمة : ${formattedPrice} ج.م`,
       `رقم الطلب: ${referenceId}`,
       "",
       formatSection("بيانات العميل", customerItems),
