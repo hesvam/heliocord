@@ -506,14 +506,10 @@ button.service-card {
    width: 100%;
    height: auto;
    object-fit: contain;
-   cursor: zoom-in;
+   cursor: pointer;
    user-select: none;
    -webkit-user-drag: none;
    transition: transform .5s ease
-}
-
-.portfolio-image:hover img {
-   transform: scale(1.015)
 }
 
 .portfolio-tag {
@@ -1614,7 +1610,7 @@ button.service-card {
    justify-content: space-between;
    gap: 8px;
    margin-bottom: 5px;
-   padding-bottom: 4px;
+   padding-bottom: 5px;
    color: #dcdcdc;
    border-bottom: 1px solid #292929;
    font-size: 9px;
@@ -1746,7 +1742,7 @@ button.service-card {
    }
 
    .deliverables-heading {
-      margin-bottom: 4px;
+      margin-bottom: 5px;
       font-size: 9px;
    }
 
@@ -2957,4 +2953,21 @@ html.js-reveal-enabled .reveal-item.is-revealed {
 
 .service-fields[data-service-fields="social-media"] .field textarea {
    margin-top: 0;
+}
+
+.upload-box.is-invalid {
+   border-color: #a94a4a;
+}
+
+.field.is-invalid textarea {
+   border: 1px solid #a94a4a;
+}
+
+/* Social Platforms — Error State */
+.field.has-error .choice-grid {
+   border: 1px solid #e05252;
+   border-radius: 10px;
+   padding: 8px;
+   box-sizing: border-box;
+   transition: border-color 0.2s ease;
 }
