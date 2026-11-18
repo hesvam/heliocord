@@ -554,7 +554,7 @@ button.service-card {
    padding: 24px;
    background: radial-gradient(circle at 90% 0%, rgba(255, 255, 255, .055), transparent 45%), linear-gradient(145deg, #141414, #0e0e0e);
    border: 1px solid #303030;
-   border-radius: 13px
+   border-radius: 12px
 }
 
 .service-details-main {
@@ -3097,7 +3097,7 @@ html.js-reveal-enabled .reveal-item.is-revealed {
    }
 
    .portfolio-slider .portfolio-track {
-      gap: 12px;
+      gap: 3px;
    }
 
    .portfolio-slider .portfolio-item {
@@ -3122,14 +3122,14 @@ html.js-reveal-enabled .reveal-item.is-revealed {
 
 /* الصورة الأولى — الحواف الخارجية ناحية اليمين */
 .portfolio-slider .portfolio-item:first-child {
-   border-top-right-radius: 15px;
-   border-bottom-right-radius: 15px;
+   border-top-right-radius: 12px;
+   border-bottom-right-radius: 12px;
 }
 
 /* الصورة الأخيرة — الحواف الخارجية ناحية الشمال */
 .portfolio-slider .portfolio-item:last-child {
-   border-top-left-radius: 15px;
-   border-bottom-left-radius: 15px;
+   border-top-left-radius: 12px;
+   border-bottom-left-radius: 12px;
 }
 
 /* الصور نفسها */
