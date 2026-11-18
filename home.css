@@ -223,7 +223,7 @@ select {
 }
 
 .section-heading h2 {
-   margin-top: 8px;
+   margin-top: 2px;
    color: #fff;
    font-size: 29px;
    font-weight: 800
@@ -2517,6 +2517,8 @@ body.lightbox-open {
 
 .portfolio-section {
    padding-top: 40px;
+   padding-bottom: 40px;
+   border-bottom: 1px solid var(--border);
 }
 
 /* Desktop: two equal columns, third image starts below the first */
@@ -3063,13 +3065,13 @@ html.js-reveal-enabled .reveal-item.is-revealed {
    display: flex !important;
    flex-flow: row nowrap;
    align-items: stretch;
-   gap: clamp(10px, 1.4vw, 16px);
+   gap: 3px;
    width: 100%;
    min-width: 0;
 }
 
 .portfolio-slider .portfolio-item {
-   flex: 0 0 calc((100% - clamp(10px, 1.4vw, 16px)) / 2);
+   flex: 0 0 calc((100% - clamp(250px, 1.4vw, 16px)) / 2);
    width: calc((100% - clamp(10px, 1.4vw, 16px)) / 2);
    min-width: 0;
    scroll-snap-align: start;
@@ -3101,8 +3103,8 @@ html.js-reveal-enabled .reveal-item.is-revealed {
    }
 
    .portfolio-slider .portfolio-item {
-      flex-basis: 82%;
-      width: 82%;
+      flex-basis: 95%;
+      width: 95%;
       scroll-snap-align: start;
    }
 }
