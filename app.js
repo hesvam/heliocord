@@ -972,10 +972,6 @@
       delay: 0
     },
     {
-      selector: ".portfolio-grid .portfolio-item",
-      delay: 110
-    },
-    {
       selector: ".brief-intro",
       delay: 0
     },
