@@ -3113,3 +3113,27 @@ html.js-reveal-enabled .reveal-item.is-revealed {
       scroll-snap-type: x proximity;
    }
 }
+
+/* الفريمات */
+.portfolio-slider .portfolio-item {
+   overflow: hidden;
+   border-radius: 0;
+}
+
+/* الصورة الأولى — الحواف الخارجية ناحية اليمين */
+.portfolio-slider .portfolio-item:first-child {
+   border-top-right-radius: 15px;
+   border-bottom-right-radius: 15px;
+}
+
+/* الصورة الأخيرة — الحواف الخارجية ناحية الشمال */
+.portfolio-slider .portfolio-item:last-child {
+   border-top-left-radius: 15px;
+   border-bottom-left-radius: 15px;
+}
+
+/* الصور نفسها */
+.portfolio-slider .portfolio-image {
+   border-radius: 0 !important;
+   overflow: hidden;
+}
