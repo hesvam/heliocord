@@ -70,7 +70,9 @@ select {
 }
 
 .home-shell {
-   width: min(100% - 64px, 1120px);
+   width: calc(100% - 40px);
+   max-width: 1500px;
+   margin-inline: auto;
    min-height: 100vh;
    margin: auto;
    display: flex;
@@ -92,8 +94,8 @@ select {
 }
 
 .brand-logo {
-   width: 68px;
-   height: 68px;
+   width: 55px;
+   height: 55px;
    object-fit: contain;
    filter: brightness(0) invert(1)
 }
@@ -206,9 +208,9 @@ select {
    animation: fadeUp .65s ease both;
 }
 
-.services-section,
-.portfolio-section {
-   padding: 76px 0;
+.services-section {
+   padding-top: 40px;
+   padding-bottom: 40px;
    border-bottom: 1px solid var(--border)
 }
 
@@ -477,10 +479,6 @@ button.service-card {
    font-size: 10px
 }
 
-.portfolio-section {
-   padding-top: 70px
-}
-
 .portfolio-grid {
    display: grid;
    grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -526,7 +524,7 @@ button.service-card {
 }
 
 .brief-section {
-   padding: 78px 0 55px
+   padding-top: 40px;
 }
 
 .brief-intro {
@@ -1189,7 +1187,7 @@ button.service-card {
 
 @media(max-width:800px) {
    .home-shell {
-      width: calc(100% - 40px)
+      width: calc(100% - 40px);
    }
 
    .service-card {
@@ -1208,7 +1206,7 @@ button.service-card {
 
 @media(max-width:600px) {
    .home-shell {
-      width: calc(100% - 32px)
+      width: calc(100% - 20px);
    }
 
    .site-header {
@@ -1217,8 +1215,8 @@ button.service-card {
    }
 
    .brand-logo {
-      width: 58px;
-      height: 58px
+      width: 50px;
+      height: 50px
    }
 
    .header-cta {
@@ -1259,11 +1257,6 @@ button.service-card {
       min-height: 40px;
       padding: 0 12px;
       font-size: 10px
-   }
-
-   .services-section,
-   .portfolio-section {
-      padding: 45px 0
    }
 
    .section-heading {
@@ -1333,15 +1326,6 @@ button.service-card {
 
    .coming-bottom {
       padding-top: 20px
-   }
-
-   .portfolio-grid {
-      grid-template-columns: 1fr;
-      gap: 12px
-   }
-
-   .brief-section {
-      padding: 48px 0 35px
    }
 
    .brief-intro h2 {
@@ -1488,7 +1472,7 @@ button.service-card {
 
 @media(max-width:370px) {
    .home-shell {
-      width: calc(100% - 24px)
+      width: calc(100% - 20px);
    }
 
    .service-card {
@@ -2528,131 +2512,100 @@ body.lightbox-open {
 }
 
 /* =========================================
-   SWIPER — PORTFOLIO LIGHTBOX
+   HELIOCORD — EDITORIAL PORTFOLIO
 ========================================= */
 
-.image-lightbox .portfolio-swiper {
-   width: 100%;
-   height: 100%;
-   direction: ltr;
-   overflow: hidden;
+.portfolio-section {
+   padding-top: 40px;
 }
 
-.portfolio-swiper .swiper-slide {
-   display: flex;
-   align-items: center;
-   justify-content: center;
-   width: 100%;
-   height: 100%;
-}
-
-.portfolio-swiper .swiper-slide img {
-   display: block;
-   width: auto;
-   height: auto;
-   max-width: 100%;
-   max-height: 100%;
-   object-fit: contain;
-   user-select: none;
-   -webkit-user-select: none;
-   -webkit-user-drag: none;
-   pointer-events: auto;
-}
-
-.image-lightbox .lightbox-close {
-   z-index: 10;
-}
-
-.portfolio-swiper .swiper-pagination {
-   bottom: 22px;
-}
-
-.portfolio-swiper .swiper-pagination-bullet {
-   width: 6px;
-   height: 6px;
-   background: #fff;
-   opacity: .4;
-}
-
-.portfolio-swiper .swiper-pagination-bullet-active {
-   opacity: 1;
-}
-
-.lightbox-nav {
-   position: absolute;
-   top: 50%;
-   transform: translateY(-50%);
-   width: 40px;
-   height: 40px;
+/* Desktop: two equal columns, third image starts below the first */
+.portfolio-grid {
    display: grid;
-   place-items: center;
+   grid-template-columns: repeat(2, minmax(0, 1fr));
+   gap: 5px;
+}
+
+/* إزالة شكل الكروت */
+.portfolio-item {
+   min-width: 0;
+   overflow: hidden;
+   background: transparent;
+   border: none;
+   border-radius: 0;
+}
+
+/* مساحة موحدة لكل صورة */
+.portfolio-image {
+   position: relative;
+   overflow: hidden;
+   background: transparent;
+   aspect-ratio: 1 / 1;
+}
+
+/* الصور */
+.portfolio-image img {
+   display: block;
+   width: 100%;
+   height: 100%;
+   object-fit: contain;
+   cursor: default;
+   user-select: none;
+   -webkit-user-drag: none;
+   transition: opacity 0.35s ease;
+}
+
+/* الصور كلها بنفس مساحة العمود */
+.portfolio-item {
+   grid-column: auto;
+}
+
+/* عنوان نوع العمل */
+.portfolio-tag {
+   position: absolute;
+   right: 12px;
+   bottom: 12px;
+
+   padding: 6px 10px;
+
    color: #fff;
-   background: #1a1a1a;
-   border: 1px solid #444;
-   border-radius: 50%;
-   font-size: 20px;
-   cursor: pointer;
-}
+   background: rgba(8, 8, 8, 0.85);
 
-.lightbox-prev {
-   right: 18px;
-}
+   border-radius: 4px;
 
-.lightbox-next {
-   left: 18px;
-}
+   font: 600 9px/1.5 "Inter", sans-serif;
+   letter-spacing: 0.6px;
 
-
-/* FIX LIGHTBOX NAVIGATION */
-.image-lightbox .lightbox-nav {
-   position: absolute !important;
-   z-index: 9999 !important;
-   pointer-events: auto !important;
-   cursor: pointer;
-   display: flex;
-   align-items: center;
-   justify-content: center;
-}
-
-.image-lightbox .lightbox-prev {
-   right: 20px;
-}
-
-.image-lightbox .lightbox-next {
-   left: 20px;
-}
-
-.image-lightbox .lightbox-nav i {
    pointer-events: none;
 }
 
-/* إخفاء أسهم الـ Lightbox على الموبايل */
+/* لا يوجد Hover Zoom أو فتح */
+.portfolio-item:hover img {
+   transform: none;
+}
+
+/* =========================================
+   PORTFOLIO — MOBILE
+========================================= */
+
 @media (max-width: 768px) {
 
-   .image-lightbox .lightbox-prev,
-   .image-lightbox .lightbox-next {
-      display: none !important;
+   .portfolio-grid {
+      grid-template-columns: 1fr;
+      gap: 5px;
    }
-}
 
-/* Lightbox Image Frame */
-.image-lightbox .swiper-slide {
-   display: flex;
-   align-items: center;
-   justify-content: center;
-}
+   .portfolio-item:first-child {
+      grid-column: auto;
+   }
 
-.image-lightbox .lightbox-image-frame {
-   position: relative;
-   display: inline-block;
-   max-width: 100%;
-}
+   .portfolio-tag {
+      right: 10px;
+      bottom: 10px;
+      font-size: 8px;
+   }
 
-.image-lightbox .lightbox-image-frame img {
-   display: block;
-   max-width: 100%;
 }
-
 
 /* =========================================
    HELIOCORD — SCROLL REVEAL ANIMATION
@@ -2970,4 +2923,193 @@ html.js-reveal-enabled .reveal-item.is-revealed {
    padding: 8px;
    box-sizing: border-box;
    transition: border-color 0.2s ease;
+}
+
+
+/* =========================================
+   HELIOCORD — LIGHTBOX POLISH
+========================================= */
+
+.image-lightbox {
+   background: rgba(0, 0, 0, .92) !important;
+   backdrop-filter: blur(12px);
+   -webkit-backdrop-filter: blur(12px);
+   padding: 24px !important;
+   transition:
+      opacity .28s ease,
+      visibility .28s ease !important;
+}
+
+.image-lightbox .portfolio-swiper {
+   width: 100%;
+   height: 100%;
+}
+
+.lightbox-image-frame {
+   display: flex !important;
+   align-items: center;
+   justify-content: center;
+   max-width: 100%;
+   max-height: 88vh;
+   overflow: hidden;
+}
+
+.lightbox-image-frame img {
+   max-width: 100% !important;
+   max-height: 88vh !important;
+   width: auto !important;
+   height: auto !important;
+   object-fit: contain;
+   transform: scale(.98);
+   transition: transform .35s ease;
+}
+
+.image-lightbox.active .lightbox-image-frame img {
+   transform: scale(1);
+}
+
+/* زر الإغلاق */
+.image-lightbox .lightbox-close {
+   top: 22px;
+   left: 22px;
+   width: 42px;
+   height: 42px;
+   color: #fff;
+   background: rgba(255, 255, 255, .07);
+   border: 1px solid rgba(255, 255, 255, .16);
+   border-radius: 50%;
+   transition:
+      background .25s ease,
+      transform .25s ease;
+}
+
+.image-lightbox .lightbox-close:hover {
+   background: rgba(255, 255, 255, .15);
+   transform: rotate(90deg);
+}
+
+/* أسهم التنقل */
+.image-lightbox .lightbox-nav {
+   width: 42px;
+   height: 42px;
+   color: #fff;
+   background: rgba(255, 255, 255, .07);
+   border: 1px solid rgba(255, 255, 255, .15);
+   transition: background .25s ease;
+}
+
+.image-lightbox .lightbox-nav:hover {
+   background: rgba(255, 255, 255, .15);
+}
+
+/* موبايل */
+@media (max-width: 768px) {
+
+   .image-lightbox {
+      padding: 14px !important;
+   }
+
+   .lightbox-image-frame,
+   .lightbox-image-frame img {
+      max-height: 90vh !important;
+   }
+
+   .image-lightbox .lightbox-close {
+      top: 14px;
+      left: 14px;
+      width: 38px;
+      height: 38px;
+   }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+   .image-lightbox,
+   .lightbox-image-frame img,
+   .image-lightbox .lightbox-close,
+   .image-lightbox .lightbox-nav {
+      transition: none !important;
+   }
+}
+
+/* =========================================
+   HELIOCORD — PORTFOLIO HORIZONTAL SLIDER
+   Native touch swipe + smooth scroll snapping
+========================================= */
+
+.portfolio-slider {
+   width: 100%;
+   overflow-x: auto;
+   overflow-y: hidden;
+   direction: rtl;
+   -webkit-overflow-scrolling: touch;
+   overscroll-behavior-x: contain;
+   scroll-snap-type: x mandatory;
+   scroll-behavior: smooth;
+   scrollbar-width: none;
+   touch-action: pan-x pan-y;
+   cursor: grab;
+}
+
+.portfolio-slider::-webkit-scrollbar {
+   display: none;
+}
+
+.portfolio-slider:active {
+   cursor: grabbing;
+}
+
+.portfolio-slider .portfolio-track {
+   display: flex !important;
+   flex-flow: row nowrap;
+   align-items: stretch;
+   gap: clamp(10px, 1.4vw, 16px);
+   width: 100%;
+   min-width: 0;
+}
+
+.portfolio-slider .portfolio-item {
+   flex: 0 0 calc((100% - clamp(10px, 1.4vw, 16px)) / 2);
+   width: calc((100% - clamp(10px, 1.4vw, 16px)) / 2);
+   min-width: 0;
+   scroll-snap-align: start;
+   scroll-snap-stop: always;
+   border-radius: 9px;
+}
+
+.portfolio-slider .portfolio-image {
+   width: 100%;
+   aspect-ratio: 1 / 1;
+   border-radius: inherit;
+}
+
+.portfolio-slider .portfolio-image img {
+   width: 100%;
+   height: 100%;
+   object-fit: contain;
+   pointer-events: none;
+}
+
+@media (max-width: 768px) {
+   .portfolio-slider {
+      margin-inline: 0;
+      padding-bottom: 5px;
+   }
+
+   .portfolio-slider .portfolio-track {
+      gap: 12px;
+   }
+
+   .portfolio-slider .portfolio-item {
+      flex-basis: 82%;
+      width: 82%;
+      scroll-snap-align: start;
+   }
+}
+
+@media (prefers-reduced-motion: reduce) {
+   .portfolio-slider {
+      scroll-behavior: auto;
+      scroll-snap-type: x proximity;
+   }
 }
