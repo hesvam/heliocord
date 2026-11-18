@@ -855,171 +855,6 @@
   });
 
   /* =========================================
-     12. PORTFOLIO LIGHTBOX
-  ========================================= */
-
-  const lightbox = document.getElementById("image-lightbox");
-  const slider = document.getElementById("lightbox-slider");
-
-  const galleryImages = [
-    ...document.querySelectorAll(".portfolio-image img")
-  ];
-
-  let portfolioSwiper = null;
-
-  if (lightbox && slider && galleryImages.length) {
-
-    const prevButton =
-      lightbox.querySelector("#lightbox-prev");
-
-    const nextButton =
-      lightbox.querySelector("#lightbox-next");
-
-    const closeButton =
-      lightbox.querySelector(".lightbox-close");
-
-    const pagination =
-      lightbox.querySelector(".swiper-pagination");
-
-    // إنشاء شرائح الصور
-    galleryImages.forEach(image => {
-      const slide = document.createElement("div");
-      slide.className = "swiper-slide";
-
-      const slideImage = document.createElement("img");
-      slideImage.src = image.currentSrc || image.src;
-      slideImage.alt = image.alt || "معاينة الصورة";
-      slideImage.draggable = false;
-
-      const imageFrame = document.createElement("div");
-      imageFrame.className = "lightbox-image-frame";
-
-      imageFrame.appendChild(slideImage);
-      slide.appendChild(imageFrame);
-
-      slider.appendChild(slide);
-    });
-
-    // فتح المعاينة
-    function openLightbox(index) {
-      lightbox.classList.add("active");
-      document.body.classList.add("lightbox-open");
-
-      if (!portfolioSwiper) {
-        portfolioSwiper = new Swiper(
-          lightbox.querySelector(".portfolio-swiper"),
-          {
-            initialSlide: index,
-            slidesPerView: 1,
-            spaceBetween: 0,
-            speed: 350,
-
-            loop: false,
-            rewind: false,
-
-            resistance: true,
-            resistanceRatio: 0.70,
-            touchRatio: 1,
-            touchReleaseOnEdges: false,
-
-            direction: "horizontal",
-
-            pagination: {
-              el: pagination,
-              clickable: true
-            },
-
-            keyboard: {
-              enabled: false,
-              onlyInViewport: false
-            }
-          }
-        );
-
-      } else {
-        portfolioSwiper.update();
-        portfolioSwiper.slideTo(index, 0);
-      }
-
-      portfolioSwiper.keyboard.enable();
-    }
-
-    // إغلاق المعاينة
-    function closeLightbox() {
-      lightbox.classList.remove("active");
-      document.body.classList.remove("lightbox-open");
-
-      if (portfolioSwiper) {
-        portfolioSwiper.keyboard.disable();
-      }
-    }
-
-    // الأسهم - ربط مباشر
-    prevButton?.addEventListener("click", event => {
-      event.preventDefault();
-      event.stopPropagation();
-
-      if (portfolioSwiper) {
-        portfolioSwiper.slidePrev();
-      }
-    });
-
-    nextButton?.addEventListener("click", event => {
-      event.preventDefault();
-      event.stopPropagation();
-
-      if (portfolioSwiper) {
-        portfolioSwiper.slideNext();
-      }
-    });
-
-    // فتح الصور
-    galleryImages.forEach((image, index) => {
-      image.addEventListener("click", () => {
-        openLightbox(index);
-      });
-    });
-
-    // زر الإغلاق
-    closeButton?.addEventListener("click", event => {
-      event.preventDefault();
-      event.stopPropagation();
-
-      closeLightbox();
-    });
-
-    // // إغلاق عند الضغط خارج الصورة - موبايل فقط
-    // lightbox.addEventListener("click", (event) => {
-    //   if (window.innerWidth > 768) return;
-
-    //   // تجاهل الضغط على الأسهم أو زر الإغلاق
-    //   if (
-    //     event.target.closest(".lightbox-nav") ||
-    //     event.target.closest(".lightbox-close")
-    //   ) {
-    //     return;
-    //   }
-
-    //   // تجاهل الضغط على الصورة نفسها
-    //   if (event.target.closest(".portfolio-swiper img")) {
-    //     return;
-    //   }
-
-    //   // إغلاق عند الضغط خارج الصورة
-    //   closeLightbox();
-    // });
-
-    // إغلاق باستخدام Escape
-    document.addEventListener("keydown", event => {
-      if (!lightbox.classList.contains("active")) return;
-
-      if (event.key === "Escape") {
-        closeLightbox();
-      }
-    });
-  }
-
-  /* =========================================
      13. SERVICE CARDS IN MAIN PAGE
   ========================================= */
 
@@ -1208,3 +1043,17 @@
   });
 
 })();
+
+// Mouse wheel support for portfolio slider
+document.querySelectorAll('.portfolio-slider').forEach(slider => {
+  slider.addEventListener('wheel', event => {
+    if (slider.scrollWidth <= slider.clientWidth) return;
+
+    event.preventDefault();
+
+    slider.scrollBy({
+      left: event.deltaY * -1,
+      behavior: 'auto'
+    });
+  }, { passive: false });
+});
