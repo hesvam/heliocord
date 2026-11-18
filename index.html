@@ -16,7 +16,6 @@
 
   <link href="https://cdn.jsdelivr.net/npm/remixicon@4.6.0/fonts/remixicon.css" rel="stylesheet" />
   <link rel="stylesheet" href="home.css" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 </head>
 
 <body>
@@ -97,7 +96,7 @@
             <strong>تصميم شعار</strong>
             <span>LOGO DESIGN</span>
             <span class="service-description">
-              تصميم لوجو احترافي يعكس شخصية مشروعك ويمنحه حضورًا مميزًا.
+              تصميم شعار احترافي يعكس شخصية مشروعك ويمنحه حضورًا مميزًا.
             </span>
           </span>
 
@@ -292,27 +291,31 @@
         <p>نظرة على مجموعة من أعمالنا السابقة في مختلف المشاريع.</p>
       </div>
 
-      <div class="portfolio-grid">
+      <div class="portfolio-slider" dir="rtl">
 
-        <div class="portfolio-item">
-          <div class="portfolio-image">
-            <img src="images/1.jpg" alt="نموذج تصميم شعار من أعمال HELIOCORD" loading="lazy" />
-            <span class="portfolio-tag">LOGO DESIGN</span>
-          </div>
-        </div>
+        <div class="portfolio-grid portfolio-track">
 
-        <div class="portfolio-item">
-          <div class="portfolio-image">
-            <img src="images/2.jpg" alt="نموذج تصميم شعار من أعمال HELIOCORD" loading="lazy" />
-            <span class="portfolio-tag">LOGO DESIGN</span>
+          <div class="portfolio-item">
+            <div class="portfolio-image">
+              <img src="images/1.jpg" alt="نموذج تصميم شعار من أعمال HELIOCORD" loading="lazy" />
+              <span class="portfolio-tag">LOGO DESIGN</span>
+            </div>
           </div>
-        </div>
 
-        <div class="portfolio-item">
-          <div class="portfolio-image">
-            <img src="images/3.jpg" alt="نموذج تصميم شعار من أعمال HELIOCORD" loading="lazy" />
-            <span class="portfolio-tag">LOGO DESIGN</span>
+          <div class="portfolio-item">
+            <div class="portfolio-image">
+              <img src="images/2.jpg" alt="نموذج تصميم شعار من أعمال HELIOCORD" loading="lazy" />
+              <span class="portfolio-tag">LOGO DESIGN</span>
+            </div>
           </div>
+
+          <div class="portfolio-item">
+            <div class="portfolio-image">
+              <img src="images/3.jpg" alt="نموذج تصميم شعار من أعمال HELIOCORD" loading="lazy" />
+              <span class="portfolio-tag">LOGO DESIGN</span>
+            </div>
+          </div>
+
         </div>
 
       </div>
@@ -714,7 +717,7 @@
                   <label for="social-logo">الشعار الذي تريد إضافته للتصميم</label>
 
                   <label class="upload-box" for="social-logo">
-                    <input id="social-logo" name="social_logo" type="file" accept="image/jpeg,image/png" required/>
+                    <input id="social-logo" name="social_logo" type="file" accept="image/jpeg,image/png" required />
 
                     <span class="upload-icon">
                       <i class="ri-upload-cloud-2-line"></i>
@@ -745,7 +748,7 @@
                   <div class="choice-grid personality-grid">
 
                     <label class="choice-item">
-                      <input type="checkbox" name="social_platforms" value="Facebook" required/>
+                      <input type="checkbox" name="social_platforms" value="Facebook" required />
                       <span>Facebook</span>
                     </label>
 
@@ -965,28 +968,6 @@
     </footer>
 
   </main>
-
-  <!-- LIGHTBOX -->
-  <div id="image-lightbox" class="image-lightbox" role="dialog" aria-modal="true" aria-label="عرض الصورة بالحجم الكامل">
-
-    <button class="lightbox-close" type="button" aria-label="إغلاق">
-      <i class="ri-close-line"></i>
-    </button>
-
-    <button class="lightbox-nav lightbox-prev" id="lightbox-prev" type="button" aria-label="الصورة السابقة">
-      <i class="ri-arrow-right-s-line"></i>
-    </button>
-
-    <button class="lightbox-nav lightbox-next" id="lightbox-next" type="button" aria-label="الصورة التالية">
-      <i class="ri-arrow-left-s-line"></i>
-    </button>
-
-    <div class="portfolio-swiper swiper">
-      <div class="lightbox-slider swiper-wrapper" id="lightbox-slider"></div>
-      <div class="swiper-pagination"></div>
-    </div>
-
-  </div>
 
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
   <script src="app.js"></script>
