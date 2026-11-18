@@ -1043,17 +1043,3 @@
   });
 
 })();
-
-// Mouse wheel support for portfolio slider
-document.querySelectorAll('.portfolio-slider').forEach(slider => {
-  slider.addEventListener('wheel', event => {
-    if (slider.scrollWidth <= slider.clientWidth) return;
-
-    event.preventDefault();
-
-    slider.scrollBy({
-      left: event.deltaY * -1,
-      behavior: 'auto'
-    });
-  }, { passive: false });
-});
