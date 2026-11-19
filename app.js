@@ -35,6 +35,8 @@
 
   const summaryServiceName = document.getElementById("summary-service-name");
   const summaryServicePrice = document.getElementById("summary-service-price");
+  const summaryDeposit = document.getElementById("summary-deposit");
+  const summaryBalance = document.getElementById("summary-balance");
 
   const serviceFields = [...form.querySelectorAll("[data-service-fields]")];
   const serviceCards = document.querySelectorAll(".service-card[data-service]");
@@ -152,6 +154,19 @@
     summaryServiceName.textContent = service.name;
     summaryServicePrice.textContent =
       `${service.price.toLocaleString("en-US")} ج.م`;
+
+    const depositAmount = Math.ceil(service.price / 2);
+    const balanceAmount = service.price - depositAmount;
+
+    if (summaryDeposit) {
+      summaryDeposit.textContent =
+        `${depositAmount.toLocaleString("en-US")} ج.م`;
+    }
+
+    if (summaryBalance) {
+      summaryBalance.textContent =
+        `${balanceAmount.toLocaleString("en-US")} ج.م`;
+    }
 
     clearErrors(steps[0]);
     clearErrors(steps[2]);
