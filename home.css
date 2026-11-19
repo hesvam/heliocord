@@ -94,8 +94,8 @@ select {
 }
 
 .brand-logo {
-   width: 50px;
-   height: 50px;
+   width: 150px;
+   height: 150px;
    object-fit: contain;
    filter: brightness(0) invert(1)
 }
@@ -1216,8 +1216,8 @@ button.service-card {
    }
 
    .brand-logo {
-      width: 45px;
-      height: 45px
+      width: 136px;
+      height: 136px;
    }
 
    .header-cta {
@@ -3139,4 +3139,184 @@ html.js-reveal-enabled .reveal-item.is-revealed {
 .portfolio-slider .portfolio-image {
    border-radius: 0 !important;
    overflow: hidden;
+}
+
+/* Payment details — integrated into the project form */
+.payment-policy {
+   display: grid;
+   grid-template-columns: minmax(150px, .72fr) minmax(0, 1.8fr);
+   align-items: center;
+   gap: 18px;
+   margin: 0 0 28px;
+   padding: 15px 16px;
+   background: rgba(255, 255, 255, .022);
+   border: 1px solid #292929;
+   border-radius: 8px;
+}
+
+.payment-policy-heading {
+   display: flex;
+   align-items: center;
+   gap: 10px;
+   min-width: 0;
+   color: #eee;
+}
+
+.payment-policy-icon {
+   width: 34px;
+   height: 34px;
+   flex: 0 0 34px;
+   display: grid;
+   place-items: center;
+   color: #e5e5e5;
+   background: #202020;
+   border: 1px solid #333;
+   border-radius: 7px;
+}
+
+.payment-policy-icon i {
+   font-size: 16px;
+}
+
+.payment-policy-heading>span:last-child {
+   display: flex;
+   flex-direction: column;
+   gap: 4px;
+}
+
+.payment-policy-heading strong {
+   color: #eee;
+   font-size: 12px;
+   font-weight: 700;
+}
+
+.payment-policy-heading small {
+   color: #777;
+   font-size: 10px;
+   line-height: 1.5;
+}
+
+.payment-policy-content {
+   display: grid;
+   grid-template-columns: repeat(2, minmax(0, 1fr));
+   gap: 14px;
+   min-width: 0;
+}
+
+.payment-policy-item {
+   display: flex;
+   align-items: flex-start;
+   gap: 9px;
+   min-width: 0;
+   padding-inline-start: 13px;
+   border-inline-start: 1px solid #303030;
+}
+
+.payment-policy-item>i {
+   flex: 0 0 auto;
+   margin-top: 2px;
+   color: #aaa;
+   font-size: 15px;
+}
+
+.payment-policy-item>span {
+   display: flex;
+   flex-direction: column;
+   gap: 4px;
+}
+
+.payment-policy-item strong {
+   color: #e8e8e8;
+   font-size: 11px;
+   font-weight: 650;
+   line-height: 1.5;
+}
+
+.payment-policy-item small {
+   color: #818181;
+   font-size: 10px;
+   line-height: 1.65;
+}
+
+.summary-payment-breakdown {
+   display: grid;
+   grid-template-columns: repeat(2, minmax(0, 1fr));
+   gap: 10px;
+   width: 100%;
+   margin-top: 14px;
+   padding-top: 14px;
+   border-top: 1px solid rgba(255, 255, 255, .10);
+}
+
+.summary-payment-breakdown>div {
+   display: flex;
+   flex-direction: column;
+   gap: 5px;
+   padding: 12px 14px;
+   background: rgba(255, 255, 255, .035);
+   border: 1px solid rgba(255, 255, 255, .08);
+   border-radius: 8px;
+}
+
+.summary-payment-breakdown span {
+   font-size: 10px;
+}
+
+.summary-payment-breakdown strong {
+   font: 700 16px "Inter", "Cairo", sans-serif;
+}
+
+.selected-service-summary {
+   flex-wrap: wrap;
+}
+
+.selected-service-summary-price {
+   margin-inline-start: auto;
+}
+
+@media (max-width: 600px) {
+   .payment-policy {
+      grid-template-columns: 1fr;
+      gap: 13px;
+      margin: 0 0 23px;
+      padding: 13px;
+   }
+
+   .payment-policy-content {
+      grid-template-columns: 1fr;
+      gap: 11px;
+   }
+
+   .payment-policy-item {
+      padding-inline-start: 0;
+      border-inline-start: 0;
+   }
+
+   .payment-policy-item strong {
+      font-size: 11px;
+   }
+
+   .payment-policy-item small {
+      font-size: 10px;
+   }
+
+   .summary-payment-breakdown {
+      grid-template-columns: 1fr;
+   }
+
+   .selected-service-summary-price {
+      margin-inline-start: 0;
+   }
+}
+
+@media (max-width: 600px) {
+   .selected-service-summary-price {
+      margin-inline-start: auto;
+      text-align: left;
+   }
+
+   .summary-payment-breakdown {
+      grid-column: 1 / -1;
+      flex-basis: 100%;
+   }
 }
