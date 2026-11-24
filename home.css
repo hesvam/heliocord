@@ -4936,7 +4936,7 @@ body.portfolio-modal-open {
    line-height: 1;
 }
 
-.brief-section .payment-policy-heading > span:last-child {
+.brief-section .payment-policy-heading>span:last-child {
    display: flex;
    flex-direction: column;
    gap: 2px;
@@ -4974,7 +4974,7 @@ body.portfolio-modal-open {
    border-radius: 10px;
 }
 
-.brief-section .payment-policy-item > i {
+.brief-section .payment-policy-item>i {
    flex: 0 0 auto;
    margin-top: 2px;
    color: #dcdcdc;
@@ -4982,7 +4982,7 @@ body.portfolio-modal-open {
    line-height: 1;
 }
 
-.brief-section .payment-policy-item > span {
+.brief-section .payment-policy-item>span {
    display: flex;
    flex-direction: column;
    gap: 3px;
@@ -5010,7 +5010,7 @@ body.portfolio-modal-open {
    margin-bottom: 24px;
 }
 
-.brief-section .step-heading > span {
+.brief-section .step-heading>span {
    width: 38px;
    height: 38px;
    flex: 0 0 38px;
@@ -5061,7 +5061,7 @@ body.portfolio-modal-open {
    cursor: pointer;
 }
 
-.brief-section .service-option > input {
+.brief-section .service-option>input {
    position: absolute;
    width: 1px;
    height: 1px;
@@ -5080,13 +5080,13 @@ body.portfolio-modal-open {
    border-radius: 12px;
 }
 
-.brief-section .service-option input:checked + .service-option-content {
+.brief-section .service-option input:checked+.service-option-content {
    border-color: rgba(255, 255, 255, 0.55);
    background: linear-gradient(165deg, #1f1f1f 0%, #141414 100%);
    box-shadow: 0 10px 26px rgba(0, 0, 0, 0.35), inset 0 0 0 1px rgba(255, 255, 255, 0.14);
 }
 
-.brief-section .service-option input:focus-visible + .service-option-content {
+.brief-section .service-option input:focus-visible+.service-option-content {
    outline: 2px solid #fff;
    outline-offset: 3px;
 }
@@ -5098,7 +5098,7 @@ body.portfolio-modal-open {
    margin-bottom: 14px;
 }
 
-.brief-section .service-option-top > i {
+.brief-section .service-option-top>i {
    width: 36px;
    height: 36px;
    display: grid;
@@ -5123,19 +5123,19 @@ body.portfolio-modal-open {
    transition: opacity 0.2s ease, transform 0.2s ease;
 }
 
-.brief-section .service-option input:checked + .service-option-content .service-option-check {
+.brief-section .service-option input:checked+.service-option-content .service-option-check {
    opacity: 1;
    transform: scale(1);
 }
 
-.brief-section .service-option-content > strong {
+.brief-section .service-option-content>strong {
    color: #fff;
    font-size: 14px;
    font-weight: 800;
    line-height: 1.5;
 }
 
-.brief-section .service-option-content > small {
+.brief-section .service-option-content>small {
    margin-top: 2px;
    color: #7c7c7c;
    font: 600 8.5px/1.5 "Inter", sans-serif;
@@ -5152,17 +5152,17 @@ body.portfolio-modal-open {
    border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-.brief-section .service-option-price > span {
+.brief-section .service-option-price>span {
    color: #888;
    font-size: 10px;
 }
 
-.brief-section .service-option-price > strong {
+.brief-section .service-option-price>strong {
    color: #fff;
    font: 800 18px/1 "Inter", sans-serif;
 }
 
-.brief-section .service-option-price > strong small {
+.brief-section .service-option-price>strong small {
    color: #a3a3a3;
    font: 700 9.5px/1 "Cairo", sans-serif;
 }
@@ -5185,7 +5185,7 @@ body.portfolio-modal-open {
    grid-column: 1 / -1;
 }
 
-.brief-section .field > label {
+.brief-section .field>label {
    color: #e4e4e4;
    font-size: 11.5px;
    font-weight: 700;
@@ -5384,19 +5384,19 @@ body.portfolio-modal-open {
    font-size: 18px;
 }
 
-.brief-section .selected-service-summary > div:nth-child(2) {
+.brief-section .selected-service-summary>div:nth-child(2) {
    display: flex;
    flex-direction: column;
    gap: 2px;
 }
 
-.brief-section .selected-service-summary > div:nth-child(2) > span,
-.brief-section .selected-service-summary-price > span {
+.brief-section .selected-service-summary>div:nth-child(2)>span,
+.brief-section .selected-service-summary-price>span {
    color: #888;
    font-size: 10px;
 }
 
-.brief-section .selected-service-summary > div:nth-child(2) > strong {
+.brief-section .selected-service-summary>div:nth-child(2)>strong {
    color: #fff;
    font-size: 13px;
    font-weight: 800;
@@ -5410,7 +5410,7 @@ body.portfolio-modal-open {
    margin-inline-start: auto;
 }
 
-.brief-section .selected-service-summary-price > strong {
+.brief-section .selected-service-summary-price>strong {
    color: #fff;
    font: 800 17px/1.2 "Inter", sans-serif;
 }
@@ -5426,7 +5426,7 @@ body.portfolio-modal-open {
    border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-.brief-section .summary-payment-breakdown > div {
+.brief-section .summary-payment-breakdown>div {
    display: flex;
    flex-direction: column;
    gap: 4px;
@@ -5498,10 +5498,11 @@ body.portfolio-modal-open {
 
 /* Desktop-Only Hover Effects */
 @media (hover: hover) and (pointer: fine) {
+
    .brief-section .payment-policy,
    .brief-section .payment-policy-icon,
    .brief-section .payment-policy-item,
-   .brief-section .payment-policy-item > i,
+   .brief-section .payment-policy-item>i,
    .brief-section .service-option-content,
    .brief-section .choice-item,
    .brief-section .upload-box,
@@ -5524,7 +5525,7 @@ body.portfolio-modal-open {
       transform: translateY(-2px);
    }
 
-   .brief-section .payment-policy-item:hover > i {
+   .brief-section .payment-policy-item:hover>i {
       color: #ffffff;
    }
 
@@ -5604,7 +5605,7 @@ body.portfolio-modal-open {
       transform: none;
    }
 
-   .brief-section .payment-policy-item:hover > i {
+   .brief-section .payment-policy-item:hover>i {
       color: #dcdcdc;
    }
 
@@ -5690,12 +5691,12 @@ body.portfolio-modal-open {
 .brief-section .payment-policy-icon,
 .payment-policy-icon,
 .brief-section .payment-policy-item,
-.brief-section .step-heading > span,
-.step-heading > span,
+.brief-section .step-heading>span,
+.step-heading>span,
 .brief-section .service-option-content,
 .service-option-content,
-.brief-section .service-option-top > i,
-.service-option-top > i,
+.brief-section .service-option-top>i,
+.service-option-top>i,
 .brief-section .field input[type="text"],
 .brief-section .field input[type="tel"],
 .brief-section .field textarea,
@@ -5719,8 +5720,8 @@ body.portfolio-modal-open {
 .selected-service-summary,
 .brief-section .selected-service-summary-icon,
 .selected-service-summary-icon,
-.brief-section .summary-payment-breakdown > div,
-.summary-payment-breakdown > div,
+.brief-section .summary-payment-breakdown>div,
+.summary-payment-breakdown>div,
 .brief-section .step-button,
 .step-button {
    border-radius: var(--radius-main) !important;
@@ -5806,6 +5807,7 @@ body.portfolio-modal-open {
 
 /* Mobile card grids (Services & Brief/Order cards) */
 @media (max-width: 700px) {
+
    .services-section .services-grid,
    .services-grid,
    .brief-section .service-selection-grid,
@@ -5818,5 +5820,50 @@ body.portfolio-modal-open {
    .summary-payment-breakdown,
    .service-details-main {
       gap: var(--gap-portfolio-mobile) !important;
+   }
+}
+
+/* =========================================
+   HELIOCORD — ULTRA-SMOOTH SCROLL REVEAL
+========================================= */
+
+html.js-reveal-enabled .reveal-item,
+.scroll-reveal,
+.services-grid .service-card.reveal-card {
+   opacity: 0 !important;
+   transform: translate3d(0, 22px, 0) !important;
+   transition:
+      opacity 0.95s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.95s cubic-bezier(0.22, 1, 0.36, 1) !important;
+   transition-delay: var(--reveal-delay, 0ms) !important;
+   will-change: opacity, transform;
+   backface-visibility: hidden;
+}
+
+html.js-reveal-enabled .reveal-item.is-revealed,
+.scroll-reveal.is-visible,
+.services-grid .service-card.reveal-card.reveal-card-visible {
+   opacity: 1 !important;
+   transform: translate3d(0, 0, 0) !important;
+}
+
+/* Restore smooth hover transitions after reveal completes */
+.services-section .service-card.is-revealed,
+.services-section .service-card.reveal-card-visible {
+   transition:
+      transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+      border-color 0.35s ease,
+      box-shadow 0.35s ease,
+      background 0.35s ease !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+   html.js-reveal-enabled .reveal-item,
+   .scroll-reveal,
+   .services-grid .service-card.reveal-card {
+      opacity: 1 !important;
+      transform: none !important;
+      transition: none !important;
    }
 }
