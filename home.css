@@ -94,8 +94,8 @@ select {
 }
 
 .brand-logo {
-   width: 150px;
-   height: 150px;
+   width: 170px;
+   height: 170px;
    object-fit: contain;
    filter: brightness(0) invert(1)
 }
@@ -496,7 +496,6 @@ button.service-card {
 .portfolio-image {
    position: relative;
    overflow: hidden;
-   background: #151515
 }
 
 .portfolio-image img {
@@ -1216,8 +1215,8 @@ button.service-card {
    }
 
    .brand-logo {
-      width: 136px;
-      height: 136px;
+      width: 150px;
+      height: 150px;
    }
 
    .header-cta {
@@ -3080,19 +3079,6 @@ html.js-reveal-enabled .reveal-item.is-revealed {
    border-radius: 9px;
 }
 
-.portfolio-slider .portfolio-image {
-   width: 100%;
-   aspect-ratio: 1 / 1;
-   border-radius: inherit;
-}
-
-.portfolio-slider .portfolio-image img {
-   width: 100%;
-   height: 100%;
-   object-fit: contain;
-   pointer-events: none;
-}
-
 @media (max-width: 768px) {
    .portfolio-slider {
       margin-inline: 0;
@@ -3133,12 +3119,6 @@ html.js-reveal-enabled .reveal-item.is-revealed {
 .portfolio-slider .portfolio-item:last-child {
    border-top-left-radius: 12px;
    border-bottom-left-radius: 12px;
-}
-
-/* الصور نفسها */
-.portfolio-slider .portfolio-image {
-   border-radius: 0 !important;
-   overflow: hidden;
 }
 
 /* Payment details — integrated into the project form */
@@ -3318,5 +3298,2525 @@ html.js-reveal-enabled .reveal-item.is-revealed {
    .summary-payment-breakdown {
       grid-column: 1 / -1;
       flex-basis: 100%;
+   }
+}
+
+/* HELIOCORD — BEHANCE-INSPIRED PORTFOLIO */
+.portfolio-section {
+   padding-block: 42px;
+   border-bottom: 1px solid var(--border);
+}
+
+.portfolio-filters {
+   display: flex;
+   flex-wrap: wrap;
+   gap: 8px;
+   margin: 0 0 22px;
+}
+
+.portfolio-filter {
+   padding: 7px 13px;
+   color: #999;
+   background: #111;
+   border: 1px solid #292929;
+   border-radius: 999px;
+   font-size: 10px;
+   transition: all .2s ease;
+}
+
+.portfolio-filter:hover,
+.portfolio-filter.is-active {
+   color: #080808;
+   background: #fff;
+   border-color: #fff;
+}
+
+.portfolio-grid {
+   display: grid !important;
+   grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+   gap: 12px;
+   direction: rtl;
+   align-items: start;
+}
+
+.portfolio-item {
+   display: block;
+   width: 100%;
+   break-inside: avoid;
+   margin: 0 0 12px;
+   padding: 0;
+   border: 0;
+   background: transparent;
+   text-align: inherit;
+   cursor: pointer;
+}
+
+.portfolio-image {
+   display: block;
+   position: relative;
+   overflow: hidden;
+   border-radius: 5px;
+   aspect-ratio: auto !important;
+}
+
+.portfolio-image img {
+   width: 100%;
+   height: auto !important;
+   object-fit: contain !important;
+   display: block;
+   pointer-events: none;
+   transition: transform .5s cubic-bezier(.2, .7, .2, 1);
+}
+
+.portfolio-overlay {
+   position: absolute;
+   inset: 0;
+   display: flex;
+   align-items: flex-end;
+   justify-content: space-between;
+   gap: 12px;
+   padding: 16px;
+   background: linear-gradient(0deg, rgba(0, 0, 0, .82), transparent 65%);
+   opacity: 0;
+   transition: opacity .25s ease;
+   color: #fff;
+}
+
+.portfolio-overlay-copy {
+   display: flex;
+   flex-direction: column;
+   gap: 4px;
+   text-align: right;
+}
+
+.portfolio-overlay-copy strong {
+   font-size: 12px;
+   font-weight: 800;
+}
+
+.portfolio-overlay-copy small {
+   font: 600 9px "Inter", sans-serif;
+   letter-spacing: 1px;
+   color: #bbb;
+}
+
+.portfolio-open {
+   width: 32px;
+   height: 32px;
+   flex: 0 0 32px;
+   display: grid;
+   place-items: center;
+   border: 1px solid rgba(255, 255, 255, .55);
+   border-radius: 50%;
+   font-size: 16px;
+}
+
+.portfolio-item:hover .portfolio-overlay,
+.portfolio-item:focus-visible .portfolio-overlay {
+   opacity: 1;
+}
+
+.portfolio-item:hover img {
+   transform: scale(1.025);
+}
+
+.portfolio-item[hidden] {
+   display: none !important;
+}
+
+.portfolio-empty {
+   color: #777;
+   font-size: 12px;
+   padding: 28px 0;
+   text-align: center;
+}
+
+.portfolio-lightbox {
+   position: fixed;
+   inset: 0;
+   z-index: 9999;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   padding: 24px;
+   background: rgba(0, 0, 0, .94);
+   opacity: 0;
+   visibility: hidden;
+   transition: opacity .2s ease, visibility .2s ease;
+}
+
+.portfolio-lightbox.is-open {
+   opacity: 1;
+   visibility: visible;
+}
+
+.portfolio-lightbox img {
+   display: block;
+   max-width: min(94vw, 1400px);
+   max-height: 88vh;
+   object-fit: contain;
+}
+
+.portfolio-lightbox-close {
+   position: absolute;
+   top: 18px;
+   left: 18px;
+   width: 42px;
+   height: 42px;
+   display: grid;
+   place-items: center;
+   color: #fff;
+   background: #181818;
+   border: 1px solid #444;
+   border-radius: 50%;
+   font-size: 20px;
+}
+
+.portfolio-lightbox-caption {
+   position: absolute;
+   bottom: 16px;
+   left: 0;
+   right: 0;
+   text-align: center;
+   color: #aaa;
+   font: 600 10px "Inter", sans-serif;
+   letter-spacing: 1px;
+}
+
+body.portfolio-modal-open {
+   overflow: hidden;
+}
+
+@media (max-width:1000px) {
+   .portfolio-grid {
+      columns: 3 200px;
+   }
+}
+
+@media (max-width:700px) {
+   .portfolio-section {
+      padding-block: 30px;
+   }
+
+   .portfolio-heading {
+      margin-bottom: 22px;
+   }
+
+   .portfolio-grid {
+      columns: 2 140px;
+      column-gap: 8px;
+   }
+
+   .portfolio-item {
+      margin-bottom: 8px;
+   }
+
+   .portfolio-overlay {
+      opacity: 1;
+      padding: 9px;
+      background: linear-gradient(0deg, rgba(0, 0, 0, .72), transparent 75%);
+   }
+
+   .portfolio-overlay-copy strong {
+      font-size: 10px;
+   }
+
+   .portfolio-overlay-copy small {
+      font-size: 7px;
+   }
+
+   .portfolio-open {
+      width: 25px;
+      height: 25px;
+      flex-basis: 25px;
+      font-size: 13px;
+   }
+
+   .portfolio-filters {
+      gap: 6px;
+      margin-bottom: 14px;
+   }
+
+   .portfolio-filter {
+      padding: 6px 10px;
+      font-size: 9px;
+   }
+
+   .portfolio-lightbox {
+      padding: 12px;
+   }
+
+   .portfolio-lightbox img {
+      max-width: 96vw;
+      max-height: 84vh;
+   }
+}
+
+@media (prefers-reduced-motion:reduce) {
+
+   .portfolio-overlay,
+   .portfolio-image img,
+   .portfolio-lightbox {
+      transition: none;
+   }
+}
+
+/* HELIOCORD — BEHANCE-STYLE MOBILE PROJECT FEED */
+@media (max-width:700px) {
+   #portfolio .portfolio-grid {
+      columns: 1 !important;
+      column-count: 1 !important;
+      column-width: auto !important;
+      display: flex !important;
+      flex-direction: column;
+      gap: 22px;
+      direction: rtl;
+   }
+
+   #portfolio .portfolio-item {
+      width: 100%;
+      margin: 0 !important;
+      break-inside: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 11px;
+      text-align: right;
+      background: transparent;
+   }
+
+   #portfolio .portfolio-image img {
+      width: 100%;
+      height: auto !important;
+      max-height: none;
+      object-fit: contain !important;
+      display: block;
+      transform: none !important;
+   }
+
+   #portfolio .portfolio-overlay {
+      position: static;
+      inset: auto;
+      opacity: 1 !important;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0;
+      color: var(--text, #fff);
+      background: none;
+      transition: none;
+   }
+
+   #portfolio .portfolio-overlay-copy {
+      gap: 4px;
+      text-align: right;
+   }
+
+   #portfolio .portfolio-overlay-copy strong {
+      font-size: 14px;
+      line-height: 1.45;
+      font-weight: 800;
+   }
+
+   #portfolio .portfolio-overlay-copy small {
+      font-size: 9px;
+      letter-spacing: 1.2px;
+      color: var(--muted, #999);
+   }
+
+   #portfolio .portfolio-open {
+      width: 32px;
+      height: 32px;
+      flex-basis: 32px;
+      border-color: var(--border, #333);
+      color: var(--text, #fff);
+      font-size: 16px;
+   }
+
+   #portfolio .portfolio-filters {
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      overflow-y: hidden;
+      white-space: nowrap;
+      scrollbar-width: none;
+      padding-bottom: 3px;
+      -webkit-overflow-scrolling: touch;
+   }
+
+   #portfolio .portfolio-filters::-webkit-scrollbar {
+      display: none;
+   }
+
+   #portfolio .portfolio-filter {
+      flex: 0 0 auto;
+      font-size: 10px;
+      padding: 7px 12px;
+   }
+}
+
+/* HELIOCORD — portfolio captions separated from image; no arrow badge */
+#portfolio .portfolio-item {
+   position: relative;
+}
+
+#portfolio .portfolio-overlay {
+   display: none !important;
+}
+
+#portfolio .portfolio-caption {
+   display: flex;
+   align-items: flex-start;
+   justify-content: space-between;
+   margin-top: 7px;
+   color: var(--text, #fff);
+}
+
+#portfolio .portfolio-caption .portfolio-overlay-copy {
+   display: flex;
+   flex-direction: column;
+   gap: 7px;
+   text-align: right;
+}
+
+#portfolio .portfolio-caption strong {
+   font-size: 14px;
+   font-weight: 800;
+   line-height: 1.35;
+}
+
+#portfolio .portfolio-caption small {
+   font: 600 7px \"Inter\", sans-serif;
+   letter-spacing: 0.8px;
+   color: var(--muted, #999);
+}
+
+@media (max-width:700px) {
+   #portfolio .portfolio-item {
+      gap: 0 !important;
+   }
+}
+
+/* FINAL FIX: image and project title are separate; remove arrow/icon */
+#portfolio .portfolio-item {
+   display: flex !important;
+   flex-direction: column !important;
+   align-items: stretch !important;
+   gap: 0 !important;
+}
+
+#portfolio .portfolio-image {
+   position: relative !important;
+   display: block !important;
+   width: 100% !important;
+}
+
+#portfolio .portfolio-caption::before,
+#portfolio .portfolio-caption::after,
+#portfolio .portfolio-item::before,
+#portfolio .portfolio-item::after,
+#portfolio .portfolio-open {
+   display: none !important;
+   content: none !important;
+}
+
+#portfolio .portfolio-caption strong {
+   display: block !important;
+}
+
+#portfolio .portfolio-caption small {
+   display: block !important;
+}
+
+/* FIX: ensure portfolio filtering hides items despite the forced flex display */
+#portfolio .portfolio-item[hidden] {
+   display: none !important;
+}
+
+/* SERVICE CARDS — PLAN CARD INSPIRED LAYOUT */
+.services-grid {
+   align-items: stretch;
+   grid-auto-rows: minmax(390px, 1fr);
+   gap: 18px;
+}
+
+.service-card {
+   box-sizing: border-box;
+   min-width: 0;
+   min-height: 390px;
+   height: 100%;
+   position: relative;
+   display: flex;
+   flex-direction: column;
+   padding: 66px 20px 18px;
+   overflow: hidden;
+   isolation: isolate;
+   color: #fff;
+   text-align: right;
+   background: linear-gradient(145deg, #171717, #101010);
+   border: 1px solid #303030;
+   border-radius: 15px;
+   transition: border-color .25s ease, transform .25s ease, box-shadow .25s ease;
+}
+
+.service-card:hover {
+   border-color: #555;
+   transform: translateY(-3px);
+   box-shadow: 0 14px 30px rgba(0, 0, 0, .18);
+}
+
+.service-card .service-price {
+   position: absolute;
+   top: 14px;
+   right: 14px;
+   z-index: 2;
+   width: auto;
+   min-height: 0;
+   height: 38px;
+   display: inline-flex;
+   align-items: center;
+   justify-content: flex-start;
+   margin: 0;
+   padding: 0 15px;
+   background: #242424;
+   border: 1px solid #3b3b3b;
+   border-radius: 0 0 0 18px;
+   text-align: right;
+}
+
+.service-card .service-price>span:first-child {
+   display: flex;
+   align-items: baseline;
+   gap: 7px;
+}
+
+.service-card .price-label {
+   color: #aaa;
+   font-size: 9px;
+}
+
+.service-card .price-value {
+   display: flex;
+   align-items: baseline;
+   gap: 4px;
+}
+
+.service-card .price-value strong {
+   color: #fff;
+   font: 700 18px/1 "Inter", sans-serif;
+}
+
+.service-card .price-value>span {
+   color: #aaa;
+   font-size: 9px;
+}
+
+.service-card .price-arrow {
+   display: none;
+}
+
+.service-card .service-top {
+   min-height: 20px;
+   margin-bottom: 12px;
+}
+
+.service-card .service-icon {
+   width: 43px;
+   height: 43px;
+   flex: 0 0 43px;
+   margin: 0 0 12px;
+}
+
+.service-card .service-info strong {
+   font-size: 16px;
+}
+
+.service-card .service-description {
+   margin-top: 7px;
+   margin-bottom: 10px;
+   font-size: 10px;
+   line-height: 1.8;
+}
+
+.service-card .service-deliverables {
+   margin-top: 4px;
+}
+
+.service-card .deliverables-heading {
+   margin-bottom: 8px;
+   padding-bottom: 7px;
+}
+
+.service-card .deliverables-list {
+   row-gap: 7px;
+}
+
+.service-card .deliverable-item {
+   font-size: 9px;
+   line-height: 1.7;
+}
+
+.service-choose-button {
+   width: 100%;
+   min-height: 44px;
+   flex: 0 0 44px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   gap: 9px;
+   margin-top: auto;
+   padding: 10px 16px;
+   color: #111;
+   background: #f1f1f1;
+   border: 1px solid #f1f1f1;
+   border-radius: 8px;
+   font: inherit;
+   font-size: 12px;
+   font-weight: 800;
+   cursor: pointer;
+   transition: background .2s ease, color .2s ease, transform .2s ease;
+}
+
+.service-choose-button i {
+   font-size: 15px;
+   transition: transform .2s ease;
+}
+
+.service-choose-button:hover {
+   color: #fff;
+   background: #292929;
+   border-color: #555;
+}
+
+.service-choose-button:hover i {
+   transform: translateX(-3px);
+}
+
+.service-choose-button:focus-visible {
+   outline: 2px solid #fff;
+   outline-offset: 3px;
+}
+
+@media (max-width: 800px) {
+   .services-grid {
+      grid-auto-rows: minmax(390px, 1fr);
+   }
+
+   .service-card {
+      min-height: 390px;
+   }
+}
+
+@media (max-width: 600px) {
+   .services-grid {
+      grid-template-columns: minmax(0, 1fr);
+      grid-auto-rows: minmax(370px, auto);
+      gap: 13px;
+   }
+
+   .service-card {
+      height: auto;
+      min-height: 370px;
+      padding: 64px 16px 16px;
+   }
+
+   .service-card .deliverable-item {
+      font-size: 9px;
+   }
+
+   .service-choose-button {
+      min-height: 43px;
+      flex-basis: 43px;
+   }
+}
+
+
+/* =====================================================
+   HELIOCORD — REFINED SERVICE PLAN CARDS
+   Inspired by the supplied plan-card reference.
+   All existing service copy, prices and colors are kept.
+===================================================== */
+
+.services-grid {
+   display: grid;
+   grid-template-columns: repeat(2, minmax(0, 1fr));
+   align-items: stretch;
+   gap: 22px;
+}
+
+.service-card {
+   --card-bg: #111;
+   --card-inner: #171717;
+   --card-border: #303030;
+   box-sizing: border-box;
+   position: relative;
+   isolation: isolate;
+   display: flex;
+   flex-direction: column;
+   min-width: 0;
+   min-height: 490px;
+   height: 100%;
+   padding: 76px 22px 20px;
+   overflow: hidden;
+   color: #fff;
+   text-align: right;
+   background: var(--card-bg);
+   border: 1px solid #383838;
+   border-radius: 19px;
+   box-shadow: 0 12px 30px rgba(0, 0, 0, .16);
+   transition: transform .28s ease, border-color .28s ease, box-shadow .28s ease;
+}
+
+.service-card::before {
+   content: "";
+   position: absolute;
+   inset: 7px;
+   z-index: -1;
+   border: 1px solid #292929;
+   border-radius: 13px;
+   pointer-events: none;
+}
+
+.service-card:hover {
+   transform: translateY(-4px);
+   border-color: #666;
+   box-shadow: 0 18px 38px rgba(0, 0, 0, .25);
+}
+
+/* Top price tab */
+.service-card .service-price {
+   position: absolute;
+   top: 8px;
+   right: 8px;
+   z-index: 3;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   width: auto;
+   min-width: 116px;
+   height: 49px;
+   min-height: 49px;
+   margin: 0;
+   padding: 0 19px 0 22px;
+   background: #292929;
+   border: 0;
+   border-radius: 0 11px 0 22px;
+   text-align: right;
+}
+
+.service-card .service-price>span:first-child {
+   display: flex;
+   flex-direction: row;
+   align-items: baseline;
+   justify-content: center;
+   gap: 8px;
+   min-width: 0;
+}
+
+.service-card .price-label {
+   color: #aaa;
+   font-size: 9px;
+   white-space: nowrap;
+}
+
+.service-card .price-value {
+   display: inline-flex;
+   align-items: baseline;
+   gap: 4px;
+   white-space: nowrap;
+}
+
+.service-card .price-value strong {
+   color: #fff;
+   font: 700 20px/1 "Inter", sans-serif;
+   letter-spacing: -.5px;
+}
+
+.service-card .price-value>span {
+   color: #aaa;
+   font-size: 10px;
+}
+
+.service-card .price-arrow {
+   display: none;
+}
+
+/* Eyebrow / availability */
+.service-card .service-top {
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   gap: 10px;
+   min-height: 22px;
+   margin: 0 0 14px;
+}
+
+.service-card .service-number {
+   color: #777;
+   font: 600 9px/1 "Inter", sans-serif;
+   letter-spacing: 1.2px;
+}
+
+.service-card .service-number span {
+   color: #555;
+}
+
+.service-card .service-status {
+   display: inline-flex;
+   align-items: center;
+   gap: 6px;
+   color: #aaa;
+   font-size: 9px;
+   white-space: nowrap;
+}
+
+.service-card .status-indicator {
+   width: 6px;
+   height: 6px;
+   border-radius: 50%;
+   background: #aaa;
+   box-shadow: 0 0 0 3px rgba(255, 255, 255, .07);
+}
+
+/* Title and intro */
+.service-card .service-icon {
+   display: none;
+}
+
+.service-card .service-info {
+   display: flex;
+   flex-direction: column;
+   min-width: 0;
+   margin: 0 0 17px;
+}
+
+.service-card .service-info>strong {
+   display: block;
+   margin: 0 0 4px;
+   color: #fff;
+   font-size: 19px;
+   font-weight: 800;
+   line-height: 1.5;
+   letter-spacing: -.25px;
+}
+
+.service-card .service-info>span:nth-child(2) {
+   color: #888;
+   font: 600 8px/1.6 "Inter", sans-serif;
+   letter-spacing: 1.15px;
+}
+
+.service-card .service-description {
+   display: block;
+   margin: 12px 0 0;
+   color: #aaa;
+   font-size: 11px;
+   line-height: 1.9;
+}
+
+/* Included items */
+.service-card .service-deliverables {
+   display: flex;
+   flex-direction: column;
+   flex: 1 1 auto;
+   min-width: 0;
+   margin: 0;
+   padding: 14px 0 16px;
+   border-top: 1px solid #292929;
+}
+
+.service-card .deliverables-heading {
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   gap: 10px;
+   margin: 0 0 12px;
+   padding: 0;
+   border: 0;
+}
+
+.service-card .deliverables-heading>span:first-child {
+   color: #ddd;
+   font-size: 10px;
+   font-weight: 800;
+}
+
+.service-card .deliverables-heading>span:last-child {
+   color: #666;
+   font: 600 7px/1.4 "Inter", sans-serif;
+   letter-spacing: 1px;
+}
+
+.service-card .deliverables-list {
+   display: grid;
+   grid-template-columns: repeat(2, minmax(0, 1fr));
+   grid-template-rows: repeat(4, auto);
+   grid-auto-flow: column;
+   align-items: start;
+   column-gap: 16px;
+   row-gap: 10px;
+}
+
+.service-card .deliverable-item {
+   display: flex;
+   align-items: flex-start;
+   gap: 9px;
+   min-width: 0;
+   color: #aaa;
+   font-size: 10px;
+   line-height: 1.65;
+}
+
+.service-card .deliverable-item i {
+   display: inline-grid;
+   place-items: center;
+   flex: 0 0 17px;
+   width: 17px;
+   height: 17px;
+   margin-top: 0;
+   color: #111;
+   background: #ddd;
+   border-radius: 50%;
+   font-size: 10px;
+   line-height: 1;
+}
+
+/* Full-width action */
+.service-choose-button {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   gap: 10px;
+   width: 100%;
+   min-height: 48px;
+   flex: 0 0 48px;
+   margin: 2px 0 0;
+   padding: 11px 18px;
+   color: #111;
+   background: #eee;
+   border: 1px solid #eee;
+   border-radius: 8px;
+   font: inherit;
+   font-size: 12px;
+   font-weight: 800;
+   cursor: pointer;
+   transition: background .22s ease, color .22s ease, border-color .22s ease;
+}
+
+.service-choose-button i {
+   font-size: 15px;
+   transition: transform .22s ease;
+}
+
+.service-choose-button:hover {
+   color: #fff;
+   background: #292929;
+   border-color: #555;
+}
+
+.service-choose-button:hover i {
+   transform: translateX(-4px);
+}
+
+.service-choose-button:focus-visible {
+   outline: 2px solid #fff;
+   outline-offset: 3px;
+}
+
+/* Tablet and mobile */
+@media (max-width: 900px) {
+   .services-grid {
+      gap: 16px;
+   }
+
+   .service-card {
+      min-height: 500px;
+      padding-inline: 18px;
+   }
+}
+
+@media (max-width: 600px) {
+   .services-grid {
+      grid-template-columns: minmax(0, 1fr);
+      grid-auto-rows: auto;
+      gap: 14px;
+   }
+
+   .service-card {
+      min-height: 0;
+      height: auto;
+      padding: 72px 19px 18px;
+      border-radius: 16px;
+   }
+
+   .service-card .service-info>strong {
+      font-size: 18px;
+   }
+
+   .service-card .service-description {
+      font-size: 10px;
+   }
+
+   .service-card .service-deliverables {
+      padding-top: 13px;
+   }
+
+   .service-card .deliverables-list {
+      row-gap: 7px;
+   }
+
+   .service-card .deliverable-item {
+      font-size: 10px;
+   }
+
+   .service-choose-button {
+      min-height: 46px;
+      flex-basis: 46px;
+   }
+}
+
+
+/* FINAL POLISH — cleaner borders, spacing and monochrome depth */
+.service-card {
+   --card-bg: #121212;
+   --card-inner: #181818;
+   background: linear-gradient(145deg, #181818 0%, #111 72%);
+   border: 1px solid #414141;
+   padding: 74px 24px 22px;
+   box-shadow:
+      0 1px 0 rgba(255, 255, 255, .035),
+      0 12px 30px rgba(0, 0, 0, .22);
+}
+
+.service-card::before {
+   inset: 8px;
+   border: 1px solid #303030;
+   border-radius: 12px;
+}
+
+.service-card:hover {
+   border-color: #777;
+   box-shadow:
+      0 1px 0 rgba(255, 255, 255, .06),
+      0 18px 38px rgba(0, 0, 0, .3);
+}
+
+.service-card .service-top {
+   justify-content: flex-start;
+   margin-bottom: 17px;
+}
+
+.service-card .service-number {
+   color: #aaa;
+}
+
+.service-card .service-number span {
+   color: #666;
+}
+
+.service-card .service-info {
+   margin-bottom: 19px;
+}
+
+.service-card .service-info>strong {
+   color: #f5f5f5;
+}
+
+.service-card .service-info>span:nth-child(2) {
+   color: #929292;
+}
+
+.service-card .service-description {
+   color: #b0b0b0;
+}
+
+.service-card .service-price {
+   background: linear-gradient(135deg, #333 0%, #252525 100%);
+   border: 1px solid #444;
+   border-top: 0;
+   border-right: 0;
+   border-radius: 0 10px 0 20px;
+}
+
+.service-card .price-label {
+   color: #b5b5b5;
+}
+
+.service-card .price-value>span {
+   color: #c1c1c1;
+}
+
+.service-card .service-deliverables {
+   padding: 17px 0 18px;
+   border-top: 1px solid #383838;
+}
+
+.service-card .deliverables-heading {
+   margin-bottom: 14px;
+}
+
+.service-card .deliverables-heading>span:first-child {
+   color: #e5e5e5;
+}
+
+.service-card .deliverables-heading>span:last-child {
+   color: #777;
+}
+
+.service-card .deliverables-list {
+   row-gap: 10px;
+}
+
+.service-card .deliverable-item {
+   color: #bcbcbc;
+   gap: 10px;
+}
+
+.service-card .deliverable-item i {
+   color: #161616;
+   background: #d8d8d8;
+   box-shadow: 0 0 0 2px rgba(255, 255, 255, .045);
+}
+
+.service-choose-button {
+   color: #111;
+   background: linear-gradient(135deg, #f1f1f1 0%, #d8d8d8 100%);
+   border-color: #eee;
+   box-shadow: 0 3px 10px rgba(0, 0, 0, .15);
+}
+
+.service-choose-button:hover {
+   color: #fff;
+   background: linear-gradient(135deg, #3a3a3a 0%, #242424 100%);
+   border-color: #666;
+}
+
+@media (max-width: 600px) {
+   .service-card {
+      padding: 72px 20px 19px;
+   }
+
+   .service-card::before {
+      inset: 7px;
+   }
+
+   .service-card .service-deliverables {
+      padding: 15px 0 16px;
+   }
+
+   .service-card .deliverables-list {
+      row-gap: 8px;
+   }
+}
+
+
+/* CARD BORDER ADJUSTMENTS — per visual markup */
+.service-card::before {
+   border-top: 0 !important;
+   /* remove line 1 only */
+}
+
+.service-card .service-deliverables {
+   margin-bottom: 18px;
+   /* balance the gap below line 2 with the gap above it */
+}
+
+@media (max-width: 600px) {
+   .service-card .service-deliverables {
+      margin-bottom: 16px;
+   }
+}
+
+/* =====================================================
+   HELIOCORD — PRO SERVICE CARDS REDESIGN (DESKTOP & RESPONSIVE)
+===================================================== */
+@media (min-width: 1025px) {
+   .services-section .services-grid {
+      display: grid !important;
+      grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+      grid-auto-rows: 1fr !important;
+      gap: 24px !important;
+      align-items: stretch !important;
+   }
+}
+
+@media (min-width: 641px) and (max-width: 1024px) {
+   .services-section .services-grid {
+      display: grid !important;
+      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+      grid-auto-rows: 1fr !important;
+      gap: 18px !important;
+      align-items: stretch !important;
+   }
+}
+
+@media (max-width: 640px) {
+   .services-section .services-grid {
+      display: grid !important;
+      grid-template-columns: minmax(0, 1fr) !important;
+      grid-auto-rows: auto !important;
+      gap: 16px !important;
+   }
+}
+
+/* Executive Dark Card */
+.services-section .service-card {
+   position: relative !important;
+   isolation: isolate !important;
+   display: flex !important;
+   flex-direction: column !important;
+   justify-content: flex-start !important;
+   height: 100% !important;
+   min-height: 0 !important;
+   padding: 26px 24px 24px !important;
+   background:
+      radial-gradient(120% 80% at 100% 0%, rgba(255, 255, 255, 0.045) 0%, transparent 55%),
+      linear-gradient(170deg, #151515 0%, #0b0b0b 100%) !important;
+   border: 1px solid rgba(255, 255, 255, 0.09) !important;
+   border-radius: 20px !important;
+   box-shadow:
+      0 18px 45px rgba(0, 0, 0, 0.45),
+      inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+   text-align: right !important;
+   overflow: hidden !important;
+   transition:
+      transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+      border-color 0.35s ease,
+      box-shadow 0.35s ease,
+      background 0.35s ease !important;
+}
+
+/* Precision Metallic Top Rim */
+.services-section .service-card::before {
+   content: "" !important;
+   position: absolute !important;
+   top: 0 !important;
+   left: 14% !important;
+   right: 14% !important;
+   height: 1px !important;
+   background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.42), transparent) !important;
+   border: 0 !important;
+   border-radius: 0 !important;
+   opacity: 0.9 !important;
+   pointer-events: none !important;
+   z-index: 3 !important;
+   transition: left 0.35s ease, right 0.35s ease, opacity 0.35s ease !important;
+}
+
+/* Ambient Hover Spotlight */
+.services-section .service-card::after {
+   content: "" !important;
+   position: absolute !important;
+   top: -90px !important;
+   left: -60px !important;
+   right: auto !important;
+   transform: none !important;
+   width: 240px !important;
+   height: 240px !important;
+   background: radial-gradient(circle, rgba(255, 255, 255, 0.075) 0%, transparent 68%) !important;
+   border: 0 !important;
+   border-radius: 50% !important;
+   opacity: 0 !important;
+   pointer-events: none !important;
+   z-index: -1 !important;
+   transition: opacity 0.4s ease !important;
+   animation: none !important;
+}
+
+.services-section .service-card:hover {
+   transform: translateY(-6px) !important;
+   border-color: rgba(255, 255, 255, 0.22) !important;
+   background:
+      radial-gradient(120% 80% at 100% 0%, rgba(255, 255, 255, 0.07) 0%, transparent 55%),
+      linear-gradient(170deg, #191919 0%, #0e0e0e 100%) !important;
+   box-shadow:
+      0 26px 55px rgba(0, 0, 0, 0.6),
+      inset 0 1px 0 rgba(255, 255, 255, 0.14) !important;
+}
+
+.services-section .service-card:hover::before {
+   left: 6% !important;
+   right: 6% !important;
+   opacity: 1 !important;
+}
+
+.services-section .service-card:hover::after {
+   opacity: 1 !important;
+}
+
+/* Hide legacy counter & icon */
+.services-section .service-card .service-top,
+.services-section .service-card .service-icon {
+   display: none !important;
+}
+
+/* 1. Top Header Row: EN Category Pill (Right) + Sleek Price Tag (Left) */
+.services-section .service-card .service-price {
+   order: 1 !important;
+   position: relative !important;
+   top: auto !important;
+   right: auto !important;
+   z-index: 2 !important;
+   display: flex !important;
+   flex-direction: row !important;
+   align-items: center !important;
+   justify-content: space-between !important;
+   width: 100% !important;
+   min-width: 0 !important;
+   height: auto !important;
+   min-height: 0 !important;
+   flex: 0 0 auto !important;
+   margin: 0 0 18px !important;
+   padding: 0 0 14px !important;
+   background: transparent !important;
+   border: 0 !important;
+   border-bottom: 1px solid rgba(255, 255, 255, 0.07) !important;
+   border-radius: 0 !important;
+   text-align: right !important;
+}
+
+.services-section .service-card .service-price>span:first-child {
+   display: flex !important;
+   flex-direction: row !important;
+   align-items: center !important;
+   justify-content: space-between !important;
+   width: 100% !important;
+   gap: 10px !important;
+}
+
+.services-section .service-card .price-label {
+   display: inline-flex !important;
+   align-items: center !important;
+   gap: 6px !important;
+   color: #8c8c8c !important;
+   font-size: 10.5px !important;
+   font-weight: 600 !important;
+}
+
+
+
+.services-section .service-card .price-value {
+   display: inline-flex !important;
+   align-items: baseline !important;
+   gap: 5px !important;
+   padding: 6px 14px !important;
+   background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%) !important;
+   border: 1px solid rgba(255, 255, 255, 0.14) !important;
+   border-radius: 999px !important;
+   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+   direction: rtl !important;
+}
+
+.services-section .service-card .price-value strong {
+   color: #ffffff !important;
+   font: 800 18px/1 "Inter", sans-serif !important;
+   letter-spacing: -0.5px !important;
+}
+
+.services-section .service-card .price-value>span {
+   color: #bdbdbd !important;
+   font-size: 10px !important;
+   font-weight: 700 !important;
+}
+
+.services-section .service-card .price-arrow {
+   display: none !important;
+}
+
+/* 2. Editorial Title, English Tag & Description */
+.services-section .service-card .service-info {
+   order: 2 !important;
+   display: flex !important;
+   flex-direction: column !important;
+   margin: 0 0 18px !important;
+   padding: 0 !important;
+}
+
+.services-section .service-card .service-info>strong {
+   color: #ffffff !important;
+   font-size: 20px !important;
+   font-weight: 800 !important;
+   line-height: 1.4 !important;
+   letter-spacing: -0.3px !important;
+   margin: 0 0 5px !important;
+}
+
+.services-section .service-card .service-info>span:nth-child(2) {
+   color: #7d7d7d !important;
+   font: 600 8.5px/1.5 "Inter", sans-serif !important;
+   letter-spacing: 1.5px !important;
+   text-transform: uppercase !important;
+}
+
+.services-section .service-card .service-description {
+   color: #989898 !important;
+   font-size: 11px !important;
+   font-weight: 400 !important;
+   line-height: 1.85 !important;
+   margin: 10px 0 0 !important;
+   max-width: 100% !important;
+}
+
+/* 3. Deliverables Section */
+.services-section .service-card .service-deliverables {
+   order: 3 !important;
+   display: flex !important;
+   flex-direction: column !important;
+   flex: 1 1 auto !important;
+   margin: 0 0 22px !important;
+   padding: 16px 0 0 !important;
+   border-top: 1px solid rgba(255, 255, 255, 0.07) !important;
+   border-bottom: 0 !important;
+}
+
+.services-section .service-card .deliverables-heading {
+   display: flex !important;
+   align-items: center !important;
+   justify-content: space-between !important;
+   gap: 8px !important;
+   margin: 0 0 13px !important;
+   padding: 0 !important;
+   border: 0 !important;
+}
+
+.services-section .service-card .deliverables-heading>span:first-child {
+   color: #e4e4e4 !important;
+   font-size: 10.5px !important;
+   font-weight: 700 !important;
+}
+
+.services-section .service-card .deliverables-heading>span:last-child {
+   color: #636363 !important;
+   font: 600 7.5px/1.4 "Inter", sans-serif !important;
+   letter-spacing: 1.1px !important;
+}
+
+.services-section .service-card .deliverables-list {
+   display: grid !important;
+   grid-template-columns: minmax(0, 1fr) !important;
+   grid-template-rows: none !important;
+   grid-auto-flow: row !important;
+   gap: 9px !important;
+   align-items: start !important;
+}
+
+.services-section .service-card .deliverable-item {
+   display: flex !important;
+   align-items: center !important;
+   gap: 10px !important;
+   color: #bdbdbd !important;
+   font-size: 10.5px !important;
+   font-weight: 500 !important;
+   line-height: 1.6 !important;
+}
+
+.services-section .service-card .deliverable-item i {
+   display: inline-grid !important;
+   place-items: center !important;
+   flex: 0 0 17px !important;
+   width: 17px !important;
+   height: 17px !important;
+   margin: 0 !important;
+   color: #ffffff !important;
+   background: rgba(255, 255, 255, 0.08) !important;
+   border: 1px solid rgba(255, 255, 255, 0.14) !important;
+   border-radius: 50% !important;
+   font-size: 10px !important;
+   box-shadow: none !important;
+}
+
+/* 4. Primary Action Button */
+.services-section .service-card .service-choose-button {
+   order: 4 !important;
+   display: flex !important;
+   align-items: center !important;
+   justify-content: center !important;
+   gap: 8px !important;
+   width: 100% !important;
+   min-height: 46px !important;
+   flex: 0 0 46px !important;
+   margin-top: auto !important;
+   padding: 11px 18px !important;
+   background: linear-gradient(180deg, #ffffff 0%, #eaeaea 100%) !important;
+   color: #080808 !important;
+   border: 1px solid #ffffff !important;
+   border-radius: 11px !important;
+   font-size: 12px !important;
+   font-weight: 800 !important;
+   box-shadow:
+      0 6px 20px rgba(0, 0, 0, 0.35),
+      inset 0 1px 0 #ffffff !important;
+   transition:
+      background 0.25s ease,
+      color 0.25s ease,
+      border-color 0.25s ease,
+      box-shadow 0.25s ease !important;
+}
+
+.services-section .service-card .service-choose-button:hover {
+   background: #1f1f1f !important;
+   color: #ffffff !important;
+   border-color: rgba(255, 255, 255, 0.25) !important;
+   box-shadow: 0 8px 22px rgba(0, 0, 0, 0.45) !important;
+}
+
+.services-section .service-card .service-choose-button i {
+   font-size: 15px !important;
+   transition: transform 0.25s ease !important;
+}
+
+.services-section .service-card .service-choose-button:hover i {
+   transform: translateX(-4px) !important;
+}
+
+@media (max-width: 640px) {
+   .services-section .service-card {
+      padding: 22px 19px 20px !important;
+      border-radius: 16px !important;
+   }
+
+   .services-section .service-card .service-info>strong {
+      font-size: 18px !important;
+   }
+
+   .services-section .service-card .price-value strong {
+      font-size: 17px !important;
+   }
+
+   .services-section .service-card .deliverable-item {
+      font-size: 10px !important;
+   }
+}
+
+
+/* =====================================================
+   HELIOCORD — MODERN BRIEF SECTION (#order)
+   Dark / Minimal / RTL — Desktop & Mobile
+===================================================== */
+
+.brief-section {
+   padding-block: 52px;
+}
+
+.brief-intro {
+   margin-bottom: 28px;
+}
+
+.brief-intro h2 {
+   margin-top: 8px;
+   color: var(--white);
+   font-size: clamp(26px, 4vw, 36px);
+   font-weight: 800;
+   line-height: 1.35;
+   letter-spacing: -0.5px;
+}
+
+.brief-intro p {
+   max-width: 540px;
+   margin-top: 8px;
+   color: var(--muted);
+   font-size: 11.5px;
+   line-height: 2;
+}
+
+/* Main Form Card */
+.brief-section .form-card {
+   position: relative;
+   isolation: isolate;
+   overflow: hidden;
+   padding: 32px;
+   background:
+      radial-gradient(110% 70% at 100% 0%, rgba(255, 255, 255, 0.045) 0%, transparent 55%),
+      linear-gradient(170deg, #151515 0%, #0c0c0c 100%);
+   border: 1px solid rgba(255, 255, 255, 0.1);
+   border-radius: 18px;
+   box-shadow:
+      0 20px 50px rgba(0, 0, 0, 0.45),
+      inset 0 1px 0 rgba(255, 255, 255, 0.07);
+}
+
+.brief-section .form-card::before {
+   content: "";
+   position: absolute;
+   top: 0;
+   left: 12%;
+   right: 12%;
+   height: 1px;
+   background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+   pointer-events: none;
+}
+
+/* Top Header & Progress */
+.brief-section .form-topline {
+   display: flex;
+   align-items: flex-start;
+   justify-content: space-between;
+   gap: 16px;
+}
+
+.brief-section .form-topline h2 {
+   margin-top: 6px;
+   color: var(--white);
+   font-size: clamp(20px, 2.5vw, 24px);
+   font-weight: 800;
+   line-height: 1.4;
+}
+
+.brief-section .form-topline p {
+   margin-top: 5px;
+   color: #8c8c8c;
+   font-size: 11px;
+   line-height: 1.85;
+}
+
+.brief-section .form-step-count {
+   flex-shrink: 0;
+   padding: 7px 12px;
+   color: #e6e6e6;
+   background: rgba(255, 255, 255, 0.05);
+   border: 1px solid rgba(255, 255, 255, 0.12);
+   border-radius: 999px;
+   font: 700 10.5px/1 "Inter", sans-serif;
+   letter-spacing: 0.6px;
+   direction: ltr;
+}
+
+.brief-section .progress-track {
+   height: 4px;
+   margin: 22px 0 30px;
+   background: rgba(255, 255, 255, 0.08);
+   border-radius: 999px;
+   overflow: hidden;
+}
+
+.brief-section .progress-track span {
+   display: block;
+   height: 100%;
+   background: linear-gradient(90deg, #cfcfcf 0%, #ffffff 100%);
+   border-radius: 999px;
+   transition: width 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* =====================================================
+   PAYMENT DETAILS (.payment-policy)
+   Matched to Site Style, RemixIcons & Desktop-Only Hover
+===================================================== */
+
+.brief-section .payment-policy {
+   display: grid;
+   grid-template-columns: minmax(185px, 0.85fr) minmax(0, 1.65fr);
+   align-items: center;
+   gap: 18px;
+   margin: 0 0 28px;
+   padding: 16px 18px;
+   background:
+      radial-gradient(120% 90% at 100% 0%, rgba(255, 255, 255, 0.04) 0%, transparent 55%),
+      linear-gradient(165deg, #151515 0%, #0e0e0e 100%);
+   border: 1px solid rgba(255, 255, 255, 0.09);
+   border-radius: 12px;
+   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+.brief-section .payment-policy-heading {
+   display: flex;
+   align-items: center;
+   gap: 11px;
+   min-width: 0;
+}
+
+.brief-section .payment-policy-icon {
+   width: 36px;
+   height: 36px;
+   flex: 0 0 36px;
+   display: grid;
+   place-items: center;
+   color: #f0f0f0;
+   background: linear-gradient(145deg, #202020, #141414);
+   border: 1px solid rgba(255, 255, 255, 0.14);
+   border-radius: 9px;
+   font-size: 16px;
+   line-height: 1;
+}
+
+.brief-section .payment-policy-heading > span:last-child {
+   display: flex;
+   flex-direction: column;
+   gap: 2px;
+   min-width: 0;
+}
+
+.brief-section .payment-policy-heading strong {
+   color: #ffffff;
+   font-size: 12px;
+   font-weight: 800;
+   line-height: 1.5;
+}
+
+.brief-section .payment-policy-heading small {
+   color: #888888;
+   font-size: 10px;
+   line-height: 1.6;
+}
+
+.brief-section .payment-policy-content {
+   display: grid;
+   grid-template-columns: repeat(2, minmax(0, 1fr));
+   gap: 12px;
+   min-width: 0;
+}
+
+.brief-section .payment-policy-item {
+   display: flex;
+   align-items: flex-start;
+   gap: 10px;
+   min-width: 0;
+   padding: 11px 13px;
+   background: rgba(255, 255, 255, 0.02);
+   border: 1px solid rgba(255, 255, 255, 0.07);
+   border-radius: 10px;
+}
+
+.brief-section .payment-policy-item > i {
+   flex: 0 0 auto;
+   margin-top: 2px;
+   color: #dcdcdc;
+   font-size: 16px;
+   line-height: 1;
+}
+
+.brief-section .payment-policy-item > span {
+   display: flex;
+   flex-direction: column;
+   gap: 3px;
+   min-width: 0;
+}
+
+.brief-section .payment-policy-item strong {
+   color: #f2f2f2;
+   font-size: 11px;
+   font-weight: 700;
+   line-height: 1.5;
+}
+
+.brief-section .payment-policy-item small {
+   color: #878787;
+   font-size: 10px;
+   line-height: 1.65;
+}
+
+/* Step Headings */
+.brief-section .step-heading {
+   display: flex;
+   align-items: center;
+   gap: 14px;
+   margin-bottom: 24px;
+}
+
+.brief-section .step-heading > span {
+   width: 38px;
+   height: 38px;
+   flex: 0 0 38px;
+   display: grid;
+   place-items: center;
+   color: #fff;
+   background: rgba(255, 255, 255, 0.05);
+   border: 1px solid rgba(255, 255, 255, 0.14);
+   border-radius: 10px;
+   font: 700 11px/1 "Inter", sans-serif;
+}
+
+.brief-section .step-heading h3 {
+   color: #fff;
+   font-size: 15.5px;
+   font-weight: 800;
+   line-height: 1.45;
+}
+
+.brief-section .step-heading p {
+   margin-top: 2px;
+   color: #828282;
+   font-size: 10.5px;
+   line-height: 1.75;
+}
+
+.brief-section .service-subheading {
+   margin-bottom: 16px;
+}
+
+.brief-section .service-shared-fields {
+   margin-top: 26px;
+   padding-top: 22px;
+   border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Step 1: Service Selection Cards */
+.brief-section .service-selection-grid {
+   display: grid;
+   grid-template-columns: repeat(2, minmax(0, 1fr));
+   gap: 14px;
+}
+
+.brief-section .service-option {
+   position: relative;
+   display: block;
+   min-width: 0;
+   cursor: pointer;
+}
+
+.brief-section .service-option > input {
+   position: absolute;
+   width: 1px;
+   height: 1px;
+   opacity: 0;
+   pointer-events: none;
+}
+
+.brief-section .service-option-content {
+   display: flex;
+   flex-direction: column;
+   height: 100%;
+   min-height: 156px;
+   padding: 18px;
+   background: linear-gradient(165deg, #161616 0%, #0f0f0f 100%);
+   border: 1px solid rgba(255, 255, 255, 0.09);
+   border-radius: 12px;
+}
+
+.brief-section .service-option input:checked + .service-option-content {
+   border-color: rgba(255, 255, 255, 0.55);
+   background: linear-gradient(165deg, #1f1f1f 0%, #141414 100%);
+   box-shadow: 0 10px 26px rgba(0, 0, 0, 0.35), inset 0 0 0 1px rgba(255, 255, 255, 0.14);
+}
+
+.brief-section .service-option input:focus-visible + .service-option-content {
+   outline: 2px solid #fff;
+   outline-offset: 3px;
+}
+
+.brief-section .service-option-top {
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   margin-bottom: 14px;
+}
+
+.brief-section .service-option-top > i {
+   width: 36px;
+   height: 36px;
+   display: grid;
+   place-items: center;
+   color: #f0f0f0;
+   background: rgba(255, 255, 255, 0.06);
+   border: 1px solid rgba(255, 255, 255, 0.12);
+   border-radius: 9px;
+   font-size: 18px;
+}
+
+.brief-section .service-option-check {
+   width: 22px;
+   height: 22px;
+   display: grid;
+   place-items: center;
+   color: #080808;
+   background: #fff;
+   border-radius: 50%;
+   opacity: 0;
+   transform: scale(0.75);
+   transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.brief-section .service-option input:checked + .service-option-content .service-option-check {
+   opacity: 1;
+   transform: scale(1);
+}
+
+.brief-section .service-option-content > strong {
+   color: #fff;
+   font-size: 14px;
+   font-weight: 800;
+   line-height: 1.5;
+}
+
+.brief-section .service-option-content > small {
+   margin-top: 2px;
+   color: #7c7c7c;
+   font: 600 8.5px/1.5 "Inter", sans-serif;
+   letter-spacing: 1px;
+}
+
+.brief-section .service-option-price {
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   gap: 8px;
+   margin-top: auto;
+   padding-top: 12px;
+   border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.brief-section .service-option-price > span {
+   color: #888;
+   font-size: 10px;
+}
+
+.brief-section .service-option-price > strong {
+   color: #fff;
+   font: 800 18px/1 "Inter", sans-serif;
+}
+
+.brief-section .service-option-price > strong small {
+   color: #a3a3a3;
+   font: 700 9.5px/1 "Cairo", sans-serif;
+}
+
+/* Inputs, Choices & Upload */
+.brief-section .form-grid {
+   display: grid;
+   grid-template-columns: repeat(2, minmax(0, 1fr));
+   gap: 18px;
+}
+
+.brief-section .field {
+   display: flex;
+   flex-direction: column;
+   gap: 8px;
+   min-width: 0;
+}
+
+.brief-section .field.full-width {
+   grid-column: 1 / -1;
+}
+
+.brief-section .field > label {
+   color: #e4e4e4;
+   font-size: 11.5px;
+   font-weight: 700;
+}
+
+.brief-section .optional-label {
+   color: #787878;
+   font-size: 10px;
+   font-weight: 500;
+}
+
+.brief-section .field input[type="text"],
+.brief-section .field input[type="tel"],
+.brief-section .field textarea,
+.brief-section .field select {
+   width: 100%;
+   min-height: 46px;
+   padding: 11px 14px;
+   color: #f2f2f2;
+   background: #090909;
+   border: 1px solid rgba(255, 255, 255, 0.12);
+   border-radius: 9px;
+   outline: none;
+   font-size: 11.5px;
+   transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.brief-section .field textarea {
+   min-height: 104px;
+   resize: vertical;
+   line-height: 1.9;
+}
+
+.brief-section .field input::placeholder,
+.brief-section .field textarea::placeholder {
+   color: #5e5e5e;
+}
+
+.brief-section .field input:focus,
+.brief-section .field textarea:focus,
+.brief-section .field select:focus {
+   border-color: rgba(255, 255, 255, 0.42);
+   background: #0d0d0d;
+   box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.04);
+}
+
+.brief-section .choice-grid {
+   display: grid;
+   grid-template-columns: repeat(2, minmax(0, 1fr));
+   gap: 10px;
+}
+
+.brief-section .personality-field {
+   margin-top: 20px;
+}
+
+.brief-section .personality-grid {
+   grid-template-columns: repeat(4, minmax(0, 1fr));
+   margin-top: 8px;
+}
+
+.brief-section .choice-item {
+   position: relative;
+   display: flex;
+   align-items: center;
+   gap: 10px;
+   min-height: 48px;
+   padding: 10px 13px;
+   color: #bdbdbd;
+   background: rgba(255, 255, 255, 0.025);
+   border: 1px solid rgba(255, 255, 255, 0.09);
+   border-radius: 9px;
+   font-size: 10.5px;
+   font-weight: 600;
+   cursor: pointer;
+}
+
+.brief-section .choice-item:has(input:checked) {
+   color: #fff;
+   background: rgba(255, 255, 255, 0.08);
+   border-color: rgba(255, 255, 255, 0.48);
+}
+
+.brief-section .choice-item small {
+   display: block;
+   margin-top: 1px;
+   color: #7c7c7c;
+   font: 600 8px/1.4 "Inter", sans-serif;
+   letter-spacing: 0.7px;
+}
+
+/* Upload Box */
+.brief-section .upload-box {
+   display: flex;
+   align-items: center;
+   gap: 15px;
+   min-height: 104px;
+   padding: 18px 20px;
+   background: rgba(255, 255, 255, 0.02);
+   border: 1px dashed rgba(255, 255, 255, 0.2);
+   border-radius: 12px;
+   cursor: pointer;
+}
+
+.brief-section .upload-icon {
+   width: 44px;
+   height: 44px;
+   flex: 0 0 44px;
+   display: grid;
+   place-items: center;
+   color: #f0f0f0;
+   background: rgba(255, 255, 255, 0.06);
+   border: 1px solid rgba(255, 255, 255, 0.12);
+   border-radius: 10px;
+   font-size: 20px;
+}
+
+.brief-section .upload-content {
+   display: flex;
+   flex-direction: column;
+   gap: 3px;
+   min-width: 0;
+}
+
+.brief-section .upload-title {
+   color: #f0f0f0;
+   font-size: 12px;
+   font-weight: 700;
+}
+
+.brief-section .upload-formats {
+   color: #7d7d7d;
+   font-size: 10px;
+}
+
+.brief-section .upload-file-name {
+   margin-top: 2px;
+   color: #888;
+   font-size: 10px;
+   overflow-wrap: anywhere;
+}
+
+.brief-section .upload-file-name.has-file {
+   color: var(--green);
+   font-weight: 700;
+}
+
+/* Validation Errors */
+.brief-section .field.is-invalid input[type="text"],
+.brief-section .field.is-invalid input[type="tel"],
+.brief-section .field.is-invalid textarea,
+.brief-section .field.is-invalid select,
+.brief-section .upload-box.is-invalid {
+   border-color: #d96464;
+   box-shadow: 0 0 0 3px rgba(217, 100, 100, 0.1);
+}
+
+.brief-section .choice-grid.has-error,
+.brief-section .service-selection-grid.has-error {
+   padding: 8px;
+   border: 1px solid rgba(217, 100, 100, 0.55);
+   border-radius: 12px;
+}
+
+.brief-section .field-error-message,
+.brief-section .group-error-message {
+   color: #f08888;
+   font-size: 10px;
+   font-weight: 600;
+   line-height: 1.6;
+}
+
+/* Summary Card (Step 5) */
+.brief-section .selected-service-summary {
+   display: flex;
+   flex-wrap: wrap;
+   align-items: center;
+   gap: 14px;
+   margin-top: 24px;
+   padding: 18px;
+   background: rgba(255, 255, 255, 0.03);
+   border: 1px solid rgba(255, 255, 255, 0.11);
+   border-radius: 12px;
+}
+
+.brief-section .selected-service-summary-icon {
+   width: 38px;
+   height: 38px;
+   flex: 0 0 38px;
+   display: grid;
+   place-items: center;
+   color: #fff;
+   background: rgba(255, 255, 255, 0.07);
+   border: 1px solid rgba(255, 255, 255, 0.14);
+   border-radius: 10px;
+   font-size: 18px;
+}
+
+.brief-section .selected-service-summary > div:nth-child(2) {
+   display: flex;
+   flex-direction: column;
+   gap: 2px;
+}
+
+.brief-section .selected-service-summary > div:nth-child(2) > span,
+.brief-section .selected-service-summary-price > span {
+   color: #888;
+   font-size: 10px;
+}
+
+.brief-section .selected-service-summary > div:nth-child(2) > strong {
+   color: #fff;
+   font-size: 13px;
+   font-weight: 800;
+}
+
+.brief-section .selected-service-summary-price {
+   display: flex;
+   flex-direction: column;
+   align-items: flex-start;
+   gap: 2px;
+   margin-inline-start: auto;
+}
+
+.brief-section .selected-service-summary-price > strong {
+   color: #fff;
+   font: 800 17px/1.2 "Inter", sans-serif;
+}
+
+.brief-section .summary-payment-breakdown {
+   display: grid;
+   grid-template-columns: repeat(2, minmax(0, 1fr));
+   gap: 10px;
+   flex: 0 0 100%;
+   width: 100%;
+   margin-top: 4px;
+   padding-top: 14px;
+   border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.brief-section .summary-payment-breakdown > div {
+   display: flex;
+   flex-direction: column;
+   gap: 4px;
+   padding: 12px 14px;
+   background: rgba(255, 255, 255, 0.025);
+   border: 1px solid rgba(255, 255, 255, 0.07);
+   border-radius: 9px;
+}
+
+.brief-section .summary-payment-breakdown span {
+   color: #8a8a8a;
+   font-size: 10px;
+}
+
+.brief-section .summary-payment-breakdown strong {
+   color: #fff;
+   font: 700 15px/1.2 "Inter", sans-serif;
+}
+
+.brief-section .privacy-note {
+   margin-top: 14px;
+   color: #7d7d7d;
+   font-size: 10px;
+}
+
+/* Navigation Buttons */
+.brief-section .form-navigation {
+   display: flex;
+   flex-wrap: wrap;
+   align-items: center;
+   gap: 12px;
+   margin-top: 26px;
+   padding-top: 20px;
+   border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.brief-section .step-button {
+   flex: 1 1 180px;
+   min-height: 46px;
+   display: inline-flex;
+   align-items: center;
+   justify-content: center;
+   gap: 8px;
+   padding: 0 18px;
+   border-radius: 10px;
+   font-size: 11.5px;
+   font-weight: 800;
+}
+
+.brief-section .step-button.primary {
+   color: #080808;
+   background: linear-gradient(180deg, #ffffff 0%, #e7e7e7 100%);
+   border: 1px solid #fff;
+}
+
+.brief-section .step-button.secondary {
+   color: #e0e0e0;
+   background: rgba(255, 255, 255, 0.04);
+   border: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.brief-section .step-hint {
+   order: 3;
+   flex: 0 0 100%;
+   text-align: center;
+   color: #7a7a7a;
+   font-size: 10px;
+}
+
+/* Desktop-Only Hover Effects */
+@media (hover: hover) and (pointer: fine) {
+   .brief-section .payment-policy,
+   .brief-section .payment-policy-icon,
+   .brief-section .payment-policy-item,
+   .brief-section .payment-policy-item > i,
+   .brief-section .service-option-content,
+   .brief-section .choice-item,
+   .brief-section .upload-box,
+   .brief-section .step-button {
+      transition:
+         transform 0.25s ease,
+         border-color 0.25s ease,
+         background 0.25s ease,
+         color 0.25s ease,
+         box-shadow 0.25s ease;
+   }
+
+   .brief-section .payment-policy:hover {
+      border-color: rgba(255, 255, 255, 0.18);
+   }
+
+   .brief-section .payment-policy-item:hover {
+      background: rgba(255, 255, 255, 0.045);
+      border-color: rgba(255, 255, 255, 0.2);
+      transform: translateY(-2px);
+   }
+
+   .brief-section .payment-policy-item:hover > i {
+      color: #ffffff;
+   }
+
+   .brief-section .service-option:hover .service-option-content {
+      transform: translateY(-2px);
+      border-color: rgba(255, 255, 255, 0.22);
+      background: linear-gradient(165deg, #1a1a1a 0%, #121212 100%);
+   }
+
+   .brief-section .choice-item:hover {
+      border-color: rgba(255, 255, 255, 0.24);
+      background: rgba(255, 255, 255, 0.045);
+   }
+
+   .brief-section .upload-box:hover {
+      border-color: rgba(255, 255, 255, 0.45);
+      background: rgba(255, 255, 255, 0.04);
+   }
+
+   .brief-section .step-button.primary:hover:not(:disabled) {
+      transform: translateY(-1px);
+      background: #ffffff;
+   }
+
+   .brief-section .step-button.secondary:hover:not(:disabled) {
+      border-color: rgba(255, 255, 255, 0.3);
+      background: rgba(255, 255, 255, 0.08);
+   }
+}
+
+/* Tablet & Mobile Responsive (No Hover on Touch/Mobile) */
+@media (max-width: 850px) {
+   .brief-section .personality-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+   }
+}
+
+@media (max-width: 640px) {
+   .brief-section {
+      padding-block: 36px;
+   }
+
+   .brief-section .form-card {
+      padding: 20px 15px;
+      border-radius: 14px;
+   }
+
+   .brief-section .payment-policy {
+      grid-template-columns: 1fr;
+      gap: 14px;
+      margin: 0 0 22px;
+      padding: 14px;
+      transition: none !important;
+   }
+
+   .brief-section .payment-policy:hover {
+      border-color: rgba(255, 255, 255, 0.09);
+      background:
+         radial-gradient(120% 90% at 100% 0%, rgba(255, 255, 255, 0.04) 0%, transparent 55%),
+         linear-gradient(165deg, #151515 0%, #0e0e0e 100%);
+      transform: none;
+   }
+
+   .brief-section .payment-policy-content {
+      grid-template-columns: 1fr;
+      gap: 10px;
+   }
+
+   .brief-section .payment-policy-item {
+      padding: 11px 12px;
+      transition: none !important;
+   }
+
+   .brief-section .payment-policy-item:hover {
+      background: rgba(255, 255, 255, 0.02);
+      border-color: rgba(255, 255, 255, 0.07);
+      transform: none;
+   }
+
+   .brief-section .payment-policy-item:hover > i {
+      color: #dcdcdc;
+   }
+
+   .brief-section .service-selection-grid {
+      grid-template-columns: 1fr;
+      gap: 10px;
+   }
+
+   .brief-section .service-option-content {
+      min-height: 0;
+      padding: 15px;
+   }
+
+   .brief-section .form-grid,
+   .brief-section .choice-grid,
+   .brief-section .summary-payment-breakdown {
+      grid-template-columns: 1fr;
+      gap: 12px;
+   }
+
+   .brief-section .personality-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+   }
+
+   .brief-section .upload-box {
+      padding: 14px;
+      gap: 12px;
+   }
+
+   .brief-section .form-navigation {
+      gap: 10px;
+   }
+
+   .brief-section .step-button {
+      flex: 1 1 130px;
+      min-height: 44px;
+      font-size: 11px;
+   }
+}
+
+
+/* =====================================================
+   HELIOCORD — UNIFIED BORDER RADIUS (MATCHING PORTFOLIO IMAGES: 5px)
+   Consistent sharp-minimal radius across cards, boxes, inputs & buttons
+===================================================== */
+
+:root {
+   --radius-main: 5px;
+   --radius-pill: 999px;
+   --radius-circle: 50%;
+}
+
+/* Header & Hero Buttons */
+.header-cta,
+.primary-btn {
+   border-radius: var(--radius-main) !important;
+}
+
+/* Portfolio Images & Lightbox */
+.portfolio-item,
+.portfolio-image,
+.portfolio-image img,
+.portfolio-tag {
+   border-radius: var(--radius-main) !important;
+}
+
+/* Service Cards & Inner Elements */
+.services-section .service-card,
+.service-card,
+.service-icon,
+.service-icon:before,
+.services-section .service-card .service-choose-button,
+.service-choose-button {
+   border-radius: var(--radius-main) !important;
+}
+
+/* Brief / Order Section (#order) — Main Card, Payment Policy, Options, Inputs & Buttons */
+.brief-section .form-card,
+.form-card,
+.brief-section .payment-policy,
+.payment-policy,
+.brief-section .payment-policy-icon,
+.payment-policy-icon,
+.brief-section .payment-policy-item,
+.brief-section .step-heading > span,
+.step-heading > span,
+.brief-section .service-option-content,
+.service-option-content,
+.brief-section .service-option-top > i,
+.service-option-top > i,
+.brief-section .field input[type="text"],
+.brief-section .field input[type="tel"],
+.brief-section .field textarea,
+.brief-section .field select,
+.field input,
+.field textarea,
+.field select,
+.brief-section .choice-item,
+.choice-item,
+.brief-section .choice-grid.has-error,
+.brief-section .service-selection-grid.has-error,
+.choice-grid.has-error,
+.service-selection-grid.has-error,
+.field.has-error .choice-grid,
+.brief-section .upload-box,
+.upload-box,
+.brief-section .upload-icon,
+.upload-icon,
+.upload-action,
+.brief-section .selected-service-summary,
+.selected-service-summary,
+.brief-section .selected-service-summary-icon,
+.selected-service-summary-icon,
+.brief-section .summary-payment-breakdown > div,
+.summary-payment-breakdown > div,
+.brief-section .step-button,
+.step-button {
+   border-radius: var(--radius-main) !important;
+}
+
+/* Legacy Service Details & Toast Notifications */
+.service-details-card,
+.service-details-item,
+.service-details-info h3 i,
+.service-details-value,
+.service-start-button,
+.form-step-count,
+.toast-item {
+   border-radius: var(--radius-main) !important;
+}
+
+/* Keep small status badges, price pills & progress bars cleanly rounded */
+.service-status,
+.portfolio-filter,
+.services-section .service-card .price-value,
+.brief-section .form-step-count,
+.brief-section .progress-track,
+.brief-section .progress-track span,
+.progress-track,
+.progress-track span {
+   border-radius: var(--radius-pill) !important;
+}
+
+/* Keep circular indicators, checkboxes/radios & close icons round */
+.status-dot,
+.status-indicator,
+.price-arrow,
+.lightbox-close,
+.portfolio-lightbox-close,
+.portfolio-open,
+.service-option-check,
+.choice-item:has(input[type="radio"])::before,
+.choice-item:has(input[type="radio"])::after,
+.services-section .service-card .deliverable-item i {
+   border-radius: var(--radius-circle) !important;
+}
+
+.choice-item input[type="checkbox"] {
+   border-radius: 3px !important;
+}
+
+
+/* =====================================================
+   HELIOCORD — MATCH CARD GAPS TO PORTFOLIO IMAGE GAPS
+   Desktop: 12px | Mobile: 22px
+===================================================== */
+
+:root {
+   --gap-portfolio-desktop: 12px;
+   --gap-portfolio-mobile: 22px;
+}
+
+/* Keep portfolio image gap consistent */
+.portfolio-grid {
+   gap: var(--gap-portfolio-desktop) !important;
+}
+
+@media (max-width: 700px) {
+   #portfolio .portfolio-grid {
+      gap: var(--gap-portfolio-mobile) !important;
+   }
+}
+
+/* Desktop card grids (Services & Brief/Order cards) */
+.services-section .services-grid,
+.services-grid,
+.brief-section .service-selection-grid,
+.service-selection-grid,
+.brief-section .choice-grid,
+.choice-grid,
+.brief-section .payment-policy-content,
+.payment-policy-content,
+.brief-section .summary-payment-breakdown,
+.summary-payment-breakdown,
+.service-details-main {
+   gap: var(--gap-portfolio-desktop) !important;
+}
+
+/* Mobile card grids (Services & Brief/Order cards) */
+@media (max-width: 700px) {
+   .services-section .services-grid,
+   .services-grid,
+   .brief-section .service-selection-grid,
+   .service-selection-grid,
+   .brief-section .choice-grid,
+   .choice-grid,
+   .brief-section .payment-policy-content,
+   .payment-policy-content,
+   .brief-section .summary-payment-breakdown,
+   .summary-payment-breakdown,
+   .service-details-main {
+      gap: var(--gap-portfolio-mobile) !important;
    }
 }
