@@ -79,13 +79,10 @@
       <div class="services-grid">
 
         <!-- LOGO DESIGN -->
-        <button class="service-card" type="button" data-service="logo-design" aria-label="اختيار خدمة تصميم الشعار">
+        <article class="service-card" data-service="logo-design" aria-label="اختيار خدمة تصميم الشعار">
 
           <span class="service-top">
             <span class="service-number">01 <span>/ 04</span></span>
-            <span class="service-status available">
-              <span class="status-indicator"></span> متاحة الآن
-            </span>
           </span>
 
           <span class="service-icon">
@@ -126,16 +123,15 @@
             <span class="price-arrow"><i class="ri-arrow-left-line"></i></span>
           </span>
 
-        </button>
+          <button class="service-choose-button" type="button">اختار الخدمة <i class="ri-arrow-left-line"
+              aria-hidden="true"></i></button>
+        </article>
 
         <!-- LOGO REDESIGN -->
-        <button class="service-card" type="button" data-service="logo-redesign" aria-label="اختيار خدمة تحديث الشعار">
+        <article class="service-card" data-service="logo-redesign" aria-label="اختيار خدمة تحديث الشعار">
 
           <span class="service-top">
             <span class="service-number">02 <span>/ 04</span></span>
-            <span class="service-status available">
-              <span class="status-indicator"></span> متاحة الآن
-            </span>
           </span>
 
           <span class="service-icon">
@@ -176,17 +172,15 @@
             <span class="price-arrow"><i class="ri-arrow-left-line"></i></span>
           </span>
 
-        </button>
+          <button class="service-choose-button" type="button">اختار الخدمة <i class="ri-arrow-left-line"
+              aria-hidden="true"></i></button>
+        </article>
 
         <!-- VISUAL IDENTITY -->
-        <button class="service-card" type="button" data-service="visual-identity"
-          aria-label="اختيار خدمة الهوية البصرية">
+        <article class="service-card" data-service="visual-identity" aria-label="اختيار خدمة الهوية البصرية">
 
           <span class="service-top">
             <span class="service-number">03 <span>/ 04</span></span>
-            <span class="service-status available">
-              <span class="status-indicator"></span> متاحة الآن
-            </span>
           </span>
 
           <span class="service-icon">
@@ -227,17 +221,15 @@
             <span class="price-arrow"><i class="ri-arrow-left-line"></i></span>
           </span>
 
-        </button>
+          <button class="service-choose-button" type="button">اختار الخدمة <i class="ri-arrow-left-line"
+              aria-hidden="true"></i></button>
+        </article>
 
         <!-- SOCIAL MEDIA -->
-        <button class="service-card" type="button" data-service="social-media"
-          aria-label="اختيار خدمة تصميم السوشيال ميديا">
+        <article class="service-card" data-service="social-media" aria-label="اختيار خدمة تصميم السوشيال ميديا">
 
           <span class="service-top">
             <span class="service-number">04 <span>/ 04</span></span>
-            <span class="service-status available">
-              <span class="status-indicator"></span> متاحة الآن
-            </span>
           </span>
 
           <span class="service-icon">
@@ -274,51 +266,49 @@
             <span class="price-arrow"><i class="ri-arrow-left-line"></i></span>
           </span>
 
-        </button>
+          <button class="service-choose-button" type="button">اختار الخدمة <i class="ri-arrow-left-line"
+              aria-hidden="true"></i></button>
+        </article>
 
       </div>
     </section>
 
     <!-- PORTFOLIO -->
     <section class="portfolio-section" id="portfolio">
-
       <div class="section-heading portfolio-heading">
-        <div>
-          <span class="section-label">SELECTED WORK / 02</span>
+        <div><span class="section-label">SELECTED WORK / 02</span>
           <h2>نماذج من أعمالنا</h2>
         </div>
-
         <p>نظرة على مجموعة من أعمالنا السابقة في مختلف المشاريع.</p>
       </div>
-
-      <div class="portfolio-slider" dir="rtl">
-
-        <div class="portfolio-grid portfolio-track">
-
-          <div class="portfolio-item">
-            <div class="portfolio-image">
-              <img src="images/1.jpg" alt="نموذج تصميم شعار من أعمال HELIOCORD" loading="lazy" />
-              <span class="portfolio-tag">LOGO DESIGN</span>
-            </div>
-          </div>
-
-          <div class="portfolio-item">
-            <div class="portfolio-image">
-              <img src="images/2.jpg" alt="نموذج تصميم شعار من أعمال HELIOCORD" loading="lazy" />
-              <span class="portfolio-tag">LOGO DESIGN</span>
-            </div>
-          </div>
-
-          <div class="portfolio-item">
-            <div class="portfolio-image">
-              <img src="images/3.jpg" alt="نموذج تصميم شعار من أعمال HELIOCORD" loading="lazy" />
-              <span class="portfolio-tag">LOGO DESIGN</span>
-            </div>
-          </div>
-
-        </div>
-
+      <div class="portfolio-filters" role="group" aria-label="تصنيف الأعمال">
+        <button class="portfolio-filter is-active" type="button" data-filter="all">كل الأعمال</button>
+        <button class="portfolio-filter" type="button" data-filter="logo">Logo Design</button>
+        <button class="portfolio-filter" type="button" data-filter="branding">Branding</button>
+        <button class="portfolio-filter" type="button" data-filter="social">Social Media</button>
       </div>
+      <div class="portfolio-grid portfolio-track" dir="rtl">
+        <button class="portfolio-item" type="button" data-category="logo" data-title="Logo Design — Project 01">
+          <span class="portfolio-image"><img src="images/1.jpg" alt="نموذج تصميم شعار من أعمال HELIOCORD"
+              loading="lazy" /></span><span class="portfolio-caption"><span class="portfolio-overlay-copy"><strong>WELLY
+              </strong><small>LOGO DESIGN</small></span></span></button>
+        <button class="portfolio-item" type="button" data-category="branding" data-title="Brand Identity — Project 02">
+          <span class="portfolio-image"><img src="images/2.jpg" alt="نموذج هوية بصرية من أعمال HELIOCORD"
+              loading="lazy" /></span><span class="portfolio-caption"><span
+              class="portfolio-overlay-copy"><strong>GURNAH COFFEE
+              </strong><small>BRANDING</small></span></span></button>
+        <button class="portfolio-item" type="button" data-category="logo" data-title="Logo Design — Project 03">
+          <span class="portfolio-image"><img src="images/3.jpg" alt="نموذج تصميم شعار من أعمال HELIOCORD"
+              loading="lazy" /></span><span class="portfolio-caption"><span
+              class="portfolio-overlay-copy"><strong>HORIVENT
+              </strong><small>LOGO DESIGN</small></span></span></button>
+        <button class="portfolio-item" type="button" data-category="social" data-title="Social Media — Project 04">
+          <span class="portfolio-image"><img src="images/4.jpg" alt="نموذج تصميم سوشيال ميديا من أعمال HELIOCORD"
+              loading="lazy" /></span><span class="portfolio-caption"><span class="portfolio-overlay-copy"><strong>AB
+                EXPRESS
+              </strong><small>SOCIAL MEDIA</small></span></span></button>
+      </div>
+      <p class="portfolio-empty" hidden>لا توجد أعمال في هذا التصنيف حاليًا.</p>
     </section>
 
     <!-- PROJECT BRIEF -->
