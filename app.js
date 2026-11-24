@@ -39,7 +39,7 @@
   const summaryBalance = document.getElementById("summary-balance");
 
   const serviceFields = [...form.querySelectorAll("[data-service-fields]")];
-  const serviceCards = document.querySelectorAll(".service-card[data-service]");
+  const serviceCards = document.querySelectorAll(".service-card[data-service] .service-choose-button");
 
   let currentStep = 0;
   let toastTimer = null;
@@ -882,8 +882,9 @@
 
   serviceCards.forEach(card => {
     card.addEventListener("click", () => {
+      const serviceCard = card.closest(".service-card[data-service]");
       const serviceKey =
-        serviceCardMap[card.dataset.service];
+        serviceCardMap[serviceCard?.dataset.service];
 
       if (serviceKey) {
         selectService(serviceKey);
@@ -987,6 +988,10 @@
       delay: 0
     },
     {
+      selector: ".portfolio-image img",
+      delay: 90
+    },
+    {
       selector: ".brief-intro",
       delay: 0
     },
@@ -1053,4 +1058,62 @@
     observer.observe(item);
   });
 
+})();
+
+/* HELIOCORD — PORTFOLIO FILTER + LIGHTBOX */
+(() => {
+  "use strict";
+  const section = document.querySelector("#portfolio");
+  if (!section) return;
+  const items = [...section.querySelectorAll(".portfolio-item")];
+  const filters = [...section.querySelectorAll(".portfolio-filter")];
+  const empty = section.querySelector(".portfolio-empty");
+
+  filters.forEach(filter => filter.addEventListener("click", () => {
+    const category = filter.dataset.filter;
+    filters.forEach(button => button.classList.toggle("is-active", button === filter));
+    let visibleCount = 0;
+    items.forEach(item => {
+      const show = category === "all" || item.dataset.category === category;
+      item.hidden = !show;
+      if (show) visibleCount++;
+    });
+    if (empty) empty.hidden = visibleCount !== 0;
+  }));
+
+  const modal = document.createElement("div");
+  modal.className = "portfolio-lightbox";
+  modal.setAttribute("role", "dialog");
+  modal.setAttribute("aria-modal", "true");
+  modal.setAttribute("aria-label", "عرض المشروع");
+  modal.innerHTML = '<button class="portfolio-lightbox-close" type="button" aria-label="إغلاق"><i class="ri-close-line"></i></button><img alt=""><span class="portfolio-lightbox-caption"></span>';
+  document.body.appendChild(modal);
+  const modalImage = modal.querySelector("img");
+  const caption = modal.querySelector(".portfolio-lightbox-caption");
+  const closeButton = modal.querySelector(".portfolio-lightbox-close");
+  let previousFocus = null;
+
+  function openItem(item) {
+    const image = item.querySelector("img");
+    if (!image) return;
+    previousFocus = document.activeElement;
+    modalImage.src = image.currentSrc || image.src;
+    modalImage.alt = image.alt;
+    caption.textContent = item.dataset.title || "";
+    modal.classList.add("is-open");
+    document.body.classList.add("portfolio-modal-open");
+    closeButton.focus();
+  }
+  function closeModal() {
+    modal.classList.remove("is-open");
+    document.body.classList.remove("portfolio-modal-open");
+    modalImage.removeAttribute("src");
+    previousFocus?.focus?.();
+  }
+  items.forEach(item => item.addEventListener("click", () => openItem(item)));
+  closeButton.addEventListener("click", closeModal);
+  modal.addEventListener("click", event => { if (event.target === modal) closeModal(); });
+  document.addEventListener("keydown", event => {
+    if (modal.classList.contains("is-open") && event.key === "Escape") closeModal();
+  });
 })();
