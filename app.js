@@ -962,102 +962,41 @@
 })();
 
 /* =========================================
-   HELIOCORD — GLOBAL SCROLL REVEAL
-   Smooth reveal for all page sections
+   HELIOCORD — REFINED SCROLL REVEAL
 ========================================= */
-
 (() => {
   "use strict";
-
-  // العناصر التي سيظهر عليها التأثير
-  const revealGroups = [
-    {
-      selector: ".hero-side",
-      delay: 100
-    },
-    {
-      selector: ".services-section .section-heading",
-      delay: 0
-    },
-    {
-      selector: ".services-grid .service-card",
-      delay: 110
-    },
-    {
-      selector: ".portfolio-section .section-heading",
-      delay: 0
-    },
-    {
-      selector: ".portfolio-image img",
-      delay: 90
-    },
-    {
-      selector: ".brief-intro",
-      delay: 0
-    },
-    {
-      selector: ".brief-section .form-card",
-      delay: 100
-    }
+  const groups = [
+    { selector: ".hero-side", stagger: 80 },
+    { selector: ".services-section .section-heading", stagger: 0 },
+    { selector: ".services-grid .service-card", stagger: 100 },
+    { selector: ".portfolio-section .section-heading", stagger: 0 },
+    { selector: ".portfolio-image img", stagger: 80 },
+    { selector: ".brief-intro", stagger: 0 },
+    { selector: ".brief-section .form-card", stagger: 0 }
   ];
-
-  const elements = [];
-
-  revealGroups.forEach((group) => {
-    const items = document.querySelectorAll(group.selector);
-
-    items.forEach((item, index) => {
-      item.classList.add("reveal-item");
-
-      const delay = group.delay
-        ? index * group.delay
-        : 0;
-
-      item.style.setProperty(
-        "--reveal-delay",
-        `${delay}ms`
-      );
-
-      elements.push(item);
+  const items = [];
+  groups.forEach(({ selector, stagger }) => {
+    document.querySelectorAll(selector).forEach((el, index) => {
+      el.classList.add("reveal-item");
+      el.style.setProperty("--reveal-delay", `${Math.min(index * stagger, 240)}ms`);
+      items.push(el);
     });
   });
-
-  if (!elements.length) return;
-
-  // في حالة عدم دعم IntersectionObserver
-  if (!("IntersectionObserver" in window)) {
-    elements.forEach((item) => {
-      item.classList.add("is-revealed");
-    });
-
+  if (!items.length) return;
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches || !("IntersectionObserver" in window)) {
+    items.forEach(el => el.classList.add("is-revealed"));
     return;
   }
-
-  const observer = new IntersectionObserver(
-    (entries, observer) => {
-      entries.forEach((entry) => {
-        if (!entry.isIntersecting) return;
-
-        entry.target.classList.add("is-revealed");
-
-        observer.unobserve(entry.target);
-      });
-    },
-    {
-      threshold: 0.08,
-      rootMargin: "0px 0px -45px 0px"
-    }
-  );
-
-  // تفعيل الإخفاء بعد تجهيز العناصر والمراقب
-  document.documentElement.classList.add(
-    "js-reveal-enabled"
-  );
-
-  elements.forEach((item) => {
-    observer.observe(item);
-  });
-
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add("is-revealed");
+      observer.unobserve(entry.target);
+    });
+  }, { threshold: 0.12, rootMargin: "0px 0px -8% 0px" });
+  document.documentElement.classList.add("js-reveal-enabled");
+  items.forEach(el => observer.observe(el));
 })();
 
 /* HELIOCORD — PORTFOLIO FILTER + LIGHTBOX */
