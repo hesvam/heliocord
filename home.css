@@ -6064,3 +6064,56 @@ html.js-reveal-enabled .reveal-item.is-revealed {
       -webkit-tap-highlight-color: transparent !important;
    }
 }
+
+
+/* FINAL TOUCH DEVICE FIX: prevent sticky hover and press visuals */
+@media (hover: none),
+(pointer: coarse),
+(max-width: 850px) {
+
+   html body *:hover,
+   html body *:hover::before,
+   html body *:hover::after,
+   html body *:active,
+   html body *:active::before,
+   html body *:active::after {
+      transform: none !important;
+      animation: none !important;
+      transition: none !important;
+      filter: none !important;
+      box-shadow: none !important;
+      opacity: revert !important;
+   }
+
+   .portfolio-item:hover .portfolio-overlay,
+   .portfolio-item:active .portfolio-overlay {
+      opacity: 0 !important;
+      visibility: hidden !important;
+   }
+
+   .service-active:hover,
+   .choice-item:hover,
+   .service-option:hover .service-option-content,
+   .service-card:hover,
+   .services-section .service-card:hover,
+   .services-section .service-card:hover::before,
+   .services-section .service-card:hover::after,
+   .service-choose-button:hover,
+   .service-choose-button:hover i,
+   .portfolio-filter:hover:not(.is-active),
+   .upload-box:hover,
+   .upload-box:hover .upload-action,
+   .brief-section .payment-policy:hover,
+   .brief-section .payment-policy-item:hover,
+   .brief-section .payment-policy-item:hover>i,
+   .brief-section .step-button.primary:hover:not(:disabled),
+   .brief-section .step-button.secondary:hover:not(:disabled) {
+      transform: none !important;
+      filter: none !important;
+      box-shadow: none !important;
+   }
+
+   * {
+      -webkit-tap-highlight-color: transparent !important;
+   }
+}
