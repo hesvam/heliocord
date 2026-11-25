@@ -1,8 +1,71 @@
-
 /* =========================================
-   HELIOCORD — MULTI SERVICE PROJECT BRIEF
-   Dynamic Services + Validation + Telegram
+   HELIOCORD — THEME + MULTI SERVICE BRIEF
+   Dark/Light Theme + Validation + Telegram
 ========================================= */
+
+(() => {
+  "use strict";
+
+  const STORAGE_KEY = "heliocord-theme";
+  const toggleBtn = document.getElementById("theme-toggle");
+  const metaTheme = document.querySelector('meta[name="theme-color"]');
+
+  function getSystemTheme() {
+    return window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches
+      ? "light"
+      : "dark";
+  }
+
+  function applyTheme(theme, persist = false) {
+    const resolved = theme === "light" ? "light" : "dark";
+    document.documentElement.setAttribute("data-theme", resolved);
+
+    if (metaTheme) {
+      metaTheme.setAttribute("content", resolved === "light" ? "#f6f5f2" : "#080808");
+    }
+
+    if (toggleBtn) {
+      toggleBtn.setAttribute("aria-pressed", String(resolved === "light"));
+    }
+
+    if (persist) {
+      try {
+        localStorage.setItem(STORAGE_KEY, resolved);
+      } catch (_) { }
+    }
+  }
+
+  let initialTheme = getSystemTheme();
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved === "light" || saved === "dark") {
+      initialTheme = saved;
+    }
+  } catch (_) { }
+
+  applyTheme(initialTheme, false);
+
+  if (toggleBtn) {
+    toggleBtn.addEventListener("click", () => {
+      const current = document.documentElement.getAttribute("data-theme");
+      const next = current === "light" ? "dark" : "light";
+      applyTheme(next, true);
+    });
+  }
+
+  if (window.matchMedia) {
+    const mediaQuery = window.matchMedia("(prefers-color-scheme: light)");
+    mediaQuery.addEventListener("change", event => {
+      try {
+        if (!localStorage.getItem(STORAGE_KEY)) {
+          applyTheme(event.matches ? "light" : "dark", false);
+        }
+      } catch (_) {
+        applyTheme(event.matches ? "light" : "dark", false);
+      }
+    });
+  }
+})();
 
 (() => {
   "use strict";
@@ -42,9 +105,6 @@
   const serviceCards = document.querySelectorAll(".service-card[data-service] .service-choose-button");
 
   let currentStep = 0;
-  let toastTimer = null;
-  let toastRemoveTimer = null;
-  let toastElement = null;
 
   /* =========================================
      2. SERVICE CONFIGURATION
@@ -214,19 +274,16 @@
   ========================================= */
 
   function clearErrors(scope = form) {
-    // إزالة كلاسات الأخطاء
     scope.querySelectorAll(".is-invalid, .has-error").forEach(element => {
       element.classList.remove("is-invalid", "has-error");
     });
 
-    // إزالة رسائل الخطأ
     scope.querySelectorAll(
       ".field-error-message, .group-error-message"
     ).forEach(error => {
       error.remove();
     });
 
-    // إزالة حالة عدم صلاحية الحقول
     scope.querySelectorAll('[aria-invalid="true"]').forEach(element => {
       element.removeAttribute("aria-invalid");
     });
@@ -243,7 +300,6 @@
       control.setAttribute("aria-invalid", "true");
     }
 
-    // إظهار إطار رفع الصورة باللون الأحمر
     const uploadBox = field.querySelector(".upload-box");
 
     if (uploadBox) {
@@ -298,7 +354,6 @@
 
     let firstInvalid = null;
 
-    // STEP 1: SERVICE
     if (index === 0) {
       const selected = getSelectedService();
 
@@ -321,7 +376,6 @@
       return true;
     }
 
-    // Required fields
     const controls = [
       ...step.querySelectorAll("input,textarea,select")
     ].filter(control => {
@@ -434,8 +488,6 @@
       }
     });
 
-    // Service-specific checkbox requirements
-
     const selectedService = getSelectedService();
 
     const requiredGroups = {
@@ -519,7 +571,6 @@
 
     submitButton.hidden = !isLastStep;
 
-    // إزالة أي display inline قديم
     submitButton.style.removeProperty("display");
 
     clearErrors(form);
@@ -580,14 +631,12 @@
   form.addEventListener("change", event => {
     const control = event.target;
 
-    // تحديد مجموعة الاختيارات
     const group = control.closest(".field, .service-selection-grid");
 
     if (group) {
       const isCheckbox = control.type === "checkbox";
       const isRadio = control.type === "radio";
 
-      // التأكد من وجود اختيار فعلي قبل إزالة الخطأ
       const hasSelection = isCheckbox
         ? !!group.querySelector('input[type="checkbox"]:checked')
         : isRadio
@@ -597,24 +646,20 @@
       if (hasSelection) {
         group.classList.remove("has-error", "is-invalid");
 
-        // إزالة أي إطار خطأ داخلي
         group.querySelectorAll(".is-invalid").forEach(element => {
           element.classList.remove("is-invalid");
         });
 
-        // إزالة رسالة الخطأ
         group.querySelectorAll(".group-error-message").forEach(error => {
           error.remove();
         });
 
-        // إزالة حالة الخطأ من عناصر المجموعة
         group.querySelectorAll('[aria-invalid="true"]').forEach(element => {
           element.removeAttribute("aria-invalid");
         });
       }
     }
 
-    // تحديث الخدمة المختارة
     if (control.name === "service_choice") {
       selectService(control.value);
     }
@@ -643,14 +688,12 @@
 
     statusBox.appendChild(toast);
 
-    // تشغيل تأثير الظهور
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
         toast.classList.add("is-visible");
       });
     });
 
-    // إخفاء الرسالة بعد 5 ثوانٍ
     setTimeout(() => {
       toast.classList.remove("is-visible");
       toast.classList.add("is-leaving");
@@ -661,7 +704,6 @@
         toast.remove();
       }, { once: true });
 
-      // حماية في حالة عدم تنفيذ transitionend
       setTimeout(() => {
         toast.remove();
       }, 500);
@@ -797,7 +839,6 @@
 
       form.reset();
 
-      // تفريغ حقول الصور وإعادة أسماء الملفات للحالة الافتراضية
       const uploadFileName = document.getElementById("upload-file-name");
       const socialLogoFileName = document.getElementById("social-logo-file-name");
 
@@ -971,7 +1012,7 @@
     { selector: ".services-section .section-heading", stagger: 0 },
     { selector: ".services-grid .service-card", stagger: 100 },
     { selector: ".portfolio-section .section-heading", stagger: 0 },
-    { selector: ".portfolio-image img", stagger: 80 },
+    { selector: ".portfolio-item", stagger: 80 },
     { selector: ".brief-intro", stagger: 0 },
     { selector: ".brief-section .form-card", stagger: 0 }
   ];
