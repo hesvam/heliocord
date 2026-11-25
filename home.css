@@ -5695,3 +5695,123 @@ html.js-reveal-enabled .reveal-item.is-revealed {
       margin-bottom: 10px !important;
    }
 }
+
+/* =====================================================
+   UNIFIED SERVICE CARDS HEIGHT & ALIGNMENT
+===================================================== */
+.services-section .services-grid {
+   display: grid !important;
+   grid-auto-rows: 1fr !important;
+   align-items: stretch !important;
+}
+
+.services-section .service-card {
+   display: flex !important;
+   flex-direction: column !important;
+   height: 100% !important;
+}
+
+.services-section .service-card .service-info {
+   flex: 0 0 auto !important;
+}
+
+.services-section .service-card .service-deliverables {
+   flex: 1 1 auto !important;
+   display: flex !important;
+   flex-direction: column !important;
+}
+
+.services-section .service-card .service-choose-button {
+   margin-top: auto !important;
+   flex-shrink: 0 !important;
+}
+
+@media (max-width: 640px) {
+   .services-section .services-grid {
+      grid-auto-rows: 1fr !important;
+   }
+}
+
+/* =====================================================
+   MOBILE — BALANCED SMALLER TYPOGRAPHY & CARD HARMONY
+   Fixes uneven heights (e.g. "تصميم سوشيال ميديا" wrapping)
+   and scales mobile card text cleanly.
+===================================================== */
+@media (max-width: 700px) {
+   .brief-section .service-selection-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+      gap: 9px !important;
+      align-items: stretch !important;
+   }
+
+   .brief-section .service-option {
+      display: flex !important;
+      min-width: 0 !important;
+   }
+
+   .brief-section .service-option-content {
+      display: flex !important;
+      flex-direction: column !important;
+      width: 100% !important;
+      height: 100% !important;
+      min-height: 128px !important;
+      padding: 12px 11px !important;
+      gap: 0 !important;
+   }
+
+   .brief-section .service-option-top {
+      margin: 0 0 9px !important;
+   }
+
+   .brief-section .service-option-top>i {
+      width: 28px !important;
+      height: 28px !important;
+      font-size: 14px !important;
+      border-radius: 7px !important;
+   }
+
+   .brief-section .service-option-content>strong {
+      display: flex !important;
+      align-items: center !important;
+      min-height: 30px !important;
+      margin: 0 0 2px !important;
+      font-size: 10.5px !important;
+      font-weight: 800 !important;
+      line-height: 1.35 !important;
+      letter-spacing: -0.1px !important;
+   }
+
+   .brief-section .service-option-content>small {
+      margin: 0 0 9px !important;
+      font-size: 6.5px !important;
+      letter-spacing: 0.65px !important;
+      line-height: 1.4 !important;
+   }
+
+   .brief-section .service-option-price {
+      display: flex !important;
+      flex-direction: row !important;
+      align-items: baseline !important;
+      justify-content: space-between !important;
+      gap: 4px !important;
+      margin-top: auto !important;
+      padding-top: 8px !important;
+      border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+   }
+
+   .brief-section .service-option-price>span {
+      font-size: 7.5px !important;
+      white-space: nowrap !important;
+   }
+
+   .brief-section .service-option-price>strong {
+      font-size: 13px !important;
+      line-height: 1 !important;
+      white-space: nowrap !important;
+   }
+
+   .brief-section .service-option-price>strong small {
+      margin-inline-start: 2px !important;
+      font-size: 8px !important;
+   }
+}
