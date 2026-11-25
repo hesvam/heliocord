@@ -5852,3 +5852,131 @@ html.js-reveal-enabled .reveal-item.is-revealed {
       transition-delay: 0ms !important;
    }
 }
+
+/* Mobile: show service-selection options two cards per row */
+@media (max-width: 700px) {
+   .brief-section .service-selection-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+   }
+}
+
+/* Mobile: balanced inner spacing for service-selection cards */
+@media (max-width: 700px) {
+   .brief-section .service-selection-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+      gap: 12px !important;
+   }
+
+   .brief-section .service-option-content {
+      box-sizing: border-box !important;
+      min-height: 0 !important;
+      padding: 14px 12px !important;
+      gap: 0 !important;
+   }
+
+   .brief-section .service-option-top {
+      margin: 0 0 10px !important;
+      gap: 8px !important;
+   }
+
+   .brief-section .service-option-content>* {
+      min-width: 0 !important;
+   }
+}
+
+/* Mobile: balance spacing below the service English label */
+@media (max-width: 700px) {
+   .brief-section .service-option-content>small {
+      margin-bottom: 10px !important;
+   }
+}
+
+/* =========================================================
+   TOUCH / MOBILE INTERACTION OVERRIDES
+   Desktop hover remains unchanged; touch devices get clean tap feedback.
+   ========================================================= */
+@media (hover: none) and (pointer: coarse) {
+
+   /* Remove sticky hover states on touch devices */
+   .service-active:hover,
+   .choice-item:hover,
+   .service-option:hover .service-option-content,
+   .portfolio-item:hover img,
+   .upload-box:hover .upload-action,
+   .image-lightbox .lightbox-close:hover,
+   .image-lightbox .lightbox-nav:hover,
+   .portfolio-filter:hover,
+   .portfolio-item:hover .portfolio-overlay,
+   .portfolio-item:hover img,
+   .service-card:hover,
+   .service-choose-button:hover,
+   .service-choose-button:hover i,
+   .services-section .service-card:hover,
+   .services-section .service-card:hover::before,
+   .services-section .service-card:hover::after,
+   .services-section .service-card .service-choose-button:hover,
+   .services-section .service-card .service-choose-button:hover i,
+   .brief-section .payment-policy:hover,
+   .brief-section .payment-policy-item:hover,
+   .brief-section .payment-policy-item:hover>i,
+   .brief-section .service-option:hover .service-option-content,
+   .brief-section .choice-item:hover,
+   .brief-section .upload-box:hover,
+   .brief-section .step-button.primary:hover:not(:disabled),
+   .brief-section .step-button.secondary:hover:not(:disabled) {
+      transform: none !important;
+   }
+
+   .service-choose-button:hover i,
+   .services-section .service-card .service-choose-button:hover i {
+      transform: none !important;
+   }
+
+   .portfolio-item:hover .portfolio-overlay {
+      opacity: 0 !important;
+   }
+
+   .portfolio-filter:hover:not(.is-active) {
+      color: #999 !important;
+      background: #111 !important;
+      border-color: #292929 !important;
+   }
+
+   .brief-section .payment-policy-item:hover>i {
+      color: inherit !important;
+   }
+
+   /* Gentle, short feedback while an element is being touched */
+   .service-choose-button,
+   .services-section .service-card .service-choose-button,
+   .portfolio-filter,
+   .step-button,
+   .choice-item,
+   .service-option-content,
+   .upload-box,
+   .portfolio-item,
+   .image-lightbox .lightbox-close,
+   .image-lightbox .lightbox-nav {
+      -webkit-tap-highlight-color: transparent;
+      transition: transform 120ms ease, opacity 120ms ease, background-color 120ms ease !important;
+   }
+
+   .service-choose-button:active,
+   .services-section .service-card .service-choose-button:active,
+   .portfolio-filter:active,
+   .step-button:active:not(:disabled),
+   .choice-item:active,
+   .service-option-content:active,
+   .upload-box:active,
+   .portfolio-item:active,
+   .image-lightbox .lightbox-close:active,
+   .image-lightbox .lightbox-nav:active {
+      transform: scale(.985) !important;
+      opacity: .88 !important;
+   }
+
+   /* Keep keyboard focus visible and distinguish it from hover */
+   :focus-visible {
+      outline-offset: 3px;
+   }
+}
