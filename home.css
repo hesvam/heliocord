@@ -5980,3 +5980,87 @@ html.js-reveal-enabled .reveal-item.is-revealed {
       outline-offset: 3px;
    }
 }
+
+/* =========================================================
+   MOBILE: REMOVE ALL HOVER / PRESS INTERACTION EFFECTS
+   Desktop interactions remain untouched.
+   ========================================================= */
+@media (hover: none),
+(pointer: coarse) {
+
+   *,
+   *::before,
+   *::after {
+      transition-property: none !important;
+      animation: none !important;
+   }
+
+   /* Neutralize hover styling throughout the site on touch devices */
+   a:hover,
+   button:hover,
+   [role="button"]:hover,
+   .service-active:hover,
+   .choice-item:hover,
+   .service-option:hover .service-option-content,
+   .portfolio-item:hover img,
+   .upload-box:hover .upload-action,
+   .image-lightbox .lightbox-close:hover,
+   .image-lightbox .lightbox-nav:hover,
+   .portfolio-filter:hover,
+   .portfolio-item:hover .portfolio-overlay,
+   .service-card:hover,
+   .service-choose-button:hover,
+   .service-choose-button:hover i,
+   .services-section .service-card:hover,
+   .services-section .service-card:hover::before,
+   .services-section .service-card:hover::after,
+   .services-section .service-card .service-choose-button:hover,
+   .services-section .service-card .service-choose-button:hover i,
+   .brief-section .payment-policy:hover,
+   .brief-section .payment-policy-item:hover,
+   .brief-section .payment-policy-item:hover>i,
+   .brief-section .service-option:hover .service-option-content,
+   .brief-section .choice-item:hover,
+   .brief-section .upload-box:hover,
+   .brief-section .step-button.primary:hover:not(:disabled),
+   .brief-section .step-button.secondary:hover:not(:disabled) {
+      transform: none !important;
+      filter: none !important;
+      box-shadow: none !important;
+   }
+
+   .portfolio-item:hover .portfolio-overlay {
+      opacity: 0 !important;
+   }
+
+   .portfolio-filter:hover:not(.is-active) {
+      color: inherit !important;
+      background: inherit !important;
+      border-color: inherit !important;
+   }
+
+   .brief-section .payment-policy-item:hover>i {
+      color: inherit !important;
+   }
+
+   /* Remove pressed / tap feedback */
+   :active,
+   :active::before,
+   :active::after {
+      transform: none !important;
+      filter: none !important;
+      opacity: 1 !important;
+      box-shadow: none !important;
+   }
+
+   /* Keep keyboard focus accessibility, but disable tap highlight */
+   button,
+   a,
+   [role="button"],
+   label,
+   input,
+   select,
+   textarea {
+      -webkit-tap-highlight-color: transparent !important;
+   }
+}
