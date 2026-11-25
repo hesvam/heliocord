@@ -269,11 +269,6 @@ button.service-card {
    border-color: #444
 }
 
-.service-active:hover {
-   border-color: #777;
-   transform: translateY(-3px)
-}
-
 .service-card:before {
    content: "";
    position: absolute;
@@ -876,10 +871,6 @@ button.service-card {
    cursor: pointer;
    transition: var(--transition);
    font-size: 10px
-}
-
-.choice-item:hover {
-   border-color: #555
 }
 
 .choice-item:has(input:checked) {
@@ -1921,11 +1912,6 @@ button.service-card {
    transition: background .25s ease, border-color .25s ease;
 }
 
-.service-option:hover .service-option-content {
-   background: #151515;
-   border-color: #555;
-}
-
 .service-option input:checked+.service-option-content {
    background: #191919;
    border-color: #999;
@@ -2581,11 +2567,6 @@ body.lightbox-open {
    pointer-events: none;
 }
 
-/* لا يوجد Hover Zoom أو فتح */
-.portfolio-item:hover img {
-   transform: none;
-}
-
 /* =========================================
    PORTFOLIO — MOBILE
 ========================================= */
@@ -2687,12 +2668,6 @@ body.lightbox-open {
    color: #ddd;
    font-size: 11px;
    transition: 0.3s ease;
-}
-
-.upload-box:hover .upload-action {
-   background: #eee;
-   border-color: #eee;
-   color: #111;
 }
 
 .upload-file-name {
@@ -2866,11 +2841,6 @@ body.lightbox-open {
       transform .25s ease;
 }
 
-.image-lightbox .lightbox-close:hover {
-   background: rgba(255, 255, 255, .15);
-   transform: rotate(90deg);
-}
-
 /* أسهم التنقل */
 .image-lightbox .lightbox-nav {
    width: 42px;
@@ -2879,10 +2849,6 @@ body.lightbox-open {
    background: rgba(255, 255, 255, .07);
    border: 1px solid rgba(255, 255, 255, .15);
    transition: background .25s ease;
-}
-
-.image-lightbox .lightbox-nav:hover {
-   background: rgba(255, 255, 255, .15);
 }
 
 /* موبايل */
@@ -3205,7 +3171,6 @@ body.lightbox-open {
    transition: all .2s ease;
 }
 
-.portfolio-filter:hover,
 .portfolio-filter.is-active {
    color: #080808;
    background: #fff;
@@ -3292,13 +3257,8 @@ body.lightbox-open {
    font-size: 16px;
 }
 
-.portfolio-item:hover .portfolio-overlay,
 .portfolio-item:focus-visible .portfolio-overlay {
    opacity: 1;
-}
-
-.portfolio-item:hover img {
-   transform: scale(1.025);
 }
 
 .portfolio-item[hidden] {
@@ -3638,12 +3598,6 @@ body.portfolio-modal-open {
    transition: border-color .25s ease, transform .25s ease, box-shadow .25s ease;
 }
 
-.service-card:hover {
-   border-color: #555;
-   transform: translateY(-3px);
-   box-shadow: 0 14px 30px rgba(0, 0, 0, .18);
-}
-
 .service-card .service-price {
    position: absolute;
    top: 14px;
@@ -3761,16 +3715,6 @@ body.portfolio-modal-open {
    transition: transform .2s ease;
 }
 
-.service-choose-button:hover {
-   color: #fff;
-   background: #292929;
-   border-color: #555;
-}
-
-.service-choose-button:hover i {
-   transform: translateX(-3px);
-}
-
 .service-choose-button:focus-visible {
    outline: 2px solid #fff;
    outline-offset: 3px;
@@ -3854,12 +3798,6 @@ body.portfolio-modal-open {
    border: 1px solid #292929;
    border-radius: 13px;
    pointer-events: none;
-}
-
-.service-card:hover {
-   transform: translateY(-4px);
-   border-color: #666;
-   box-shadow: 0 18px 38px rgba(0, 0, 0, .25);
 }
 
 /* Top price tab */
@@ -4087,16 +4025,6 @@ body.portfolio-modal-open {
    transition: transform .22s ease;
 }
 
-.service-choose-button:hover {
-   color: #fff;
-   background: #292929;
-   border-color: #555;
-}
-
-.service-choose-button:hover i {
-   transform: translateX(-4px);
-}
-
 .service-choose-button:focus-visible {
    outline: 2px solid #fff;
    outline-offset: 3px;
@@ -4171,13 +4099,6 @@ body.portfolio-modal-open {
    inset: 8px;
    border: 1px solid #303030;
    border-radius: 12px;
-}
-
-.service-card:hover {
-   border-color: #777;
-   box-shadow:
-      0 1px 0 rgba(255, 255, 255, .06),
-      0 18px 38px rgba(0, 0, 0, .3);
 }
 
 .service-card .service-top {
@@ -4262,12 +4183,6 @@ body.portfolio-modal-open {
    background: linear-gradient(135deg, #f1f1f1 0%, #d8d8d8 100%);
    border-color: #eee;
    box-shadow: 0 3px 10px rgba(0, 0, 0, .15);
-}
-
-.service-choose-button:hover {
-   color: #fff;
-   background: linear-gradient(135deg, #3a3a3a 0%, #242424 100%);
-   border-color: #666;
 }
 
 @media (max-width: 600px) {
@@ -4400,27 +4315,6 @@ body.portfolio-modal-open {
    z-index: -1 !important;
    transition: opacity 0.4s ease !important;
    animation: none !important;
-}
-
-.services-section .service-card:hover {
-   transform: translateY(-6px) !important;
-   border-color: rgba(255, 255, 255, 0.22) !important;
-   background:
-      radial-gradient(120% 80% at 100% 0%, rgba(255, 255, 255, 0.07) 0%, transparent 55%),
-      linear-gradient(170deg, #191919 0%, #0e0e0e 100%) !important;
-   box-shadow:
-      0 26px 55px rgba(0, 0, 0, 0.6),
-      inset 0 1px 0 rgba(255, 255, 255, 0.14) !important;
-}
-
-.services-section .service-card:hover::before {
-   left: 6% !important;
-   right: 6% !important;
-   opacity: 1 !important;
-}
-
-.services-section .service-card:hover::after {
-   opacity: 1 !important;
 }
 
 /* Hide legacy counter & icon */
@@ -4632,20 +4526,9 @@ body.portfolio-modal-open {
       box-shadow 0.25s ease !important;
 }
 
-.services-section .service-card .service-choose-button:hover {
-   background: #1f1f1f !important;
-   color: #ffffff !important;
-   border-color: rgba(255, 255, 255, 0.25) !important;
-   box-shadow: 0 8px 22px rgba(0, 0, 0, 0.45) !important;
-}
-
 .services-section .service-card .service-choose-button i {
    font-size: 15px !important;
    transition: transform 0.25s ease !important;
-}
-
-.services-section .service-card .service-choose-button:hover i {
-   transform: translateX(-4px) !important;
 }
 
 @media (max-width: 640px) {
@@ -5377,67 +5260,7 @@ body.portfolio-modal-open {
    font-size: 10px;
 }
 
-/* Desktop-Only Hover Effects */
-@media (hover: hover) and (pointer: fine) {
-
-   .brief-section .payment-policy,
-   .brief-section .payment-policy-icon,
-   .brief-section .payment-policy-item,
-   .brief-section .payment-policy-item>i,
-   .brief-section .service-option-content,
-   .brief-section .choice-item,
-   .brief-section .upload-box,
-   .brief-section .step-button {
-      transition:
-         transform 0.25s ease,
-         border-color 0.25s ease,
-         background 0.25s ease,
-         color 0.25s ease,
-         box-shadow 0.25s ease;
-   }
-
-   .brief-section .payment-policy:hover {
-      border-color: rgba(255, 255, 255, 0.18);
-   }
-
-   .brief-section .payment-policy-item:hover {
-      background: rgba(255, 255, 255, 0.045);
-      border-color: rgba(255, 255, 255, 0.2);
-      transform: translateY(-2px);
-   }
-
-   .brief-section .payment-policy-item:hover>i {
-      color: #ffffff;
-   }
-
-   .brief-section .service-option:hover .service-option-content {
-      transform: translateY(-2px);
-      border-color: rgba(255, 255, 255, 0.22);
-      background: linear-gradient(165deg, #1a1a1a 0%, #121212 100%);
-   }
-
-   .brief-section .choice-item:hover {
-      border-color: rgba(255, 255, 255, 0.24);
-      background: rgba(255, 255, 255, 0.045);
-   }
-
-   .brief-section .upload-box:hover {
-      border-color: rgba(255, 255, 255, 0.45);
-      background: rgba(255, 255, 255, 0.04);
-   }
-
-   .brief-section .step-button.primary:hover:not(:disabled) {
-      transform: translateY(-1px);
-      background: #ffffff;
-   }
-
-   .brief-section .step-button.secondary:hover:not(:disabled) {
-      border-color: rgba(255, 255, 255, 0.3);
-      background: rgba(255, 255, 255, 0.08);
-   }
-}
-
-/* Tablet & Mobile Responsive (No Hover on Touch/Mobile) */
+/* Tablet & Mobile Responsive */
 @media (max-width: 850px) {
    .brief-section .personality-grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -5462,14 +5285,6 @@ body.portfolio-modal-open {
       transition: none !important;
    }
 
-   .brief-section .payment-policy:hover {
-      border-color: rgba(255, 255, 255, 0.09);
-      background:
-         radial-gradient(120% 90% at 100% 0%, rgba(255, 255, 255, 0.04) 0%, transparent 55%),
-         linear-gradient(165deg, #151515 0%, #0e0e0e 100%);
-      transform: none;
-   }
-
    .brief-section .payment-policy-content {
       grid-template-columns: 1fr;
       gap: 10px;
@@ -5478,16 +5293,6 @@ body.portfolio-modal-open {
    .brief-section .payment-policy-item {
       padding: 11px 12px;
       transition: none !important;
-   }
-
-   .brief-section .payment-policy-item:hover {
-      background: rgba(255, 255, 255, 0.02);
-      border-color: rgba(255, 255, 255, 0.07);
-      transform: none;
-   }
-
-   .brief-section .payment-policy-item:hover>i {
-      color: #dcdcdc;
    }
 
    .brief-section .service-selection-grid {
@@ -5888,232 +5693,5 @@ html.js-reveal-enabled .reveal-item.is-revealed {
 @media (max-width: 700px) {
    .brief-section .service-option-content>small {
       margin-bottom: 10px !important;
-   }
-}
-
-/* =========================================================
-   TOUCH / MOBILE INTERACTION OVERRIDES
-   Desktop hover remains unchanged; touch devices get clean tap feedback.
-   ========================================================= */
-@media (hover: none) and (pointer: coarse) {
-
-   /* Remove sticky hover states on touch devices */
-   .service-active:hover,
-   .choice-item:hover,
-   .service-option:hover .service-option-content,
-   .portfolio-item:hover img,
-   .upload-box:hover .upload-action,
-   .image-lightbox .lightbox-close:hover,
-   .image-lightbox .lightbox-nav:hover,
-   .portfolio-filter:hover,
-   .portfolio-item:hover .portfolio-overlay,
-   .portfolio-item:hover img,
-   .service-card:hover,
-   .service-choose-button:hover,
-   .service-choose-button:hover i,
-   .services-section .service-card:hover,
-   .services-section .service-card:hover::before,
-   .services-section .service-card:hover::after,
-   .services-section .service-card .service-choose-button:hover,
-   .services-section .service-card .service-choose-button:hover i,
-   .brief-section .payment-policy:hover,
-   .brief-section .payment-policy-item:hover,
-   .brief-section .payment-policy-item:hover>i,
-   .brief-section .service-option:hover .service-option-content,
-   .brief-section .choice-item:hover,
-   .brief-section .upload-box:hover,
-   .brief-section .step-button.primary:hover:not(:disabled),
-   .brief-section .step-button.secondary:hover:not(:disabled) {
-      transform: none !important;
-   }
-
-   .service-choose-button:hover i,
-   .services-section .service-card .service-choose-button:hover i {
-      transform: none !important;
-   }
-
-   .portfolio-item:hover .portfolio-overlay {
-      opacity: 0 !important;
-   }
-
-   .portfolio-filter:hover:not(.is-active) {
-      color: #999 !important;
-      background: #111 !important;
-      border-color: #292929 !important;
-   }
-
-   .brief-section .payment-policy-item:hover>i {
-      color: inherit !important;
-   }
-
-   /* Gentle, short feedback while an element is being touched */
-   .service-choose-button,
-   .services-section .service-card .service-choose-button,
-   .portfolio-filter,
-   .step-button,
-   .choice-item,
-   .service-option-content,
-   .upload-box,
-   .portfolio-item,
-   .image-lightbox .lightbox-close,
-   .image-lightbox .lightbox-nav {
-      -webkit-tap-highlight-color: transparent;
-      transition: transform 120ms ease, opacity 120ms ease, background-color 120ms ease !important;
-   }
-
-   .service-choose-button:active,
-   .services-section .service-card .service-choose-button:active,
-   .portfolio-filter:active,
-   .step-button:active:not(:disabled),
-   .choice-item:active,
-   .service-option-content:active,
-   .upload-box:active,
-   .portfolio-item:active,
-   .image-lightbox .lightbox-close:active,
-   .image-lightbox .lightbox-nav:active {
-      transform: scale(.985) !important;
-      opacity: .88 !important;
-   }
-
-   /* Keep keyboard focus visible and distinguish it from hover */
-   :focus-visible {
-      outline-offset: 3px;
-   }
-}
-
-/* =========================================================
-   MOBILE: REMOVE ALL HOVER / PRESS INTERACTION EFFECTS
-   Desktop interactions remain untouched.
-   ========================================================= */
-@media (hover: none),
-(pointer: coarse) {
-
-   *,
-   *::before,
-   *::after {
-      transition-property: none !important;
-      animation: none !important;
-   }
-
-   /* Neutralize hover styling throughout the site on touch devices */
-   a:hover,
-   button:hover,
-   [role="button"]:hover,
-   .service-active:hover,
-   .choice-item:hover,
-   .service-option:hover .service-option-content,
-   .portfolio-item:hover img,
-   .upload-box:hover .upload-action,
-   .image-lightbox .lightbox-close:hover,
-   .image-lightbox .lightbox-nav:hover,
-   .portfolio-filter:hover,
-   .portfolio-item:hover .portfolio-overlay,
-   .service-card:hover,
-   .service-choose-button:hover,
-   .service-choose-button:hover i,
-   .services-section .service-card:hover,
-   .services-section .service-card:hover::before,
-   .services-section .service-card:hover::after,
-   .services-section .service-card .service-choose-button:hover,
-   .services-section .service-card .service-choose-button:hover i,
-   .brief-section .payment-policy:hover,
-   .brief-section .payment-policy-item:hover,
-   .brief-section .payment-policy-item:hover>i,
-   .brief-section .service-option:hover .service-option-content,
-   .brief-section .choice-item:hover,
-   .brief-section .upload-box:hover,
-   .brief-section .step-button.primary:hover:not(:disabled),
-   .brief-section .step-button.secondary:hover:not(:disabled) {
-      transform: none !important;
-      filter: none !important;
-      box-shadow: none !important;
-   }
-
-   .portfolio-item:hover .portfolio-overlay {
-      opacity: 0 !important;
-   }
-
-   .portfolio-filter:hover:not(.is-active) {
-      color: inherit !important;
-      background: inherit !important;
-      border-color: inherit !important;
-   }
-
-   .brief-section .payment-policy-item:hover>i {
-      color: inherit !important;
-   }
-
-   /* Remove pressed / tap feedback */
-   :active,
-   :active::before,
-   :active::after {
-      transform: none !important;
-      filter: none !important;
-      opacity: 1 !important;
-      box-shadow: none !important;
-   }
-
-   /* Keep keyboard focus accessibility, but disable tap highlight */
-   button,
-   a,
-   [role="button"],
-   label,
-   input,
-   select,
-   textarea {
-      -webkit-tap-highlight-color: transparent !important;
-   }
-}
-
-
-/* FINAL TOUCH DEVICE FIX: prevent sticky hover and press visuals */
-@media (hover: none),
-(pointer: coarse),
-(max-width: 850px) {
-
-   html body *:hover,
-   html body *:hover::before,
-   html body *:hover::after,
-   html body *:active,
-   html body *:active::before,
-   html body *:active::after {
-      transform: none !important;
-      animation: none !important;
-      transition: none !important;
-      filter: none !important;
-      box-shadow: none !important;
-      opacity: revert !important;
-   }
-
-   .portfolio-item:hover .portfolio-overlay,
-   .portfolio-item:active .portfolio-overlay {
-      opacity: 0 !important;
-      visibility: hidden !important;
-   }
-
-   .service-active:hover,
-   .choice-item:hover,
-   .service-option:hover .service-option-content,
-   .service-card:hover,
-   .services-section .service-card:hover,
-   .services-section .service-card:hover::before,
-   .services-section .service-card:hover::after,
-   .service-choose-button:hover,
-   .service-choose-button:hover i,
-   .portfolio-filter:hover:not(.is-active),
-   .upload-box:hover,
-   .upload-box:hover .upload-action,
-   .brief-section .payment-policy:hover,
-   .brief-section .payment-policy-item:hover,
-   .brief-section .payment-policy-item:hover>i,
-   .brief-section .step-button.primary:hover:not(:disabled),
-   .brief-section .step-button.secondary:hover:not(:disabled) {
-      transform: none !important;
-      filter: none !important;
-      box-shadow: none !important;
-   }
-
-   * {
-      -webkit-tap-highlight-color: transparent !important;
    }
 }
